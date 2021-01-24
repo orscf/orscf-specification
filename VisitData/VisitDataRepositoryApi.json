@@ -1,0 +1,553 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Visit Data Repository",
+    "description": "Stores data for visits of research studies.",
+    "contact": {
+      "name": "Open Research Study Communication Format",
+      "url": "https://orscf.org",
+      "email": "info@orscf.org"
+    },
+    "version": "v1.0.0"
+  },
+  "paths": {
+    "/Visits": {
+      "get": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "searches Visits matching the given criteria",
+        "description": "SearchVisits",
+        "operationId": "SearchVisits",
+        "parameters": [
+          {
+            "name": "withParticipantIdentifier",
+            "in": "query",
+            "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)",
+            "schema": {
+              "type": "string",
+              "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)",
+              "nullable": true
+            }
+          },
+          {
+            "name": "withExecutingInstituteIdentifier",
+            "in": "query",
+            "description": "the institute which is executing the study",
+            "schema": {
+              "type": "string",
+              "description": "the institute which is executing the study",
+              "nullable": true
+            }
+          },
+          {
+            "name": "withStudyIdentifier",
+            "in": "query",
+            "description": "the study itself (this value is not related to any specific execution or institute)",
+            "schema": {
+              "type": "string",
+              "description": "the study itself (this value is not related to any specific execution or institute)",
+              "nullable": true
+            }
+          },
+          {
+            "name": "withVisitIdentifier",
+            "in": "query",
+            "description": "the VisitIdentifier as defined in the 'StudyWorkflowDefinition'",
+            "schema": {
+              "type": "string",
+              "description": "the VisitIdentifier as defined in the 'StudyWorkflowDefinition'",
+              "nullable": true
+            }
+          },
+          {
+            "name": "withExecutionState",
+            "in": "query",
+            "description": "0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed",
+            "schema": {
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "type": "integer",
+              "description": "0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed",
+              "format": "int32",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Visit"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "adds the given Visit as new Record to the Repository. A new RecordId will be assigned\r\n(any value of the 'RecordId'-Property of the given Visit will be ignored).",
+        "description": "AddNewVisit",
+        "operationId": "AddNewVisit",
+        "requestBody": {
+          "description": "the new Visit",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "updates the Visit which is addressed by the value of the 'RecordId'-Property of the given Visit using the Contents of the given Visit",
+        "description": "UpdateVisit",
+        "operationId": "UpdateVisit",
+        "requestBody": {
+          "description": "the visit",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Visits/{recordId}": {
+      "get": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "picks the Visit which is addressed by the given RecordId",
+        "description": "GetVisitById",
+        "operationId": "GetVisitById",
+        "parameters": [
+          {
+            "name": "recordId",
+            "in": "path",
+            "description": "target RecordId (specific for this repository)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "target RecordId (specific for this repository)",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Visit"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "updates the Visit which is addressed by the given RecordId using the Contents of the given Visit\r\n(any value of the 'RecordId'-Property of the given Visit will be ignored).",
+        "description": "UpdateVisitById",
+        "operationId": "UpdateVisitById",
+        "parameters": [
+          {
+            "name": "recordId",
+            "in": "path",
+            "description": "target RecordId (specific for this repository)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "target RecordId (specific for this repository)",
+              "nullable": true
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "the visit",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "deletes the Visit which is addressed by the given RecordId",
+        "description": "DeleteVisit",
+        "operationId": "DeleteVisit",
+        "parameters": [
+          {
+            "name": "recordId",
+            "in": "path",
+            "description": "target RecordId (specific for this repository)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "target RecordId (specific for this repository)",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DataRecording": {
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "string",
+            "description": "a repository-specific id",
+            "nullable": true
+          },
+          "taskIdentifier": {
+            "type": "string",
+            "description": "Identifier as defined in the 'StudyWorkflowDefinition' (only one is possible per visit)\r\nor 'null' which indicates, that this was a unplanned task which is not defined in the 'StudyWorkflowDefinition'",
+            "nullable": true
+          },
+          "shortSubject": {
+            "type": "string",
+            "nullable": true
+          },
+          "scheduledDateTimeUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "executionDateTimeUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "executionState": {
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "type": "integer",
+            "format": "int32"
+          },
+          "dataSchemaInfo": {
+            "type": "string",
+            "nullable": true
+          },
+          "recordedData": {
+            "type": "string",
+            "nullable": true
+          },
+          "instructionsForExecution": {
+            "type": "string",
+            "nullable": true
+          },
+          "notesRegardingOutcome": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DrugApplyment": {
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "string",
+            "description": "a repository-specific id",
+            "nullable": true
+          },
+          "taskIdentifier": {
+            "type": "string",
+            "description": "Identifier as defined in the 'StudyWorkflowDefinition' (only one is possible per visit)\r\nor 'null' which indicates, that this was a unplanned task which is not defined in the 'StudyWorkflowDefinition'",
+            "nullable": true
+          },
+          "shortSubject": {
+            "type": "string",
+            "nullable": true
+          },
+          "scheduledDateTimeUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "executionDateTimeUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "executionState": {
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "type": "integer",
+            "format": "int32"
+          },
+          "drugName": {
+            "type": "string",
+            "nullable": true
+          },
+          "drugDoseMgPerUnit": {
+            "type": "number",
+            "format": "double"
+          },
+          "appliedUnits": {
+            "type": "number",
+            "format": "double"
+          },
+          "instructionsForExecution": {
+            "type": "string",
+            "nullable": true
+          },
+          "notesRegardingOutcome": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Treatment": {
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "string",
+            "description": "a repository-specific id",
+            "nullable": true
+          },
+          "taskIdentifier": {
+            "type": "string",
+            "description": "Identifier as defined in the 'StudyWorkflowDefinition' (only one is possible per visit)\r\nor 'null' which indicates, that this was a unplanned task which is not defined in the 'StudyWorkflowDefinition'",
+            "nullable": true
+          },
+          "shortSubject": {
+            "type": "string",
+            "nullable": true
+          },
+          "scheduledDateTimeUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "executionDateTimeUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "executionState": {
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "type": "integer",
+            "format": "int32"
+          },
+          "instructionsForExecution": {
+            "type": "string",
+            "nullable": true
+          },
+          "notesRegardingOutcome": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Visit": {
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "string",
+            "description": "a repository-specific id",
+            "nullable": true
+          },
+          "participantIdentifier": {
+            "type": "string",
+            "description": "identity of the patient which can be a randomization or screening number\r\n(the exact semantic is defined per study)",
+            "nullable": true
+          },
+          "executingInstituteIdentifier": {
+            "type": "string",
+            "description": "the institute which is executing the study",
+            "nullable": true
+          },
+          "studyIdentifier": {
+            "type": "string",
+            "description": "the study itself (this value is not related to any specific execution or institute)",
+            "nullable": true
+          },
+          "visitIdentifier": {
+            "type": "string",
+            "description": "as defined in the 'StudyWorkflowDefinition'\r\nonly one is possible per visit",
+            "nullable": true
+          },
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "the study itself (this value is related to the institute specific execution of the study)",
+            "nullable": true
+          },
+          "scheduledDateUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "executionDateUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "executionState": {
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "type": "integer",
+            "description": "0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed",
+            "format": "int32"
+          },
+          "dataRecordings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataRecording"
+            },
+            "nullable": true
+          },
+          "drugApplyments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DrugApplyment"
+            },
+            "nullable": true
+          },
+          "treatments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Treatment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
