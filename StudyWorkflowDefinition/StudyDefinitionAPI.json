@@ -128,57 +128,6 @@
         } ]
       }
     },
-    "/pet/findByTags" : {
-      "get" : {
-        "tags" : [ "pet" ],
-        "summary" : "Finds Pets by tags",
-        "description" : "Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.",
-        "operationId" : "findPetsByTags",
-        "parameters" : [ {
-          "name" : "tags",
-          "in" : "query",
-          "description" : "Tags to filter by",
-          "required" : true,
-          "explode" : true,
-          "schema" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Pet"
-                  }
-                }
-              },
-              "application/xml" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Pet"
-                  }
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Invalid tag value"
-          }
-        },
-        "security" : [ {
-          "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
-        "deprecated" : true
-      }
-    },
     "/pet/{petId}" : {
       "get" : {
         "tags" : [ "pet" ],
