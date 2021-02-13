@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Visit Data Repository",
-    "description": "Stores data for visits of research studies.",
+    "title": "Visit Data Repository API",
+    "description": "stores data for research study related visits",
     "contact": {
       "name": "Open Research Study Communication Format",
       "url": "https://orscf.org",
@@ -11,6 +11,31 @@
     "version": "v1.0.0"
   },
   "paths": {
+    "/Permissions": {
+      "get": {
+        "tags": [
+          "Permissions"
+        ],
+        "summary": "returns the set of permissions which are assigned to the api-key of the request",
+        "description": "GetPermissions",
+        "operationId": "GetPermissions",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Visits": {
       "get": {
         "tags": [
