@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="DataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="DataModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DomainModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="StudyExecutionScopes" EntityType="DomainModel.StudyExecutionScope" />
+          <EntitySet Name="StudyScopes" EntityType="DomainModel.StudyScope" />
+          <AssociationSet Name="StudyScopeStudyExecutionScope" Association="DomainModel.StudyScopeStudyExecutionScope">
+            <End Role="StudyScope" EntitySet="StudyScopes" />
+            <End Role="StudyExecutionScope" EntitySet="StudyExecutionScopes" />
+          </AssociationSet>
+          <EntitySet Name="SubjectParticipations" EntityType="DomainModel.SubjectParticipation" />
+          <AssociationSet Name="StudyScopeSubjectIdentity" Association="DomainModel.StudyScopeSubjectIdentity">
+            <End Role="StudyScope" EntitySet="StudyScopes" />
+            <End Role="SubjectIdentity" EntitySet="SubjectParticipations" />
+          </AssociationSet>
+          <EntitySet Name="SubjectIdentities" EntityType="DomainModel.SubjectIdentity" />
+          <EntitySet Name="AdditionalSubjectParticipationIdentifiers" EntityType="DomainModel.AdditionalSubjectParticipationIdentifier" />
+          <AssociationSet Name="SubjectParticipationAdditionalSubjectParticipationIdentifier" Association="DomainModel.SubjectParticipationAdditionalSubjectParticipationIdentifier">
+            <End Role="SubjectParticipation" EntitySet="SubjectParticipations" />
+            <End Role="AdditionalSubjectParticipationIdentifier" EntitySet="AdditionalSubjectParticipationIdentifiers" />
+          </AssociationSet>
+          <AssociationSet Name="StudyExecutionScopeSubjectParticipation" Association="DomainModel.StudyExecutionScopeSubjectParticipation">
+            <End Role="StudyExecutionScope" EntitySet="StudyExecutionScopes" />
+            <End Role="SubjectParticipation" EntitySet="SubjectParticipations" />
+          </AssociationSet>
+          <AssociationSet Name="SubjectIdentitySubjectParticipation" Association="DomainModel.SubjectIdentitySubjectParticipation">
+            <End Role="SubjectIdentity" EntitySet="SubjectIdentities" />
+            <End Role="SubjectParticipation" EntitySet="SubjectParticipations" />
+          </AssociationSet>
+          <EntitySet Name="SubjectAddresses" EntityType="DomainModel.SubjectAddress" />
+          <AssociationSet Name="SubjectAddressSubjectIdentity" Association="DomainModel.SubjectAddressSubjectIdentity">
+            <End Role="SubjectAddress" EntitySet="SubjectAddresses" />
+            <End Role="SubjectIdentity" EntitySet="SubjectIdentities" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="StudyExecutionScope">
+          <Key>
+            <PropertyRef Name="StudyExecutionIdentifier" />
+          </Key>
+          <Property Name="StudyExecutionIdentifier" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutingInstituteIdentifier" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="StudyScope" Relationship="DomainModel.StudyScopeStudyExecutionScope" FromRole="StudyExecutionScope" ToRole="StudyScope" />
+          <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" />
+          <NavigationProperty Name="CreatedParticipations" Relationship="DomainModel.StudyExecutionScopeSubjectParticipation" FromRole="StudyExecutionScope" ToRole="SubjectParticipation" />
+        </EntityType>
+        <EntityType Name="StudyScope">
+          <Key>
+            <PropertyRef Name="StudyWorkflowName" />
+            <PropertyRef Name="StudyWorkflowVersion" />
+          </Key>
+          <Property Name="StudyWorkflowName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="100" >
+            <Documentation>
+              <Summary>the official invariant name of the study as given by the sponsor</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" >
+            <Documentation>
+              <Summary>version of the workflow</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="ExecutionScopes" Relationship="DomainModel.StudyScopeStudyExecutionScope" FromRole="StudyScope" ToRole="StudyExecutionScope" />
+          <NavigationProperty Name="Participations" Relationship="DomainModel.StudyScopeSubjectIdentity" FromRole="StudyScope" ToRole="SubjectIdentity" />
+          <Property Name="ParticipantIdentifierSemantic" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary> for example "Screening-Number" or "Randomization-Number"</Summary>
+            </Documentation>
+          </Property>
+        </EntityType>
+        <Association Name="StudyScopeStudyExecutionScope">
+          <End Type="DomainModel.StudyScope" Role="StudyScope" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DomainModel.StudyExecutionScope" Role="StudyExecutionScope" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyScope">
+              <PropertyRef Name="StudyWorkflowName" />
+              <PropertyRef Name="StudyWorkflowVersion" />
+            </Principal>
+            <Dependent Role="StudyExecutionScope">
+              <PropertyRef Name="StudyWorkflowName" />
+              <PropertyRef Name="StudyWorkflowVersion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SubjectParticipation">
+          <Key>
+            <PropertyRef Name="ParticipantIdentifier" />
+          </Key>
+          <Property Name="ParticipantIdentifier" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" >
+            <Documentation>
+              <Summary>identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="StudyScope" Relationship="DomainModel.StudyScopeSubjectIdentity" FromRole="SubjectIdentity" ToRole="StudyScope" />
+          <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" />
+          <NavigationProperty Name="AdditionalIdentifiers" Relationship="DomainModel.SubjectParticipationAdditionalSubjectParticipationIdentifier" FromRole="SubjectParticipation" ToRole="AdditionalSubjectParticipationIdentifier" />
+          <Property Name="CreationDateUtc" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="StudyExecutionScope" Relationship="DomainModel.StudyExecutionScopeSubjectParticipation" FromRole="SubjectParticipation" ToRole="StudyExecutionScope" />
+          <Property Name="CreatedForStudyExecutionIdentifier" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Identity" Relationship="DomainModel.SubjectIdentitySubjectParticipation" FromRole="SubjectParticipation" ToRole="SubjectIdentity" />
+          <Property Name="SubjectIdentityRecordId" Type="Guid" Nullable="true" />
+        </EntityType>
+        <Association Name="StudyScopeSubjectIdentity">
+          <End Type="DomainModel.StudyScope" Role="StudyScope" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DomainModel.SubjectParticipation" Role="SubjectIdentity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyScope">
+              <PropertyRef Name="StudyWorkflowName" />
+              <PropertyRef Name="StudyWorkflowVersion" />
+            </Principal>
+            <Dependent Role="SubjectIdentity">
+              <PropertyRef Name="StudyWorkflowName" />
+              <PropertyRef Name="StudyWorkflowVersion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SubjectIdentity">
+          <Key>
+            <PropertyRef Name="RecordId" />
+          </Key>
+          <Property Name="RecordId" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Participations" Relationship="DomainModel.SubjectIdentitySubjectParticipation" FromRole="SubjectIdentity" ToRole="SubjectParticipation" />
+          <Property Name="FirstName" Type="String" Nullable="true" />
+          <Property Name="LastName" Type="String" Nullable="true" />
+          <Property Name="Gender" Type="Int32" Nullable="true" >
+            <Documentation>
+              <Summary>0=Male / 1=Female / 2=Other</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="true" />
+          <Property Name="DateOfDeath" Type="DateTime" Nullable="true" />
+          <Property Name="FullNamePattern" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>can be used to specify the full salutation including all academic grades by a string containing the placeholders: "{G}"=Gender {F}="FirstName" {L}="LastName". If not specified, a generic fallback can be used</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Language" Type="String" Nullable="true" />
+          <Property Name="Notes" Type="String" Nullable="true" />
+          <Property Name="Email" Type="String" Nullable="true" />
+          <Property Name="MobileNumber" Type="String" Nullable="true" />
+          <NavigationProperty Name="ResidentAddress" Relationship="DomainModel.SubjectAddressSubjectIdentity" FromRole="SubjectIdentity" ToRole="SubjectAddress" />
+          <Property Name="ResidentAddressId" Type="Guid" Nullable="true" />
+        </EntityType>
+        <EntityType Name="AdditionalSubjectParticipationIdentifier">
+          <Key>
+            <PropertyRef Name="ParticipantIdentifier" />
+            <PropertyRef Name="IdentifierName" />
+          </Key>
+          <NavigationProperty Name="Participation" Relationship="DomainModel.SubjectParticipationAdditionalSubjectParticipationIdentifier" FromRole="AdditionalSubjectParticipationIdentifier" ToRole="SubjectParticipation" />
+          <Property Name="ParticipantIdentifier" Type="String" Nullable="false" MaxLength="50" >
+            <Documentation>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="IdentifierName" Type="String" Nullable="false" MaxLength="30" >
+            <Documentation>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="IdentifierValue" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="SubjectParticipationAdditionalSubjectParticipationIdentifier">
+          <End Type="DomainModel.SubjectParticipation" Role="SubjectParticipation" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DomainModel.AdditionalSubjectParticipationIdentifier" Role="AdditionalSubjectParticipationIdentifier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubjectParticipation">
+              <PropertyRef Name="ParticipantIdentifier" />
+            </Principal>
+            <Dependent Role="AdditionalSubjectParticipationIdentifier">
+              <PropertyRef Name="ParticipantIdentifier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudyExecutionScopeSubjectParticipation">
+          <End Type="DomainModel.StudyExecutionScope" Role="StudyExecutionScope" Multiplicity="1" />
+          <End Type="DomainModel.SubjectParticipation" Role="SubjectParticipation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyExecutionScope">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Principal>
+            <Dependent Role="SubjectParticipation">
+              <PropertyRef Name="CreatedForStudyExecutionIdentifier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SubjectIdentitySubjectParticipation">
+          <End Type="DomainModel.SubjectIdentity" Role="SubjectIdentity" Multiplicity="0..1" />
+          <End Type="DomainModel.SubjectParticipation" Role="SubjectParticipation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubjectIdentity">
+              <PropertyRef Name="RecordId" />
+            </Principal>
+            <Dependent Role="SubjectParticipation">
+              <PropertyRef Name="SubjectIdentityRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SubjectAddress">
+          <Key>
+            <PropertyRef Name="InternalRecordId" />
+          </Key>
+          <Property Name="InternalRecordId" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="SubjectIdentities" Relationship="DomainModel.SubjectAddressSubjectIdentity" FromRole="SubjectAddress" ToRole="SubjectIdentity" />
+          <Property Name="Street" Type="String" Nullable="false" />
+          <Property Name="HouseNumber" Type="String" Nullable="false" />
+          <Property Name="PostCode" Type="String" Nullable="false" />
+          <Property Name="City" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="Country" Type="String" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="true" />
+        </EntityType>
+        <Association Name="SubjectAddressSubjectIdentity">
+          <End Type="DomainModel.SubjectAddress" Role="SubjectAddress" Multiplicity="0..1" />
+          <End Type="DomainModel.SubjectIdentity" Role="SubjectIdentity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubjectAddress">
+              <PropertyRef Name="InternalRecordId" />
+            </Principal>
+            <Dependent Role="SubjectIdentity">
+              <PropertyRef Name="ResidentAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="DataModel" />
+        <Alias Key="Target" Value="DataModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="Model" StorageEntityContainer="DataModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1e673f0774584ac2be5350aef5de4487" Name="Schema" ZoomLevel="80">
+        <EntityTypeShape EntityType="DomainModel.StudyExecutionScope" Width="2.25" PointX="1.375" PointY="3" FillColor="Maroon" />
+        <EntityTypeShape EntityType="DomainModel.StudyScope" Width="2.75" PointX="4.5" PointY="1.75" FillColor="Maroon" />
+        <AssociationConnector Association="DomainModel.StudyScopeStudyExecutionScope" />
+        <EntityTypeShape EntityType="DomainModel.SubjectParticipation" Width="2.75" PointX="4.5" PointY="4.375" FillColor="Maroon" />
+        <AssociationConnector Association="DomainModel.StudyScopeSubjectIdentity" />
+        <EntityTypeShape EntityType="DomainModel.SubjectIdentity" Width="2.25" PointX="8.125" PointY="1.75" FillColor="Maroon" />
+        <EntityTypeShape EntityType="DomainModel.AdditionalSubjectParticipationIdentifier" Width="2.75" PointX="4.5" PointY="7.875" FillColor="Maroon" />
+        <AssociationConnector Association="DomainModel.SubjectParticipationAdditionalSubjectParticipationIdentifier" />
+        <AssociationConnector Association="DomainModel.StudyExecutionScopeSubjectParticipation" />
+        <AssociationConnector Association="DomainModel.SubjectIdentitySubjectParticipation" />
+        <EntityTypeShape EntityType="DomainModel.SubjectAddress" Width="2.25" PointX="11.25" PointY="1.75" FillColor="Maroon" />
+        <AssociationConnector Association="DomainModel.SubjectAddressSubjectIdentity" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
