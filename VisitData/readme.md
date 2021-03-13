@@ -11,25 +11,25 @@ add. info: [orscf.org](https://www.orscf.org)
 
 
 
-## Type: DataRecording
+## DataRecording
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskGuid](#DataRecording.**TaskGuid** (Field)) **(KEY)** | *guid* | YES | YES |
-| [VisitGuid](#DataRecording.**VisitGuid** (Field)) (FK) | *guid* | YES | no |
-| [DataRecordingName](#DataRecording.**DataRecordingName** (Field)) | *string* | YES | no |
-| [TaskExecutionTitle](#DataRecording.**TaskExecutionTitle** (Field)) | *string* | YES | no |
-| [ScheduledDateTimeUtc](#DataRecording.**ScheduledDateTimeUtc** (Field)) | *datetime* | no | no |
-| [ExecutionDateTimeUtc](#DataRecording.**ExecutionDateTimeUtc** (Field)) | *datetime* | no | no |
-| [ExecutionState](#DataRecording.**ExecutionState** (Field)) | *int32* | YES | no |
-| [DataSchemaUrl](#DataRecording.**DataSchemaUrl** (Field)) | *string* | YES | no |
-| [RecordedData](#DataRecording.**RecordedData** (Field)) | *string* | YES | no |
-| [NotesRegardingOutcome](#DataRecording.**NotesRegardingOutcome** (Field)) | *string* | no | no |
-| [ExtendedMetaData](#DataRecording.**ExtendedMetaData** (Field)) | *string* | YES | no |
-| [ExecutingPerson](#DataRecording.**ExecutingPerson** (Field)) | *string* | no | no |
+| [TaskGuid](#DataRecordingTaskGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [VisitGuid](#DataRecordingVisitGuid-Field) (FK) | *guid* | YES | no |
+| [DataRecordingName](#DataRecordingDataRecordingName-Field) | *string* | YES | no |
+| [TaskExecutionTitle](#DataRecordingTaskExecutionTitle-Field) | *string* | YES | no |
+| [ScheduledDateTimeUtc](#DataRecordingScheduledDateTimeUtc-Field) | *datetime* | no | no |
+| [ExecutionDateTimeUtc](#DataRecordingExecutionDateTimeUtc-Field) | *datetime* | no | no |
+| [ExecutionState](#DataRecordingExecutionState-Field) | *int32* | YES | no |
+| [DataSchemaUrl](#DataRecordingDataSchemaUrl-Field) | *string* | YES | no |
+| [RecordedData](#DataRecordingRecordedData-Field) | *string* | YES | no |
+| [NotesRegardingOutcome](#DataRecordingNotesRegardingOutcome-Field) | *string* | no | no |
+| [ExtendedMetaData](#DataRecordingExtendedMetaData-Field) | *string* | YES | no |
+| [ExecutingPerson](#DataRecordingExecutingPerson-Field) | *string* | no | no |
 ##### DataRecording.**TaskGuid** (Field)
 ```
 a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -91,11 +91,11 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [Visit](#**Visit** (parent of this DataRecording)) | Parent | [Visit](#Type: Visit) | 0/1 (optional) |
+| [Visit](#Visit-parent-of-this-DataRecording) | Parent | [Visit](#Visit) | 0/1 (optional) |
 
 ##### **Visit** (parent of this DataRecording)
-Target Type: [Visit](#Type: Visit)
-Addressed by: [VisitGuid](#DataRecording.VisitGuid (Field)).
+Target Type: [Visit](#Visit)
+Addressed by: [VisitGuid](#DataRecordingVisitGuid-Field).
 ```
 self describing ...
 ```
@@ -103,23 +103,23 @@ self describing ...
 
 
 
-## Type: Visit
+## Visit
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [VisitGuid](#Visit.**VisitGuid** (Field)) **(KEY)** | *guid* | YES | YES |
-| [ParticipantIdentifier](#Visit.**ParticipantIdentifier** (Field)) | *string* (50) | YES | YES |
-| [StudyExecutionIdentifier](#Visit.**StudyExecutionIdentifier** (Field)) (FK) | *guid* | YES | no |
-| [VisitProdecureName](#Visit.**VisitProdecureName** (Field)) | *string* | YES | no |
-| [VisitExecutionTitle](#Visit.**VisitExecutionTitle** (Field)) | *string* | YES | no |
-| [ScheduledDateUtc](#Visit.**ScheduledDateUtc** (Field)) | *datetime* | no | no |
-| [ExecutionDateUtc](#Visit.**ExecutionDateUtc** (Field)) | *datetime* | no | no |
-| [ExecutionState](#Visit.**ExecutionState** (Field)) | *int32* | YES | no |
-| [ExtendedMetaData](#Visit.**ExtendedMetaData** (Field)) | *string* | no | no |
-| [ExecutingPerson](#Visit.**ExecutingPerson** (Field)) | *string* | no | no |
+| [VisitGuid](#VisitVisitGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [ParticipantIdentifier](#VisitParticipantIdentifier-Field) | *string* (50) | YES | YES |
+| [StudyExecutionIdentifier](#VisitStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
+| [VisitProdecureName](#VisitVisitProdecureName-Field) | *string* | YES | no |
+| [VisitExecutionTitle](#VisitVisitExecutionTitle-Field) | *string* | YES | no |
+| [ScheduledDateUtc](#VisitScheduledDateUtc-Field) | *datetime* | no | no |
+| [ExecutionDateUtc](#VisitExecutionDateUtc-Field) | *datetime* | no | no |
+| [ExecutionState](#VisitExecutionState-Field) | *int32* | YES | no |
+| [ExtendedMetaData](#VisitExtendedMetaData-Field) | *string* | no | no |
+| [ExecutingPerson](#VisitExecutingPerson-Field) | *string* | no | no |
 ##### Visit.**VisitGuid** (Field)
 ```
 a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -175,29 +175,29 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [DataRecordings](#**DataRecordings** (childs of this Visit)) | Childs | [DataRecording](#Type: DataRecording) | * (multiple) |
-| [DrugApplyments](#**DrugApplyments** (childs of this Visit)) | Childs | [DrugApplyment](#Type: DrugApplyment) | * (multiple) |
-| [StudyExecution](#**StudyExecution** (lookup from this Visit)) | Lookup | [StudyExecutionScope](#Type: StudyExecutionScope) | 0/1 (optional) |
-| [Treatments](#**Treatments** (childs of this Visit)) | Childs | [Treatment](#Type: Treatment) | * (multiple) |
+| [DataRecordings](#DataRecordings-childs-of-this-Visit) | Childs | [DataRecording](#DataRecording) | * (multiple) |
+| [DrugApplyments](#DrugApplyments-childs-of-this-Visit) | Childs | [DrugApplyment](#DrugApplyment) | * (multiple) |
+| [StudyExecution](#StudyExecution-lookup-from-this-Visit) | Lookup | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
+| [Treatments](#Treatments-childs-of-this-Visit) | Childs | [Treatment](#Treatment) | * (multiple) |
 
 ##### **DataRecordings** (childs of this Visit)
-Target: [DataRecording](#Type: DataRecording)
+Target: [DataRecording](#DataRecording)
 ```
 all the data which has been captured for this visit
 ```
 ##### **DrugApplyments** (childs of this Visit)
-Target: [DrugApplyment](#Type: DrugApplyment)
+Target: [DrugApplyment](#DrugApplyment)
 ```
 all the drug applyments which have been executed for this visit
 ```
 ##### **StudyExecution** (lookup from this Visit)
-Target Type: [StudyExecutionScope](#Type: StudyExecutionScope)
-Addressed by: [StudyExecutionIdentifier](#Visit.StudyExecutionIdentifier (Field)).
+Target Type: [StudyExecutionScope](#StudyExecutionScope)
+Addressed by: [StudyExecutionIdentifier](#VisitStudyExecutionIdentifier-Field).
 ```
 self describing ...
 ```
 ##### **Treatments** (childs of this Visit)
-Target: [Treatment](#Type: Treatment)
+Target: [Treatment](#Treatment)
 ```
 all the treatments which have been executed for this visit
 ```
@@ -205,26 +205,26 @@ all the treatments which have been executed for this visit
 
 
 
-## Type: DrugApplyment
+## DrugApplyment
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskGuid](#DrugApplyment.**TaskGuid** (Field)) **(KEY)** | *guid* | YES | YES |
-| [VisitGuid](#DrugApplyment.**VisitGuid** (Field)) (FK) | *guid* | YES | no |
-| [DrugApplymentName](#DrugApplyment.**DrugApplymentName** (Field)) | *string* | YES | no |
-| [TaskExecutionTitle](#DrugApplyment.**TaskExecutionTitle** (Field)) | *string* | YES | no |
-| [ScheduledDateTimeUtc](#DrugApplyment.**ScheduledDateTimeUtc** (Field)) | *datetime* | no | no |
-| [ExecutionDateTimeUtc](#DrugApplyment.**ExecutionDateTimeUtc** (Field)) | *datetime* | no | no |
-| [ExecutionState](#DrugApplyment.**ExecutionState** (Field)) | *int32* | YES | no |
-| [DrugName](#DrugApplyment.**DrugName** (Field)) | *string* | YES | no |
-| [DrugDoseMgPerUnitMg](#DrugApplyment.**DrugDoseMgPerUnitMg** (Field)) | *decimal* | YES | no |
-| [AppliedUnits](#DrugApplyment.**AppliedUnits** (Field)) | *decimal* | YES | no |
-| [NotesRegardingOutcome](#DrugApplyment.**NotesRegardingOutcome** (Field)) | *string* | no | no |
-| [ExtendedMetaData](#DrugApplyment.**ExtendedMetaData** (Field)) | *string* | YES | no |
-| [ExecutingPerson](#DrugApplyment.**ExecutingPerson** (Field)) | *string* | no | no |
+| [TaskGuid](#DrugApplymentTaskGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [VisitGuid](#DrugApplymentVisitGuid-Field) (FK) | *guid* | YES | no |
+| [DrugApplymentName](#DrugApplymentDrugApplymentName-Field) | *string* | YES | no |
+| [TaskExecutionTitle](#DrugApplymentTaskExecutionTitle-Field) | *string* | YES | no |
+| [ScheduledDateTimeUtc](#DrugApplymentScheduledDateTimeUtc-Field) | *datetime* | no | no |
+| [ExecutionDateTimeUtc](#DrugApplymentExecutionDateTimeUtc-Field) | *datetime* | no | no |
+| [ExecutionState](#DrugApplymentExecutionState-Field) | *int32* | YES | no |
+| [DrugName](#DrugApplymentDrugName-Field) | *string* | YES | no |
+| [DrugDoseMgPerUnitMg](#DrugApplymentDrugDoseMgPerUnitMg-Field) | *decimal* | YES | no |
+| [AppliedUnits](#DrugApplymentAppliedUnits-Field) | *decimal* | YES | no |
+| [NotesRegardingOutcome](#DrugApplymentNotesRegardingOutcome-Field) | *string* | no | no |
+| [ExtendedMetaData](#DrugApplymentExtendedMetaData-Field) | *string* | YES | no |
+| [ExecutingPerson](#DrugApplymentExecutingPerson-Field) | *string* | no | no |
 ##### DrugApplyment.**TaskGuid** (Field)
 ```
 a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -290,11 +290,11 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [Visit](#**Visit** (parent of this DrugApplyment)) | Parent | [Visit](#Type: Visit) | 0/1 (optional) |
+| [Visit](#Visit-parent-of-this-DrugApplyment) | Parent | [Visit](#Visit) | 0/1 (optional) |
 
 ##### **Visit** (parent of this DrugApplyment)
-Target Type: [Visit](#Type: Visit)
-Addressed by: [VisitGuid](#DrugApplyment.VisitGuid (Field)).
+Target Type: [Visit](#Visit)
+Addressed by: [VisitGuid](#DrugApplymentVisitGuid-Field).
 ```
 self describing ...
 ```
@@ -302,21 +302,21 @@ self describing ...
 
 
 
-## Type: StudyEvent
+## StudyEvent
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [EventGuid](#StudyEvent.**EventGuid** (Field)) **(KEY)** | *guid* | YES | no |
-| [ParticipantIdentifier](#StudyEvent.**ParticipantIdentifier** (Field)) | *string* | YES | no |
-| [StudyExecutionIdentifier](#StudyEvent.**StudyExecutionIdentifier** (Field)) (FK) | *guid* | YES | no |
-| [StudyEventName](#StudyEvent.**StudyEventName** (Field)) | *string* | YES | no |
-| [ExtendedMetaData](#StudyEvent.**ExtendedMetaData** (Field)) | *string* | no | no |
-| [OccourrenceDateTimeUtc](#StudyEvent.**OccourrenceDateTimeUtc** (Field)) | *datetime* | YES | no |
-| [CauseInfo](#StudyEvent.**CauseInfo** (Field)) | *string* | YES | no |
-| [AdditionalNotes](#StudyEvent.**AdditionalNotes** (Field)) | *string* | no | no |
+| [EventGuid](#StudyEventEventGuid-Field) **(KEY)** | *guid* | YES | no |
+| [ParticipantIdentifier](#StudyEventParticipantIdentifier-Field) | *string* | YES | no |
+| [StudyExecutionIdentifier](#StudyEventStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
+| [StudyEventName](#StudyEventStudyEventName-Field) | *string* | YES | no |
+| [ExtendedMetaData](#StudyEventExtendedMetaData-Field) | *string* | no | no |
+| [OccourrenceDateTimeUtc](#StudyEventOccourrenceDateTimeUtc-Field) | *datetime* | YES | no |
+| [CauseInfo](#StudyEventCauseInfo-Field) | *string* | YES | no |
+| [AdditionalNotes](#StudyEventAdditionalNotes-Field) | *string* | no | no |
 ##### StudyEvent.**EventGuid** (Field)
 ```
 a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')
@@ -359,11 +359,11 @@ additional notes (supplied by the execution person)
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [StudyExecution](#**StudyExecution** (lookup from this StudyEvent)) | Lookup | [StudyExecutionScope](#Type: StudyExecutionScope) | 0/1 (optional) |
+| [StudyExecution](#StudyExecution-lookup-from-this-StudyEvent) | Lookup | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 
 ##### **StudyExecution** (lookup from this StudyEvent)
-Target Type: [StudyExecutionScope](#Type: StudyExecutionScope)
-Addressed by: [StudyExecutionIdentifier](#StudyEvent.StudyExecutionIdentifier (Field)).
+Target Type: [StudyExecutionScope](#StudyExecutionScope)
+Addressed by: [StudyExecutionIdentifier](#StudyEventStudyExecutionIdentifier-Field).
 ```
 self describing ...
 ```
@@ -371,18 +371,18 @@ self describing ...
 
 
 
-## Type: StudyExecutionScope
+## StudyExecutionScope
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyExecutionIdentifier](#StudyExecutionScope.**StudyExecutionIdentifier** (Field)) **(KEY)** | *guid* | YES | YES |
-| [ExecutingInstituteIdentifier](#StudyExecutionScope.**ExecutingInstituteIdentifier** (Field)) | *string* | YES | YES |
-| [StudyWorkflowName](#StudyExecutionScope.**StudyWorkflowName** (Field)) | *string* (100) | YES | YES |
-| [StudyWorkflowVersion](#StudyExecutionScope.**StudyWorkflowVersion** (Field)) | *string* (20) | YES | YES |
-| [ExtendedMetaData](#StudyExecutionScope.**ExtendedMetaData** (Field)) | *string* | no | no |
+| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(KEY)** | *guid* | YES | YES |
+| [ExecutingInstituteIdentifier](#StudyExecutionScopeExecutingInstituteIdentifier-Field) | *string* | YES | YES |
+| [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field) | *string* (100) | YES | YES |
+| [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field) | *string* (20) | YES | YES |
+| [ExtendedMetaData](#StudyExecutionScopeExtendedMetaData-Field) | *string* | no | no |
 ##### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
 ```
 a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
@@ -417,16 +417,16 @@ optional structure (in JSON-format) containing additional metadata regarding thi
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [Events](#**Events** (refering to this StudyExecutionScope)) | Referers | [StudyEvent](#Type: StudyEvent) | * (multiple) |
-| [Visits](#**Visits** (refering to this StudyExecutionScope)) | Referers | [Visit](#Type: Visit) | * (multiple) |
+| [Events](#Events-refering-to-this-StudyExecutionScope) | Referers | [StudyEvent](#StudyEvent) | * (multiple) |
+| [Visits](#Visits-refering-to-this-StudyExecutionScope) | Referers | [Visit](#Visit) | * (multiple) |
 
 ##### **Events** (refering to this StudyExecutionScope)
-Target: [StudyEvent](#Type: StudyEvent)
+Target: [StudyEvent](#StudyEvent)
 ```
 self describing ...
 ```
 ##### **Visits** (refering to this StudyExecutionScope)
-Target: [Visit](#Type: Visit)
+Target: [Visit](#Visit)
 ```
 self describing ...
 ```
@@ -434,23 +434,23 @@ self describing ...
 
 
 
-## Type: Treatment
+## Treatment
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskGuid](#Treatment.**TaskGuid** (Field)) **(KEY)** | *guid* | YES | YES |
-| [VisitGuid](#Treatment.**VisitGuid** (Field)) (FK) | *guid* | YES | no |
-| [TreatmentName](#Treatment.**TreatmentName** (Field)) | *string* | YES | no |
-| [TaskExecutionTitle](#Treatment.**TaskExecutionTitle** (Field)) | *string* | YES | no |
-| [ScheduledDateTimeUtc](#Treatment.**ScheduledDateTimeUtc** (Field)) | *datetime* | no | no |
-| [ExecutionDateTimeUtc](#Treatment.**ExecutionDateTimeUtc** (Field)) | *datetime* | no | no |
-| [ExecutionState](#Treatment.**ExecutionState** (Field)) | *int32* | YES | no |
-| [NotesRegardingOutcome](#Treatment.**NotesRegardingOutcome** (Field)) | *string* | no | no |
-| [ExtendedMetaData](#Treatment.**ExtendedMetaData** (Field)) | *string* | YES | no |
-| [ExecutingPerson](#Treatment.**ExecutingPerson** (Field)) | *string* | no | no |
+| [TaskGuid](#TreatmentTaskGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [VisitGuid](#TreatmentVisitGuid-Field) (FK) | *guid* | YES | no |
+| [TreatmentName](#TreatmentTreatmentName-Field) | *string* | YES | no |
+| [TaskExecutionTitle](#TreatmentTaskExecutionTitle-Field) | *string* | YES | no |
+| [ScheduledDateTimeUtc](#TreatmentScheduledDateTimeUtc-Field) | *datetime* | no | no |
+| [ExecutionDateTimeUtc](#TreatmentExecutionDateTimeUtc-Field) | *datetime* | no | no |
+| [ExecutionState](#TreatmentExecutionState-Field) | *int32* | YES | no |
+| [NotesRegardingOutcome](#TreatmentNotesRegardingOutcome-Field) | *string* | no | no |
+| [ExtendedMetaData](#TreatmentExtendedMetaData-Field) | *string* | YES | no |
+| [ExecutingPerson](#TreatmentExecutingPerson-Field) | *string* | no | no |
 ##### Treatment.**TaskGuid** (Field)
 ```
 a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -504,11 +504,11 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [Visit](#**Visit** (parent of this Treatment)) | Parent | [Visit](#Type: Visit) | 0/1 (optional) |
+| [Visit](#Visit-parent-of-this-Treatment) | Parent | [Visit](#Visit) | 0/1 (optional) |
 
 ##### **Visit** (parent of this Treatment)
-Target Type: [Visit](#Type: Visit)
-Addressed by: [VisitGuid](#Treatment.VisitGuid (Field)).
+Target Type: [Visit](#Visit)
+Addressed by: [VisitGuid](#TreatmentVisitGuid-Field).
 ```
 self describing ...
 ```
