@@ -2,11 +2,15 @@
 
 -----
 
-# Specification
+# Specifications:
 
+  [BillingData](https://github.com/orscf/orscf-specification/tree/master/BillingData)
 
+  [IdentityManagement](https://github.com/orscf/orscf-specification/tree/master/IdentityManagement)
 
-comming soon...
+  [StudyWorkflowDefinition](https://github.com/orscf/orscf-specification/tree/master/StudyWorkflowDefinition)
+
+  [VisitData](https://github.com/orscf/orscf-specification/tree/master/VisitData)
 
 ----
 
