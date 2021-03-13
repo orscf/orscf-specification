@@ -11,17 +11,17 @@ add. info: [orscf.org](https://www.orscf.org)
 
 
 
-## Type: BillableTask
+## BillableTask
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskGuid](#BillableTask.**TaskGuid** (Field)) **(KEY)** | *guid* | YES | YES |
-| [VisitGuid](#BillableTask.**VisitGuid** (Field)) (FK) | *guid* | YES | YES |
-| [TaskName](#BillableTask.**TaskName** (Field)) | *string* | YES | YES |
-| [TaskExecutionTitle](#BillableTask.**TaskExecutionTitle** (Field)) | *string* | YES | YES |
+| [TaskGuid](#BillableTaskTaskGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [VisitGuid](#BillableTaskVisitGuid-Field) (FK) | *guid* | YES | YES |
+| [TaskName](#BillableTaskTaskName-Field) | *string* | YES | YES |
+| [TaskExecutionTitle](#BillableTaskTaskExecutionTitle-Field) | *string* | YES | YES |
 ##### BillableTask.**TaskGuid** (Field)
 ```
 a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -50,11 +50,11 @@ title of the task execution as defined in the 'StudyWorkflowDefinition' (origina
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [BillableVisit](#**BillableVisit** (parent of this BillableTask)) | Parent | [BillableVisit](#Type: BillableVisit) | 0/1 (optional) |
+| [BillableVisit](#BillableVisit-parent-of-this-BillableTask) | Parent | [BillableVisit](#BillableVisit) | 0/1 (optional) |
 
 ##### **BillableVisit** (parent of this BillableTask)
-Target Type: [BillableVisit](#Type: BillableVisit)
-Addressed by: [VisitGuid](#BillableTask.VisitGuid (Field)).
+Target Type: [BillableVisit](#BillableVisit)
+Addressed by: [VisitGuid](#BillableTaskVisitGuid-Field).
 ```
 self describing ...
 ```
@@ -62,23 +62,23 @@ self describing ...
 
 
 
-## Type: BillableVisit
+## BillableVisit
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [VisitGuid](#BillableVisit.**VisitGuid** (Field)) **(KEY)** | *guid* | YES | no |
-| [StudyExecutionIdentifier](#BillableVisit.**StudyExecutionIdentifier** (Field)) (FK) | *guid* | YES | no |
-| [ParticipantIdentifier](#BillableVisit.**ParticipantIdentifier** (Field)) | *string* (50) | YES | no |
-| [VisitProdecureName](#BillableVisit.**VisitProdecureName** (Field)) | *string* | YES | no |
-| [VisitExecutionTitle](#BillableVisit.**VisitExecutionTitle** (Field)) | *string* | YES | no |
-| [BillingDemandId](#BillableVisit.**BillingDemandId** (Field)) (FK) | *guid* | no | no |
-| [InvoiceId](#BillableVisit.**InvoiceId** (Field)) (FK) | *guid* | no | no |
-| [ExecutionEndDateUtc](#BillableVisit.**ExecutionEndDateUtc** (Field)) | *datetime* | no | no |
-| [SponsorValidationDateUtc](#BillableVisit.**SponsorValidationDateUtc** (Field)) | *datetime* | no | no |
-| [ExecutorValidationDateUtc](#BillableVisit.**ExecutorValidationDateUtc** (Field)) | *datetime* | no | no |
+| [VisitGuid](#BillableVisitVisitGuid-Field) **(KEY)** | *guid* | YES | no |
+| [StudyExecutionIdentifier](#BillableVisitStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
+| [ParticipantIdentifier](#BillableVisitParticipantIdentifier-Field) | *string* (50) | YES | no |
+| [VisitProdecureName](#BillableVisitVisitProdecureName-Field) | *string* | YES | no |
+| [VisitExecutionTitle](#BillableVisitVisitExecutionTitle-Field) | *string* | YES | no |
+| [BillingDemandId](#BillableVisitBillingDemandId-Field) (FK) | *guid* | no | no |
+| [InvoiceId](#BillableVisitInvoiceId-Field) (FK) | *guid* | no | no |
+| [ExecutionEndDateUtc](#BillableVisitExecutionEndDateUtc-Field) | *datetime* | no | no |
+| [SponsorValidationDateUtc](#BillableVisitSponsorValidationDateUtc-Field) | *datetime* | no | no |
+| [ExecutorValidationDateUtc](#BillableVisitExecutorValidationDateUtc-Field) | *datetime* | no | no |
 ##### BillableVisit.**VisitGuid** (Field)
 ```
 a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -135,31 +135,31 @@ indicates, that the visit is ready to get assigned to a 'Invoice' (usually this 
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [BillableTasks](#**BillableTasks** (childs of this BillableVisit)) | Childs | [BillableTask](#Type: BillableTask) | * (multiple) |
-| [StudyExecution](#**StudyExecution** (parent of this BillableVisit)) | Parent | [StudyExecutionScope](#Type: StudyExecutionScope) | 0/1 (optional) |
-| [AssignedBillingDemand](#**AssignedBillingDemand** (lookup from this BillableVisit)) | Lookup | [BillingDemand](#Type: BillingDemand) | 1 (required) |
-| [AssignedInvoice](#**AssignedInvoice** (lookup from this BillableVisit)) | Lookup | [Invoice](#Type: Invoice) | 1 (required) |
+| [BillableTasks](#BillableTasks-childs-of-this-BillableVisit) | Childs | [BillableTask](#BillableTask) | * (multiple) |
+| [StudyExecution](#StudyExecution-parent-of-this-BillableVisit) | Parent | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
+| [AssignedBillingDemand](#AssignedBillingDemand-lookup-from-this-BillableVisit) | Lookup | [BillingDemand](#BillingDemand) | 1 (required) |
+| [AssignedInvoice](#AssignedInvoice-lookup-from-this-BillableVisit) | Lookup | [Invoice](#Invoice) | 1 (required) |
 
 ##### **BillableTasks** (childs of this BillableVisit)
-Target: [BillableTask](#Type: BillableTask)
+Target: [BillableTask](#BillableTask)
 ```
 self describing ...
 ```
 ##### **StudyExecution** (parent of this BillableVisit)
-Target Type: [StudyExecutionScope](#Type: StudyExecutionScope)
-Addressed by: [StudyExecutionIdentifier](#BillableVisit.StudyExecutionIdentifier (Field)).
+Target Type: [StudyExecutionScope](#StudyExecutionScope)
+Addressed by: [StudyExecutionIdentifier](#BillableVisitStudyExecutionIdentifier-Field).
 ```
 self describing ...
 ```
 ##### **AssignedBillingDemand** (lookup from this BillableVisit)
-Target Type: [BillingDemand](#Type: BillingDemand)
-Addressed by: [BillingDemandId](#BillableVisit.BillingDemandId (Field)).
+Target Type: [BillingDemand](#BillingDemand)
+Addressed by: [BillingDemandId](#BillableVisitBillingDemandId-Field).
 ```
 self describing ...
 ```
 ##### **AssignedInvoice** (lookup from this BillableVisit)
-Target Type: [Invoice](#Type: Invoice)
-Addressed by: [InvoiceId](#BillableVisit.InvoiceId (Field)).
+Target Type: [Invoice](#Invoice)
+Addressed by: [InvoiceId](#BillableVisitInvoiceId-Field).
 ```
 self describing ...
 ```
@@ -167,18 +167,18 @@ self describing ...
 
 
 
-## Type: StudyExecutionScope
+## StudyExecutionScope
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyExecutionIdentifier](#StudyExecutionScope.**StudyExecutionIdentifier** (Field)) **(KEY)** | *guid* | YES | YES |
-| [ExecutingInstituteIdentifier](#StudyExecutionScope.**ExecutingInstituteIdentifier** (Field)) | *string* | YES | YES |
-| [StudyWorkflowName](#StudyExecutionScope.**StudyWorkflowName** (Field)) | *string* (100) | YES | YES |
-| [StudyWorkflowVersion](#StudyExecutionScope.**StudyWorkflowVersion** (Field)) | *string* (20) | YES | YES |
-| [ExtendedMetaData](#StudyExecutionScope.**ExtendedMetaData** (Field)) | *string* | no | no |
+| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(KEY)** | *guid* | YES | YES |
+| [ExecutingInstituteIdentifier](#StudyExecutionScopeExecutingInstituteIdentifier-Field) | *string* | YES | YES |
+| [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field) | *string* (100) | YES | YES |
+| [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field) | *string* (20) | YES | YES |
+| [ExtendedMetaData](#StudyExecutionScopeExtendedMetaData-Field) | *string* | no | no |
 ##### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
 ```
 a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
@@ -213,22 +213,22 @@ optional structure (in JSON-format) containing additional metadata regarding thi
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [BillableVisits](#**BillableVisits** (childs of this StudyExecutionScope)) | Childs | [BillableVisit](#Type: BillableVisit) | * (multiple) |
-| [BillingDemands](#**BillingDemands** (childs of this StudyExecutionScope)) | Childs | [BillingDemand](#Type: BillingDemand) | * (multiple) |
-| [Invoices](#**Invoices** (childs of this StudyExecutionScope)) | Childs | [Invoice](#Type: Invoice) | * (multiple) |
+| [BillableVisits](#BillableVisits-childs-of-this-StudyExecutionScope) | Childs | [BillableVisit](#BillableVisit) | * (multiple) |
+| [BillingDemands](#BillingDemands-childs-of-this-StudyExecutionScope) | Childs | [BillingDemand](#BillingDemand) | * (multiple) |
+| [Invoices](#Invoices-childs-of-this-StudyExecutionScope) | Childs | [Invoice](#Invoice) | * (multiple) |
 
 ##### **BillableVisits** (childs of this StudyExecutionScope)
-Target: [BillableVisit](#Type: BillableVisit)
+Target: [BillableVisit](#BillableVisit)
 ```
 self describing ...
 ```
 ##### **BillingDemands** (childs of this StudyExecutionScope)
-Target: [BillingDemand](#Type: BillingDemand)
+Target: [BillingDemand](#BillingDemand)
 ```
 self describing ...
 ```
 ##### **Invoices** (childs of this StudyExecutionScope)
-Target: [Invoice](#Type: Invoice)
+Target: [Invoice](#Invoice)
 ```
 self describing ...
 ```
@@ -236,19 +236,19 @@ self describing ...
 
 
 
-## Type: BillingDemand
+## BillingDemand
 
 created by the sponsor
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#BillingDemand.**Id** (Field)) **(KEY)** | *guid* | YES | no |
-| [OfficialNumber](#BillingDemand.**OfficialNumber** (Field)) | *string* | YES | no |
-| [StudyExecutionIdentifier](#BillingDemand.**StudyExecutionIdentifier** (Field)) (FK) | *guid* | YES | no |
-| [TransmissionDateUtc](#BillingDemand.**TransmissionDateUtc** (Field)) | *datetime* | no | no |
-| [CreationDateUtc](#BillingDemand.**CreationDateUtc** (Field)) | *datetime* | YES | no |
-| [CreatedByPerson](#BillingDemand.**CreatedByPerson** (Field)) | *string* | YES | no |
+| [Id](#BillingDemandId-Field) **(KEY)** | *guid* | YES | no |
+| [OfficialNumber](#BillingDemandOfficialNumber-Field) | *string* | YES | no |
+| [StudyExecutionIdentifier](#BillingDemandStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
+| [TransmissionDateUtc](#BillingDemandTransmissionDateUtc-Field) | *datetime* | no | no |
+| [CreationDateUtc](#BillingDemandCreationDateUtc-Field) | *datetime* | YES | no |
+| [CreatedByPerson](#BillingDemandCreatedByPerson-Field) | *string* | YES | no |
 ##### BillingDemand.**Id** (Field)
 ```
 self describing ...
@@ -282,17 +282,17 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [AssignedVisits](#**AssignedVisits** (refering to this BillingDemand)) | Referers | [BillableVisit](#Type: BillableVisit) | * (multiple) |
-| [StudyExecution](#**StudyExecution** (parent of this BillingDemand)) | Parent | [StudyExecutionScope](#Type: StudyExecutionScope) | 0/1 (optional) |
+| [AssignedVisits](#AssignedVisits-refering-to-this-BillingDemand) | Referers | [BillableVisit](#BillableVisit) | * (multiple) |
+| [StudyExecution](#StudyExecution-parent-of-this-BillingDemand) | Parent | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 
 ##### **AssignedVisits** (refering to this BillingDemand)
-Target: [BillableVisit](#Type: BillableVisit)
+Target: [BillableVisit](#BillableVisit)
 ```
 self describing ...
 ```
 ##### **StudyExecution** (parent of this BillingDemand)
-Target Type: [StudyExecutionScope](#Type: StudyExecutionScope)
-Addressed by: [StudyExecutionIdentifier](#BillingDemand.StudyExecutionIdentifier (Field)).
+Target Type: [StudyExecutionScope](#StudyExecutionScope)
+Addressed by: [StudyExecutionIdentifier](#BillingDemandStudyExecutionIdentifier-Field).
 ```
 self describing ...
 ```
@@ -300,22 +300,22 @@ self describing ...
 
 
 
-## Type: Invoice
+## Invoice
 
 created by the executor-company
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#Invoice.**Id** (Field)) **(KEY)** | *guid* | YES | YES |
-| [OfficialNumber](#Invoice.**OfficialNumber** (Field)) | *string* | YES | YES |
-| [StudyExecutionIdentifier](#Invoice.**StudyExecutionIdentifier** (Field)) (FK) | *guid* | YES | YES |
-| [OffcialInvoiceDate](#Invoice.**OffcialInvoiceDate** (Field)) | *datetime* | YES | YES |
-| [TransmissionDateUtc](#Invoice.**TransmissionDateUtc** (Field)) | *datetime* | no | no |
-| [CreationDateUtc](#Invoice.**CreationDateUtc** (Field)) | *datetime* | YES | no |
-| [CreatedByPerson](#Invoice.**CreatedByPerson** (Field)) | *string* | YES | no |
-| [PaymentSubmittedDateUtc](#Invoice.**PaymentSubmittedDateUtc** (Field)) | *datetime* | no | no |
-| [PaymentReceivedDateUtc](#Invoice.**PaymentReceivedDateUtc** (Field)) | *datetime* | no | no |
+| [Id](#InvoiceId-Field) **(KEY)** | *guid* | YES | YES |
+| [OfficialNumber](#InvoiceOfficialNumber-Field) | *string* | YES | YES |
+| [StudyExecutionIdentifier](#InvoiceStudyExecutionIdentifier-Field) (FK) | *guid* | YES | YES |
+| [OffcialInvoiceDate](#InvoiceOffcialInvoiceDate-Field) | *datetime* | YES | YES |
+| [TransmissionDateUtc](#InvoiceTransmissionDateUtc-Field) | *datetime* | no | no |
+| [CreationDateUtc](#InvoiceCreationDateUtc-Field) | *datetime* | YES | no |
+| [CreatedByPerson](#InvoiceCreatedByPerson-Field) | *string* | YES | no |
+| [PaymentSubmittedDateUtc](#InvoicePaymentSubmittedDateUtc-Field) | *datetime* | no | no |
+| [PaymentReceivedDateUtc](#InvoicePaymentReceivedDateUtc-Field) | *datetime* | no | no |
 ##### Invoice.**Id** (Field)
 ```
 self describing ...
@@ -367,17 +367,17 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [AssignedVisits](#**AssignedVisits** (refering to this Invoice)) | Referers | [BillableVisit](#Type: BillableVisit) | * (multiple) |
-| [StudyExecution](#**StudyExecution** (parent of this Invoice)) | Parent | [StudyExecutionScope](#Type: StudyExecutionScope) | 0/1 (optional) |
+| [AssignedVisits](#AssignedVisits-refering-to-this-Invoice) | Referers | [BillableVisit](#BillableVisit) | * (multiple) |
+| [StudyExecution](#StudyExecution-parent-of-this-Invoice) | Parent | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 
 ##### **AssignedVisits** (refering to this Invoice)
-Target: [BillableVisit](#Type: BillableVisit)
+Target: [BillableVisit](#BillableVisit)
 ```
 self describing ...
 ```
 ##### **StudyExecution** (parent of this Invoice)
-Target Type: [StudyExecutionScope](#Type: StudyExecutionScope)
-Addressed by: [StudyExecutionIdentifier](#Invoice.StudyExecutionIdentifier (Field)).
+Target Type: [StudyExecutionScope](#StudyExecutionScope)
+Addressed by: [StudyExecutionIdentifier](#InvoiceStudyExecutionIdentifier-Field).
 ```
 self describing ...
 ```

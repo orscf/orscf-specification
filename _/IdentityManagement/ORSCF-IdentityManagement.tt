@@ -67,7 +67,7 @@ foreach (EntitySchema entity in schema.Entities) {
 #>
 
 
-## Type: <#=entityClassNamePattern.Replace("{E}", entity.Name)#>
+## <#=entityClassNamePattern.Replace("{E}", entity.Name)#>
 
 <#=entitySummary#>
 <#
@@ -96,6 +96,7 @@ This type is a specialization of (<#=entityClassNamePattern.Replace("{E}", entit
     List<String> attributes = attributesPerField[field.Name];
 
     String fieldHeading = entityClassNamePattern.Replace("{E}", entity.Name) + ".**" + field.Name + "** (Field)";
+    String fieldHeadingMdLink = ExcapeHeadingToMdLink(fieldHeading);
     fieldDetails.AppendLine("##### " + fieldHeading);
     fieldDetails.AppendLine("```");
     if(String.IsNullOrWhiteSpace(field.Summary)){
@@ -170,7 +171,7 @@ This type is a specialization of (<#=entityClassNamePattern.Replace("{E}", entit
     }
 
 #>
-| [<#=field.Name #>](#<#=fieldHeading #>)<#=fieldsuffix #> | <#=typeName #> | <#=reqStr #> | <#=fixStr #> |
+| [<#=field.Name #>](#<#=fieldHeadingMdLink #>)<#=fieldsuffix #> | <#=typeName #> | <#=reqStr #> | <#=fixStr #> |
 <#
 
   } // field-loop
@@ -237,10 +238,10 @@ This type is a specialization of (<#=entityClassNamePattern.Replace("{E}", entit
                   navHeading = "**" + rel.PrimaryNavigationName + "** (child of this " + entityClassNamePattern.Replace("{E}", entity.Name) + ")";
                 }
                 navDetails.AppendLine("##### " + navHeading);
-                navDetails.AppendLine("Target: [" + entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) + "](#Type: " + entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) + ")");
+                navDetails.AppendLine("Target: [" + entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) + "](#" + entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) + ")");
                
 #>
-| [<#=rel.PrimaryNavigationName #>](#<#=navHeading #>) | <#=cat #> | [<#=entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) #>](#Type: <#=entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) #>) | 0/1 (single) |
+| [<#=rel.PrimaryNavigationName #>](#<#=ExcapeHeadingToMdLink(navHeading) #>) | <#=cat #> | [<#=entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) #>](#<#=entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) #>) | 0/1 (single) |
 <#
                 anyNavProp = true;
               }
@@ -254,11 +255,11 @@ This type is a specialization of (<#=entityClassNamePattern.Replace("{E}", entit
                   navHeading = "**" + rel.PrimaryNavigationName + "** (childs of this " + entityClassNamePattern.Replace("{E}", entity.Name) + ")";
                 }
                 navDetails.AppendLine("##### " + navHeading);
-                navDetails.AppendLine("Target: [" + entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) + "](#Type: " + entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) + ")");
+                navDetails.AppendLine("Target: [" + entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) + "](#" + entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) + ")");
 
 
 #>
-| [<#=rel.PrimaryNavigationName #>](#<#=navHeading #>) | <#=cat #> | [<#=entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) #>](#Type: <#=entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) #>) | * (multiple) |
+| [<#=rel.PrimaryNavigationName #>](#<#=ExcapeHeadingToMdLink(navHeading) #>) | <#=cat #> | [<#=entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) #>](#<#=entityClassNamePattern.Replace("{E}", rel.ForeignEntityName) #>) | * (multiple) |
 <#
                 anyNavProp = true;
               }
@@ -316,22 +317,21 @@ This type is a specialization of (<#=entityClassNamePattern.Replace("{E}", entit
               }
 
               navDetails.AppendLine("##### " + navHeading);
-              navDetails.AppendLine("Target Type: [" + entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) + "](#Type: " + entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) + ")");
+              navDetails.AppendLine("Target Type: [" + entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) + "](#" + entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) + ")");
 
-
-              String pattern = "[{F}](#" + entityClassNamePattern.Replace("{E}", entity.Name) + ".{F} (Field))";
+              String pattern = "[{F}](#" + entityClassNamePattern.Replace("{E}", entity.Name) + "{F}-Field)";
               var x = idx.MemberFieldNames.Select((f)=> pattern.Replace("{F}", f)).ToArray();
               navDetails.AppendLine("Addressed by: " + String.Join(", ", x) + ".");
 
 
               if(rel.PrimaryEntityIsOptional){
 #>
-| [<#=rel.ForeignNavigationName #>](#<#=navHeading #>) | <#=cat #> | [<#=entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) #>](#Type: <#=entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) #>) | 1 (required) |
+| [<#=rel.ForeignNavigationName #>](#<#=ExcapeHeadingToMdLink(navHeading) #>) | <#=cat #> | [<#=entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) #>](#<#=entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) #>) | 1 (required) |
 <#
               }
               else{
 #>
-| [<#=rel.ForeignNavigationName #>](#<#=navHeading #>) | <#=cat #> | [<#=entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) #>](#Type: <#=entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) #>) | 0/1 (optional) |
+| [<#=rel.ForeignNavigationName #>](#<#=ExcapeHeadingToMdLink(navHeading) #>) | <#=cat #> | [<#=entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) #>](#<#=entityClassNamePattern.Replace("{E}", rel.PrimaryEntityName) #>) | 0/1 (optional) |
 <#
               }
               anyNavProp = true;
@@ -374,6 +374,11 @@ This type is a specialization of (<#=entityClassNamePattern.Replace("{E}", entit
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //     GENERATOR-CODE                                                                        //
 ///////////////////////////////////////////////////////////////////////////////////////////////
+
+public static string ExcapeHeadingToMdLink(string heading)
+{
+  return heading.Replace("(", "").Replace(")", "").Replace("*", "").Replace(".", "").Replace(" ", "-");
+}
 
 public static string RenderMdTable(params List<string>[] columns)
 {

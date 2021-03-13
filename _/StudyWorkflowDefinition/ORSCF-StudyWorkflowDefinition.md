@@ -11,24 +11,24 @@ add. info: [orscf.org](https://www.orscf.org)
 
 
 
-## Type: Arm
+## Arm
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyArmName](#Arm.**StudyArmName** (Field)) **(KEY)** | *string* (50) | YES | no |
-| [StudyWorkflowName](#Arm.**StudyWorkflowName** (Field)) **(KEY)** (FK) | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#Arm.**StudyWorkflowVersion** (Field)) **(KEY)** (FK) | *string* (20) | YES | no |
-| [RootProcedureScheduleId](#Arm.**RootProcedureScheduleId** (Field)) (FK) | *guid* | no | no |
-| [BillablePriceOnFailedInclusion](#Arm.**BillablePriceOnFailedInclusion** (Field)) | *decimal* | no | no |
-| [BillablePriceOnSuccessfullInclusion](#Arm.**BillablePriceOnSuccessfullInclusion** (Field)) | *decimal* | no | no |
-| [BillablePriceOnAbortedParticipation](#Arm.**BillablePriceOnAbortedParticipation** (Field)) | *decimal* | no | no |
-| [BillablePriceOnCompletedParticipation](#Arm.**BillablePriceOnCompletedParticipation** (Field)) | *decimal* | no | no |
-| [ArmSpecificDocumentationUrl](#Arm.**ArmSpecificDocumentationUrl** (Field)) | *string* | no | no |
-| [InclusionCriteria](#Arm.**InclusionCriteria** (Field)) | *string* | no | no |
-| [Substudy](#Arm.**Substudy** (Field)) | *string* | no | no |
+| [StudyArmName](#ArmStudyArmName-Field) **(KEY)** | *string* (50) | YES | no |
+| [StudyWorkflowName](#ArmStudyWorkflowName-Field) **(KEY)** (FK) | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#ArmStudyWorkflowVersion-Field) **(KEY)** (FK) | *string* (20) | YES | no |
+| [RootProcedureScheduleId](#ArmRootProcedureScheduleId-Field) (FK) | *guid* | no | no |
+| [BillablePriceOnFailedInclusion](#ArmBillablePriceOnFailedInclusion-Field) | *decimal* | no | no |
+| [BillablePriceOnSuccessfullInclusion](#ArmBillablePriceOnSuccessfullInclusion-Field) | *decimal* | no | no |
+| [BillablePriceOnAbortedParticipation](#ArmBillablePriceOnAbortedParticipation-Field) | *decimal* | no | no |
+| [BillablePriceOnCompletedParticipation](#ArmBillablePriceOnCompletedParticipation-Field) | *decimal* | no | no |
+| [ArmSpecificDocumentationUrl](#ArmArmSpecificDocumentationUrl-Field) | *string* | no | no |
+| [InclusionCriteria](#ArmInclusionCriteria-Field) | *string* | no | no |
+| [Substudy](#ArmSubstudy-Field) | *string* | no | no |
 ##### Arm.**StudyArmName** (Field)
 ```
 self describing ...
@@ -96,18 +96,18 @@ defines, that the arm is part of a SubStudy which is addressed by a UniqueName o
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [ResearchStudy](#**ResearchStudy** (parent of this Arm)) | Parent | [ResearchStudy](#Type: ResearchStudy) | 0/1 (optional) |
-| [RootProcedureSchedule](#**RootProcedureSchedule** (lookup from this Arm)) | Lookup | [ProcedureSchedule](#Type: ProcedureSchedule) | 1 (required) |
+| [ResearchStudy](#ResearchStudy-parent-of-this-Arm) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
+| [RootProcedureSchedule](#RootProcedureSchedule-lookup-from-this-Arm) | Lookup | [ProcedureSchedule](#ProcedureSchedule) | 1 (required) |
 
 ##### **ResearchStudy** (parent of this Arm)
-Target Type: [ResearchStudy](#Type: ResearchStudy)
-Addressed by: [StudyWorkflowName](#Arm.StudyWorkflowName (Field)), [StudyWorkflowVersion](#Arm.StudyWorkflowVersion (Field)).
+Target Type: [ResearchStudy](#ResearchStudy)
+Addressed by: [StudyWorkflowName](#ArmStudyWorkflowName-Field), [StudyWorkflowVersion](#ArmStudyWorkflowVersion-Field).
 ```
 self describing ...
 ```
 ##### **RootProcedureSchedule** (lookup from this Arm)
-Target Type: [ProcedureSchedule](#Type: ProcedureSchedule)
-Addressed by: [RootProcedureScheduleId](#Arm.RootProcedureScheduleId (Field)).
+Target Type: [ProcedureSchedule](#ProcedureSchedule)
+Addressed by: [RootProcedureScheduleId](#ArmRootProcedureScheduleId-Field).
 ```
 the ProcedureSchedule which is representing the primary-/entry-workflow (estimated visits) for participants of this arm
 ```
@@ -115,27 +115,27 @@ the ProcedureSchedule which is representing the primary-/entry-workflow (estimat
 
 
 
-## Type: ResearchStudy
+## ResearchStudy
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyWorkflowName](#ResearchStudy.**StudyWorkflowName** (Field)) **(KEY)** | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#ResearchStudy.**StudyWorkflowVersion** (Field)) **(KEY)** | *string* (20) | YES | no |
-| [OfficialLabel](#ResearchStudy.**OfficialLabel** (Field)) | *string* | YES | no |
-| [DefinitionOwner](#ResearchStudy.**DefinitionOwner** (Field)) | *string* | YES | no |
-| [DocumentationUrl](#ResearchStudy.**DocumentationUrl** (Field)) | *string* | YES | no |
-| [LogoImage](#ResearchStudy.**LogoImage** (Field)) | *string* | YES | no |
-| [Description](#ResearchStudy.**Description** (Field)) | *string* | YES | no |
-| [VersionIdentity](#ResearchStudy.**VersionIdentity** (Field)) | *string* | YES | no |
-| [LastChangeUtc](#ResearchStudy.**LastChangeUtc** (Field)) | *datetime* | YES | no |
-| [DraftState](#ResearchStudy.**DraftState** (Field)) | *int32* | YES | no |
-| [BillingCurrency](#ResearchStudy.**BillingCurrency** (Field)) | *string* | no | no |
-| [BillablePriceForGeneralPreparation](#ResearchStudy.**BillablePriceForGeneralPreparation** (Field)) | *decimal* | no | no |
-| [StudyDocumentationUrl](#ResearchStudy.**StudyDocumentationUrl** (Field)) | *string* | no | no |
-| [CaseReportFormUrl](#ResearchStudy.**CaseReportFormUrl** (Field)) | *string* | no | no |
+| [StudyWorkflowName](#ResearchStudyStudyWorkflowName-Field) **(KEY)** | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#ResearchStudyStudyWorkflowVersion-Field) **(KEY)** | *string* (20) | YES | no |
+| [OfficialLabel](#ResearchStudyOfficialLabel-Field) | *string* | YES | no |
+| [DefinitionOwner](#ResearchStudyDefinitionOwner-Field) | *string* | YES | no |
+| [DocumentationUrl](#ResearchStudyDocumentationUrl-Field) | *string* | YES | no |
+| [LogoImage](#ResearchStudyLogoImage-Field) | *string* | YES | no |
+| [Description](#ResearchStudyDescription-Field) | *string* | YES | no |
+| [VersionIdentity](#ResearchStudyVersionIdentity-Field) | *string* | YES | no |
+| [LastChangeUtc](#ResearchStudyLastChangeUtc-Field) | *datetime* | YES | no |
+| [DraftState](#ResearchStudyDraftState-Field) | *int32* | YES | no |
+| [BillingCurrency](#ResearchStudyBillingCurrency-Field) | *string* | no | no |
+| [BillablePriceForGeneralPreparation](#ResearchStudyBillablePriceForGeneralPreparation-Field) | *decimal* | no | no |
+| [StudyDocumentationUrl](#ResearchStudyStudyDocumentationUrl-Field) | *string* | no | no |
+| [CaseReportFormUrl](#ResearchStudyCaseReportFormUrl-Field) | *string* | no | no |
 ##### ResearchStudy.**StudyWorkflowName** (Field)
 ```
 the official invariant name of the study as given by the sponsor
@@ -206,52 +206,52 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [Arms](#**Arms** (childs of this ResearchStudy)) | Childs | [Arm](#Type: Arm) | * (multiple) |
-| [DataRecordingTasks](#**DataRecordingTasks** (childs of this ResearchStudy)) | Childs | [DataRecordingTask](#Type: DataRecordingTask) | * (multiple) |
-| [DrugApplymentTasks](#**DrugApplymentTasks** (childs of this ResearchStudy)) | Childs | [DrugApplymentTask](#Type: DrugApplymentTask) | * (multiple) |
-| [ProcedureSchedules](#**ProcedureSchedules** (childs of this ResearchStudy)) | Childs | [ProcedureSchedule](#Type: ProcedureSchedule) | * (multiple) |
-| [TreatmentTasks](#**TreatmentTasks** (childs of this ResearchStudy)) | Childs | [TreatmentTask](#Type: TreatmentTask) | * (multiple) |
-| [TaskSchedules](#**TaskSchedules** (childs of this ResearchStudy)) | Childs | [TaskSchedule](#Type: TaskSchedule) | * (multiple) |
-| [VisitProdecureDefinitions](#**VisitProdecureDefinitions** (childs of this ResearchStudy)) | Childs | [VisitProdecureDefinition](#Type: VisitProdecureDefinition) | * (multiple) |
-| [Events](#**Events** (childs of this ResearchStudy)) | Childs | [StudyEvent](#Type: StudyEvent) | * (multiple) |
+| [Arms](#Arms-childs-of-this-ResearchStudy) | Childs | [Arm](#Arm) | * (multiple) |
+| [DataRecordingTasks](#DataRecordingTasks-childs-of-this-ResearchStudy) | Childs | [DataRecordingTask](#DataRecordingTask) | * (multiple) |
+| [DrugApplymentTasks](#DrugApplymentTasks-childs-of-this-ResearchStudy) | Childs | [DrugApplymentTask](#DrugApplymentTask) | * (multiple) |
+| [ProcedureSchedules](#ProcedureSchedules-childs-of-this-ResearchStudy) | Childs | [ProcedureSchedule](#ProcedureSchedule) | * (multiple) |
+| [TreatmentTasks](#TreatmentTasks-childs-of-this-ResearchStudy) | Childs | [TreatmentTask](#TreatmentTask) | * (multiple) |
+| [TaskSchedules](#TaskSchedules-childs-of-this-ResearchStudy) | Childs | [TaskSchedule](#TaskSchedule) | * (multiple) |
+| [VisitProdecureDefinitions](#VisitProdecureDefinitions-childs-of-this-ResearchStudy) | Childs | [VisitProdecureDefinition](#VisitProdecureDefinition) | * (multiple) |
+| [Events](#Events-childs-of-this-ResearchStudy) | Childs | [StudyEvent](#StudyEvent) | * (multiple) |
 
 ##### **Arms** (childs of this ResearchStudy)
-Target: [Arm](#Type: Arm)
+Target: [Arm](#Arm)
 ```
 self describing ...
 ```
 ##### **DataRecordingTasks** (childs of this ResearchStudy)
-Target: [DataRecordingTask](#Type: DataRecordingTask)
+Target: [DataRecordingTask](#DataRecordingTask)
 ```
 self describing ...
 ```
 ##### **DrugApplymentTasks** (childs of this ResearchStudy)
-Target: [DrugApplymentTask](#Type: DrugApplymentTask)
+Target: [DrugApplymentTask](#DrugApplymentTask)
 ```
 self describing ...
 ```
 ##### **ProcedureSchedules** (childs of this ResearchStudy)
-Target: [ProcedureSchedule](#Type: ProcedureSchedule)
+Target: [ProcedureSchedule](#ProcedureSchedule)
 ```
 self describing ...
 ```
 ##### **TreatmentTasks** (childs of this ResearchStudy)
-Target: [TreatmentTask](#Type: TreatmentTask)
+Target: [TreatmentTask](#TreatmentTask)
 ```
 self describing ...
 ```
 ##### **TaskSchedules** (childs of this ResearchStudy)
-Target: [TaskSchedule](#Type: TaskSchedule)
+Target: [TaskSchedule](#TaskSchedule)
 ```
 self describing ...
 ```
 ##### **VisitProdecureDefinitions** (childs of this ResearchStudy)
-Target: [VisitProdecureDefinition](#Type: VisitProdecureDefinition)
+Target: [VisitProdecureDefinition](#VisitProdecureDefinition)
 ```
 self describing ...
 ```
 ##### **Events** (childs of this ResearchStudy)
-Target: [StudyEvent](#Type: StudyEvent)
+Target: [StudyEvent](#StudyEvent)
 ```
 self describing ...
 ```
@@ -259,26 +259,26 @@ self describing ...
 
 
 
-## Type: ProcedureSchedule
+## ProcedureSchedule
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [ProcedureScheduleId](#ProcedureSchedule.**ProcedureScheduleId** (Field)) **(KEY)** | *guid* | YES | no |
-| [StudyWorkflowName](#ProcedureSchedule.**StudyWorkflowName** (Field)) (FK) | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#ProcedureSchedule.**StudyWorkflowVersion** (Field)) (FK) | *string* (20) | YES | no |
-| [Title](#ProcedureSchedule.**Title** (Field)) | *string* | YES | no |
-| [MaxSkipsBeforeLost](#ProcedureSchedule.**MaxSkipsBeforeLost** (Field)) | *string* | YES | no |
-| [MaxSubsequentSkipsBeforeLost](#ProcedureSchedule.**MaxSubsequentSkipsBeforeLost** (Field)) | *string* | YES | no |
-| [MaxLostsBeforeLtfuAbort](#ProcedureSchedule.**MaxLostsBeforeLtfuAbort** (Field)) | *string* | YES | no |
-| [MaxSubsequentLostsBeforeLtfuAbort](#ProcedureSchedule.**MaxSubsequentLostsBeforeLtfuAbort** (Field)) | *string* | YES | no |
-| [EventOnLtfuAbort](#ProcedureSchedule.**EventOnLtfuAbort** (Field)) | *string* | YES | no |
-| [EventOnCycleEnded](#ProcedureSchedule.**EventOnCycleEnded** (Field)) | *string* | YES | no |
-| [EventOnAllCyclesEnded](#ProcedureSchedule.**EventOnAllCyclesEnded** (Field)) | *string* | YES | no |
-| [InducingEvents](#ProcedureSchedule.**InducingEvents** (Field)) | *string* | YES | no |
-| [AbortCausingEvents](#ProcedureSchedule.**AbortCausingEvents** (Field)) | *string* | YES | no |
+| [ProcedureScheduleId](#ProcedureScheduleProcedureScheduleId-Field) **(KEY)** | *guid* | YES | no |
+| [StudyWorkflowName](#ProcedureScheduleStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#ProcedureScheduleStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
+| [Title](#ProcedureScheduleTitle-Field) | *string* | YES | no |
+| [MaxSkipsBeforeLost](#ProcedureScheduleMaxSkipsBeforeLost-Field) | *string* | YES | no |
+| [MaxSubsequentSkipsBeforeLost](#ProcedureScheduleMaxSubsequentSkipsBeforeLost-Field) | *string* | YES | no |
+| [MaxLostsBeforeLtfuAbort](#ProcedureScheduleMaxLostsBeforeLtfuAbort-Field) | *string* | YES | no |
+| [MaxSubsequentLostsBeforeLtfuAbort](#ProcedureScheduleMaxSubsequentLostsBeforeLtfuAbort-Field) | *string* | YES | no |
+| [EventOnLtfuAbort](#ProcedureScheduleEventOnLtfuAbort-Field) | *string* | YES | no |
+| [EventOnCycleEnded](#ProcedureScheduleEventOnCycleEnded-Field) | *string* | YES | no |
+| [EventOnAllCyclesEnded](#ProcedureScheduleEventOnAllCyclesEnded-Field) | *string* | YES | no |
+| [InducingEvents](#ProcedureScheduleInducingEvents-Field) | *string* | YES | no |
+| [AbortCausingEvents](#ProcedureScheduleAbortCausingEvents-Field) | *string* | YES | no |
 ##### ProcedureSchedule.**ProcedureScheduleId** (Field)
 ```
 self describing ...
@@ -342,41 +342,41 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [EntryArms](#**EntryArms** (refering to this ProcedureSchedule)) | Referers | [Arm](#Type: Arm) | * (multiple) |
-| [InducedSubProcedureSchedules](#**InducedSubProcedureSchedules** (childs of this ProcedureSchedule)) | Childs | [InducedSubProcedureSchedule](#Type: InducedSubProcedureSchedule) | * (multiple) |
-| [InducingSubProcedureSchedules](#**InducingSubProcedureSchedules** (refering to this ProcedureSchedule)) | Referers | [InducedSubProcedureSchedule](#Type: InducedSubProcedureSchedule) | * (multiple) |
-| [InducedProcedures](#**InducedProcedures** (childs of this ProcedureSchedule)) | Childs | [InducedVisitProcedure](#Type: InducedVisitProcedure) | * (multiple) |
-| [CycleDefinition](#**CycleDefinition** (child of this ProcedureSchedule)) | Child | [ProcedureCycleDefinition](#Type: ProcedureCycleDefinition) | 0/1 (single) |
-| [ResearchStudy](#**ResearchStudy** (parent of this ProcedureSchedule)) | Parent | [ResearchStudy](#Type: ResearchStudy) | 0/1 (optional) |
+| [EntryArms](#EntryArms-refering-to-this-ProcedureSchedule) | Referers | [Arm](#Arm) | * (multiple) |
+| [InducedSubProcedureSchedules](#InducedSubProcedureSchedules-childs-of-this-ProcedureSchedule) | Childs | [InducedSubProcedureSchedule](#InducedSubProcedureSchedule) | * (multiple) |
+| [InducingSubProcedureSchedules](#InducingSubProcedureSchedules-refering-to-this-ProcedureSchedule) | Referers | [InducedSubProcedureSchedule](#InducedSubProcedureSchedule) | * (multiple) |
+| [InducedProcedures](#InducedProcedures-childs-of-this-ProcedureSchedule) | Childs | [InducedVisitProcedure](#InducedVisitProcedure) | * (multiple) |
+| [CycleDefinition](#CycleDefinition-child-of-this-ProcedureSchedule) | Child | [ProcedureCycleDefinition](#ProcedureCycleDefinition) | 0/1 (single) |
+| [ResearchStudy](#ResearchStudy-parent-of-this-ProcedureSchedule) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 
 ##### **EntryArms** (refering to this ProcedureSchedule)
-Target: [Arm](#Type: Arm)
+Target: [Arm](#Arm)
 ```
 self describing ...
 ```
 ##### **InducedSubProcedureSchedules** (childs of this ProcedureSchedule)
-Target: [InducedSubProcedureSchedule](#Type: InducedSubProcedureSchedule)
+Target: [InducedSubProcedureSchedule](#InducedSubProcedureSchedule)
 ```
 self describing ...
 ```
 ##### **InducingSubProcedureSchedules** (refering to this ProcedureSchedule)
-Target: [InducedSubProcedureSchedule](#Type: InducedSubProcedureSchedule)
+Target: [InducedSubProcedureSchedule](#InducedSubProcedureSchedule)
 ```
 self describing ...
 ```
 ##### **InducedProcedures** (childs of this ProcedureSchedule)
-Target: [InducedVisitProcedure](#Type: InducedVisitProcedure)
+Target: [InducedVisitProcedure](#InducedVisitProcedure)
 ```
 self describing ...
 ```
 ##### **CycleDefinition** (child of this ProcedureSchedule)
-Target: [ProcedureCycleDefinition](#Type: ProcedureCycleDefinition)
+Target: [ProcedureCycleDefinition](#ProcedureCycleDefinition)
 ```
 self describing ...
 ```
 ##### **ResearchStudy** (parent of this ProcedureSchedule)
-Target Type: [ResearchStudy](#Type: ResearchStudy)
-Addressed by: [StudyWorkflowName](#ProcedureSchedule.StudyWorkflowName (Field)), [StudyWorkflowVersion](#ProcedureSchedule.StudyWorkflowVersion (Field)).
+Target Type: [ResearchStudy](#ResearchStudy)
+Addressed by: [StudyWorkflowName](#ProcedureScheduleStudyWorkflowName-Field), [StudyWorkflowVersion](#ProcedureScheduleStudyWorkflowVersion-Field).
 ```
 self describing ...
 ```
@@ -384,22 +384,22 @@ self describing ...
 
 
 
-## Type: DataRecordingTask
+## DataRecordingTask
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [DataRecordingName](#DataRecordingTask.**DataRecordingName** (Field)) **(KEY)** | *string* (50) | YES | no |
-| [StudyWorkflowName](#DataRecordingTask.**StudyWorkflowName** (Field)) (FK) | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#DataRecordingTask.**StudyWorkflowVersion** (Field)) (FK) | *string* (20) | YES | no |
-| [BillablePriceOnCompletedExecution](#DataRecordingTask.**BillablePriceOnCompletedExecution** (Field)) | *decimal* | no | no |
-| [ShortDescription](#DataRecordingTask.**ShortDescription** (Field)) | *string* | YES | no |
-| [TaskSpecificDocumentationUrl](#DataRecordingTask.**TaskSpecificDocumentationUrl** (Field)) | *string* | no | no |
-| [ImportantNotices](#DataRecordingTask.**ImportantNotices** (Field)) | *string* | no | no |
-| [DataSchemaUrl](#DataRecordingTask.**DataSchemaUrl** (Field)) | *string* | YES | no |
-| [DefaultData](#DataRecordingTask.**DefaultData** (Field)) | *string* | no | no |
+| [DataRecordingName](#DataRecordingTaskDataRecordingName-Field) **(KEY)** | *string* (50) | YES | no |
+| [StudyWorkflowName](#DataRecordingTaskStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#DataRecordingTaskStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
+| [BillablePriceOnCompletedExecution](#DataRecordingTaskBillablePriceOnCompletedExecution-Field) | *decimal* | no | no |
+| [ShortDescription](#DataRecordingTaskShortDescription-Field) | *string* | YES | no |
+| [TaskSpecificDocumentationUrl](#DataRecordingTaskTaskSpecificDocumentationUrl-Field) | *string* | no | no |
+| [ImportantNotices](#DataRecordingTaskImportantNotices-Field) | *string* | no | no |
+| [DataSchemaUrl](#DataRecordingTaskDataSchemaUrl-Field) | *string* | YES | no |
+| [DefaultData](#DataRecordingTaskDefaultData-Field) | *string* | no | no |
 ##### DataRecordingTask.**DataRecordingName** (Field)
 ```
 self describing ...
@@ -452,17 +452,17 @@ RAW data, in the schema as defined at the 'DataSchemaUrl'
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [Inducements](#**Inducements** (refering to this DataRecordingTask)) | Referers | [InducedDataRecordingTask](#Type: InducedDataRecordingTask) | * (multiple) |
-| [ResearchStudy](#**ResearchStudy** (parent of this DataRecordingTask)) | Parent | [ResearchStudy](#Type: ResearchStudy) | 0/1 (optional) |
+| [Inducements](#Inducements-refering-to-this-DataRecordingTask) | Referers | [InducedDataRecordingTask](#InducedDataRecordingTask) | * (multiple) |
+| [ResearchStudy](#ResearchStudy-parent-of-this-DataRecordingTask) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 
 ##### **Inducements** (refering to this DataRecordingTask)
-Target: [InducedDataRecordingTask](#Type: InducedDataRecordingTask)
+Target: [InducedDataRecordingTask](#InducedDataRecordingTask)
 ```
 self describing ...
 ```
 ##### **ResearchStudy** (parent of this DataRecordingTask)
-Target Type: [ResearchStudy](#Type: ResearchStudy)
-Addressed by: [StudyWorkflowName](#DataRecordingTask.StudyWorkflowName (Field)), [StudyWorkflowVersion](#DataRecordingTask.StudyWorkflowVersion (Field)).
+Target Type: [ResearchStudy](#ResearchStudy)
+Addressed by: [StudyWorkflowName](#DataRecordingTaskStudyWorkflowName-Field), [StudyWorkflowVersion](#DataRecordingTaskStudyWorkflowVersion-Field).
 ```
 self describing ...
 ```
@@ -470,25 +470,25 @@ self describing ...
 
 
 
-## Type: InducedDataRecordingTask
+## InducedDataRecordingTask
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedDataRecordingTask.**Id** (Field)) **(KEY)** | *guid* | YES | no |
-| [TaskScheduleId](#InducedDataRecordingTask.**TaskScheduleId** (Field)) (FK) | *guid* | YES | no |
-| [InducedDataRecordingName](#InducedDataRecordingTask.**InducedDataRecordingName** (Field)) (FK) | *string* (50) | YES | no |
-| [Offset](#InducedDataRecordingTask.**Offset** (Field)) | *int32* | YES | no |
-| [OffsetUnit](#InducedDataRecordingTask.**OffsetUnit** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityBefore](#InducedDataRecordingTask.**SchedulingVariabilityBefore** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityAfter](#InducedDataRecordingTask.**SchedulingVariabilityAfter** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityUnit](#InducedDataRecordingTask.**SchedulingVariabilityUnit** (Field)) | *string* | YES | no |
-| [InducedTaskExecutionTitle](#InducedDataRecordingTask.**InducedTaskExecutionTitle** (Field)) | *string* | YES | no |
-| [Skipable](#InducedDataRecordingTask.**Skipable** (Field)) | *boolean* | YES | no |
-| [EventOnSkip](#InducedDataRecordingTask.**EventOnSkip** (Field)) | *string* | YES | no |
-| [EventOnLost](#InducedDataRecordingTask.**EventOnLost** (Field)) | *string* | YES | no |
+| [Id](#InducedDataRecordingTaskId-Field) **(KEY)** | *guid* | YES | no |
+| [TaskScheduleId](#InducedDataRecordingTaskTaskScheduleId-Field) (FK) | *guid* | YES | no |
+| [InducedDataRecordingName](#InducedDataRecordingTaskInducedDataRecordingName-Field) (FK) | *string* (50) | YES | no |
+| [Offset](#InducedDataRecordingTaskOffset-Field) | *int32* | YES | no |
+| [OffsetUnit](#InducedDataRecordingTaskOffsetUnit-Field) | *string* | YES | no |
+| [SchedulingVariabilityBefore](#InducedDataRecordingTaskSchedulingVariabilityBefore-Field) | *string* | YES | no |
+| [SchedulingVariabilityAfter](#InducedDataRecordingTaskSchedulingVariabilityAfter-Field) | *string* | YES | no |
+| [SchedulingVariabilityUnit](#InducedDataRecordingTaskSchedulingVariabilityUnit-Field) | *string* | YES | no |
+| [InducedTaskExecutionTitle](#InducedDataRecordingTaskInducedTaskExecutionTitle-Field) | *string* | YES | no |
+| [Skipable](#InducedDataRecordingTaskSkipable-Field) | *boolean* | YES | no |
+| [EventOnSkip](#InducedDataRecordingTaskEventOnSkip-Field) | *string* | YES | no |
+| [EventOnLost](#InducedDataRecordingTaskEventOnLost-Field) | *string* | YES | no |
 ##### InducedDataRecordingTask.**Id** (Field)
 ```
 self describing ...
@@ -547,18 +547,18 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [InducedTask](#**InducedTask** (lookup from this InducedDataRecordingTask)) | Lookup | [DataRecordingTask](#Type: DataRecordingTask) | 0/1 (optional) |
-| [TaskSchedule](#**TaskSchedule** (parent of this InducedDataRecordingTask)) | Parent | [TaskSchedule](#Type: TaskSchedule) | 0/1 (optional) |
+| [InducedTask](#InducedTask-lookup-from-this-InducedDataRecordingTask) | Lookup | [DataRecordingTask](#DataRecordingTask) | 0/1 (optional) |
+| [TaskSchedule](#TaskSchedule-parent-of-this-InducedDataRecordingTask) | Parent | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
 
 ##### **InducedTask** (lookup from this InducedDataRecordingTask)
-Target Type: [DataRecordingTask](#Type: DataRecordingTask)
-Addressed by: [InducedDataRecordingName](#InducedDataRecordingTask.InducedDataRecordingName (Field)).
+Target Type: [DataRecordingTask](#DataRecordingTask)
+Addressed by: [InducedDataRecordingName](#InducedDataRecordingTaskInducedDataRecordingName-Field).
 ```
 self describing ...
 ```
 ##### **TaskSchedule** (parent of this InducedDataRecordingTask)
-Target Type: [TaskSchedule](#Type: TaskSchedule)
-Addressed by: [TaskScheduleId](#InducedDataRecordingTask.TaskScheduleId (Field)).
+Target Type: [TaskSchedule](#TaskSchedule)
+Addressed by: [TaskScheduleId](#InducedDataRecordingTaskTaskScheduleId-Field).
 ```
 self describing ...
 ```
@@ -566,24 +566,24 @@ self describing ...
 
 
 
-## Type: DrugApplymentTask
+## DrugApplymentTask
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [DrugApplymentName](#DrugApplymentTask.**DrugApplymentName** (Field)) **(KEY)** | *string* (50) | YES | no |
-| [StudyWorkflowName](#DrugApplymentTask.**StudyWorkflowName** (Field)) (FK) | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#DrugApplymentTask.**StudyWorkflowVersion** (Field)) (FK) | *string* (20) | YES | no |
-| [BillablePriceOnCompletedExecution](#DrugApplymentTask.**BillablePriceOnCompletedExecution** (Field)) | *decimal* | no | no |
-| [ShortDescription](#DrugApplymentTask.**ShortDescription** (Field)) | *string* | YES | no |
-| [TaskSpecificDocumentationUrl](#DrugApplymentTask.**TaskSpecificDocumentationUrl** (Field)) | *string* | no | no |
-| [DrugName](#DrugApplymentTask.**DrugName** (Field)) | *string* | YES | no |
-| [DrugDoseMgPerUnitMg](#DrugApplymentTask.**DrugDoseMgPerUnitMg** (Field)) | *decimal* | YES | no |
-| [UnitsToApply](#DrugApplymentTask.**UnitsToApply** (Field)) | *decimal* | YES | no |
-| [ApplymentRoute](#DrugApplymentTask.**ApplymentRoute** (Field)) | *string* | YES | no |
-| [ImportantNotices](#DrugApplymentTask.**ImportantNotices** (Field)) | *string* | no | no |
+| [DrugApplymentName](#DrugApplymentTaskDrugApplymentName-Field) **(KEY)** | *string* (50) | YES | no |
+| [StudyWorkflowName](#DrugApplymentTaskStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#DrugApplymentTaskStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
+| [BillablePriceOnCompletedExecution](#DrugApplymentTaskBillablePriceOnCompletedExecution-Field) | *decimal* | no | no |
+| [ShortDescription](#DrugApplymentTaskShortDescription-Field) | *string* | YES | no |
+| [TaskSpecificDocumentationUrl](#DrugApplymentTaskTaskSpecificDocumentationUrl-Field) | *string* | no | no |
+| [DrugName](#DrugApplymentTaskDrugName-Field) | *string* | YES | no |
+| [DrugDoseMgPerUnitMg](#DrugApplymentTaskDrugDoseMgPerUnitMg-Field) | *decimal* | YES | no |
+| [UnitsToApply](#DrugApplymentTaskUnitsToApply-Field) | *decimal* | YES | no |
+| [ApplymentRoute](#DrugApplymentTaskApplymentRoute-Field) | *string* | YES | no |
+| [ImportantNotices](#DrugApplymentTaskImportantNotices-Field) | *string* | no | no |
 ##### DrugApplymentTask.**DrugApplymentName** (Field)
 ```
 self describing ...
@@ -643,17 +643,17 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [Inducements](#**Inducements** (refering to this DrugApplymentTask)) | Referers | [InducedDrugApplymentTask](#Type: InducedDrugApplymentTask) | * (multiple) |
-| [ResearchStudy](#**ResearchStudy** (parent of this DrugApplymentTask)) | Parent | [ResearchStudy](#Type: ResearchStudy) | 0/1 (optional) |
+| [Inducements](#Inducements-refering-to-this-DrugApplymentTask) | Referers | [InducedDrugApplymentTask](#InducedDrugApplymentTask) | * (multiple) |
+| [ResearchStudy](#ResearchStudy-parent-of-this-DrugApplymentTask) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 
 ##### **Inducements** (refering to this DrugApplymentTask)
-Target: [InducedDrugApplymentTask](#Type: InducedDrugApplymentTask)
+Target: [InducedDrugApplymentTask](#InducedDrugApplymentTask)
 ```
 self describing ...
 ```
 ##### **ResearchStudy** (parent of this DrugApplymentTask)
-Target Type: [ResearchStudy](#Type: ResearchStudy)
-Addressed by: [StudyWorkflowName](#DrugApplymentTask.StudyWorkflowName (Field)), [StudyWorkflowVersion](#DrugApplymentTask.StudyWorkflowVersion (Field)).
+Target Type: [ResearchStudy](#ResearchStudy)
+Addressed by: [StudyWorkflowName](#DrugApplymentTaskStudyWorkflowName-Field), [StudyWorkflowVersion](#DrugApplymentTaskStudyWorkflowVersion-Field).
 ```
 self describing ...
 ```
@@ -661,25 +661,25 @@ self describing ...
 
 
 
-## Type: InducedDrugApplymentTask
+## InducedDrugApplymentTask
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedDrugApplymentTask.**Id** (Field)) **(KEY)** | *guid* | YES | no |
-| [TaskScheduleId](#InducedDrugApplymentTask.**TaskScheduleId** (Field)) (FK) | *guid* | YES | no |
-| [InducedDrugApplymentName](#InducedDrugApplymentTask.**InducedDrugApplymentName** (Field)) (FK) | *string* (50) | YES | no |
-| [Offset](#InducedDrugApplymentTask.**Offset** (Field)) | *int32* | YES | no |
-| [OffsetUnit](#InducedDrugApplymentTask.**OffsetUnit** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityBefore](#InducedDrugApplymentTask.**SchedulingVariabilityBefore** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityAfter](#InducedDrugApplymentTask.**SchedulingVariabilityAfter** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityUnit](#InducedDrugApplymentTask.**SchedulingVariabilityUnit** (Field)) | *string* | YES | no |
-| [InducedTaskExecutionTitle](#InducedDrugApplymentTask.**InducedTaskExecutionTitle** (Field)) | *string* | YES | no |
-| [Skipable](#InducedDrugApplymentTask.**Skipable** (Field)) | *boolean* | YES | no |
-| [EventOnSkip](#InducedDrugApplymentTask.**EventOnSkip** (Field)) | *string* | YES | no |
-| [EventOnLost](#InducedDrugApplymentTask.**EventOnLost** (Field)) | *string* | YES | no |
+| [Id](#InducedDrugApplymentTaskId-Field) **(KEY)** | *guid* | YES | no |
+| [TaskScheduleId](#InducedDrugApplymentTaskTaskScheduleId-Field) (FK) | *guid* | YES | no |
+| [InducedDrugApplymentName](#InducedDrugApplymentTaskInducedDrugApplymentName-Field) (FK) | *string* (50) | YES | no |
+| [Offset](#InducedDrugApplymentTaskOffset-Field) | *int32* | YES | no |
+| [OffsetUnit](#InducedDrugApplymentTaskOffsetUnit-Field) | *string* | YES | no |
+| [SchedulingVariabilityBefore](#InducedDrugApplymentTaskSchedulingVariabilityBefore-Field) | *string* | YES | no |
+| [SchedulingVariabilityAfter](#InducedDrugApplymentTaskSchedulingVariabilityAfter-Field) | *string* | YES | no |
+| [SchedulingVariabilityUnit](#InducedDrugApplymentTaskSchedulingVariabilityUnit-Field) | *string* | YES | no |
+| [InducedTaskExecutionTitle](#InducedDrugApplymentTaskInducedTaskExecutionTitle-Field) | *string* | YES | no |
+| [Skipable](#InducedDrugApplymentTaskSkipable-Field) | *boolean* | YES | no |
+| [EventOnSkip](#InducedDrugApplymentTaskEventOnSkip-Field) | *string* | YES | no |
+| [EventOnLost](#InducedDrugApplymentTaskEventOnLost-Field) | *string* | YES | no |
 ##### InducedDrugApplymentTask.**Id** (Field)
 ```
 self describing ...
@@ -738,18 +738,18 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [InducedTask](#**InducedTask** (lookup from this InducedDrugApplymentTask)) | Lookup | [DrugApplymentTask](#Type: DrugApplymentTask) | 0/1 (optional) |
-| [TaskSchedule](#**TaskSchedule** (parent of this InducedDrugApplymentTask)) | Parent | [TaskSchedule](#Type: TaskSchedule) | 0/1 (optional) |
+| [InducedTask](#InducedTask-lookup-from-this-InducedDrugApplymentTask) | Lookup | [DrugApplymentTask](#DrugApplymentTask) | 0/1 (optional) |
+| [TaskSchedule](#TaskSchedule-parent-of-this-InducedDrugApplymentTask) | Parent | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
 
 ##### **InducedTask** (lookup from this InducedDrugApplymentTask)
-Target Type: [DrugApplymentTask](#Type: DrugApplymentTask)
-Addressed by: [InducedDrugApplymentName](#InducedDrugApplymentTask.InducedDrugApplymentName (Field)).
+Target Type: [DrugApplymentTask](#DrugApplymentTask)
+Addressed by: [InducedDrugApplymentName](#InducedDrugApplymentTaskInducedDrugApplymentName-Field).
 ```
 self describing ...
 ```
 ##### **TaskSchedule** (parent of this InducedDrugApplymentTask)
-Target Type: [TaskSchedule](#Type: TaskSchedule)
-Addressed by: [TaskScheduleId](#InducedDrugApplymentTask.TaskScheduleId (Field)).
+Target Type: [TaskSchedule](#TaskSchedule)
+Addressed by: [TaskScheduleId](#InducedDrugApplymentTaskTaskScheduleId-Field).
 ```
 self describing ...
 ```
@@ -757,26 +757,26 @@ self describing ...
 
 
 
-## Type: TaskSchedule
+## TaskSchedule
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskScheduleId](#TaskSchedule.**TaskScheduleId** (Field)) **(KEY)** | *guid* | YES | no |
-| [StudyWorkflowName](#TaskSchedule.**StudyWorkflowName** (Field)) (FK) | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#TaskSchedule.**StudyWorkflowVersion** (Field)) (FK) | *string* (20) | YES | no |
-| [Title](#TaskSchedule.**Title** (Field)) | *string* | YES | no |
-| [MaxSkipsBeforeLost](#TaskSchedule.**MaxSkipsBeforeLost** (Field)) | *string* | YES | no |
-| [MaxSubsequentSkipsBeforeLost](#TaskSchedule.**MaxSubsequentSkipsBeforeLost** (Field)) | *string* | YES | no |
-| [MaxLostsBeforeLtfuAbort](#TaskSchedule.**MaxLostsBeforeLtfuAbort** (Field)) | *string* | YES | no |
-| [MaxSubsequentLostsBeforeLtfuAbort](#TaskSchedule.**MaxSubsequentLostsBeforeLtfuAbort** (Field)) | *string* | YES | no |
-| [EventOnLtfuAbort](#TaskSchedule.**EventOnLtfuAbort** (Field)) | *string* | YES | no |
-| [EventOnCycleEnded](#TaskSchedule.**EventOnCycleEnded** (Field)) | *string* | YES | no |
-| [EventOnAllCyclesEnded](#TaskSchedule.**EventOnAllCyclesEnded** (Field)) | *string* | YES | no |
-| [InducingEvents](#TaskSchedule.**InducingEvents** (Field)) | *string* | YES | no |
-| [AbortCausingEvents](#TaskSchedule.**AbortCausingEvents** (Field)) | *string* | YES | no |
+| [TaskScheduleId](#TaskScheduleTaskScheduleId-Field) **(KEY)** | *guid* | YES | no |
+| [StudyWorkflowName](#TaskScheduleStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#TaskScheduleStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
+| [Title](#TaskScheduleTitle-Field) | *string* | YES | no |
+| [MaxSkipsBeforeLost](#TaskScheduleMaxSkipsBeforeLost-Field) | *string* | YES | no |
+| [MaxSubsequentSkipsBeforeLost](#TaskScheduleMaxSubsequentSkipsBeforeLost-Field) | *string* | YES | no |
+| [MaxLostsBeforeLtfuAbort](#TaskScheduleMaxLostsBeforeLtfuAbort-Field) | *string* | YES | no |
+| [MaxSubsequentLostsBeforeLtfuAbort](#TaskScheduleMaxSubsequentLostsBeforeLtfuAbort-Field) | *string* | YES | no |
+| [EventOnLtfuAbort](#TaskScheduleEventOnLtfuAbort-Field) | *string* | YES | no |
+| [EventOnCycleEnded](#TaskScheduleEventOnCycleEnded-Field) | *string* | YES | no |
+| [EventOnAllCyclesEnded](#TaskScheduleEventOnAllCyclesEnded-Field) | *string* | YES | no |
+| [InducingEvents](#TaskScheduleInducingEvents-Field) | *string* | YES | no |
+| [AbortCausingEvents](#TaskScheduleAbortCausingEvents-Field) | *string* | YES | no |
 ##### TaskSchedule.**TaskScheduleId** (Field)
 ```
 self describing ...
@@ -840,53 +840,53 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [InducedDataRecordingTasks](#**InducedDataRecordingTasks** (childs of this TaskSchedule)) | Childs | [InducedDataRecordingTask](#Type: InducedDataRecordingTask) | * (multiple) |
-| [InducedDrugApplymentTasks](#**InducedDrugApplymentTasks** (childs of this TaskSchedule)) | Childs | [InducedDrugApplymentTask](#Type: InducedDrugApplymentTask) | * (multiple) |
-| [InducedSubTaskSchedules](#**InducedSubTaskSchedules** (childs of this TaskSchedule)) | Childs | [InducedSubTaskSchedule](#Type: InducedSubTaskSchedule) | * (multiple) |
-| [InducingTaskSchedules](#**InducingTaskSchedules** (refering to this TaskSchedule)) | Referers | [InducedSubTaskSchedule](#Type: InducedSubTaskSchedule) | * (multiple) |
-| [InducedTreatmentTasks](#**InducedTreatmentTasks** (childs of this TaskSchedule)) | Childs | [InducedTreatmentTask](#Type: InducedTreatmentTask) | * (multiple) |
-| [ResearchStudy](#**ResearchStudy** (parent of this TaskSchedule)) | Parent | [ResearchStudy](#Type: ResearchStudy) | 0/1 (optional) |
-| [CycleDefinition](#**CycleDefinition** (child of this TaskSchedule)) | Child | [TaskCycleDefinition](#Type: TaskCycleDefinition) | 0/1 (single) |
-| [EntryVisitProdecureDefinitions](#**EntryVisitProdecureDefinitions** (refering to this TaskSchedule)) | Referers | [VisitProdecureDefinition](#Type: VisitProdecureDefinition) | * (multiple) |
+| [InducedDataRecordingTasks](#InducedDataRecordingTasks-childs-of-this-TaskSchedule) | Childs | [InducedDataRecordingTask](#InducedDataRecordingTask) | * (multiple) |
+| [InducedDrugApplymentTasks](#InducedDrugApplymentTasks-childs-of-this-TaskSchedule) | Childs | [InducedDrugApplymentTask](#InducedDrugApplymentTask) | * (multiple) |
+| [InducedSubTaskSchedules](#InducedSubTaskSchedules-childs-of-this-TaskSchedule) | Childs | [InducedSubTaskSchedule](#InducedSubTaskSchedule) | * (multiple) |
+| [InducingTaskSchedules](#InducingTaskSchedules-refering-to-this-TaskSchedule) | Referers | [InducedSubTaskSchedule](#InducedSubTaskSchedule) | * (multiple) |
+| [InducedTreatmentTasks](#InducedTreatmentTasks-childs-of-this-TaskSchedule) | Childs | [InducedTreatmentTask](#InducedTreatmentTask) | * (multiple) |
+| [ResearchStudy](#ResearchStudy-parent-of-this-TaskSchedule) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
+| [CycleDefinition](#CycleDefinition-child-of-this-TaskSchedule) | Child | [TaskCycleDefinition](#TaskCycleDefinition) | 0/1 (single) |
+| [EntryVisitProdecureDefinitions](#EntryVisitProdecureDefinitions-refering-to-this-TaskSchedule) | Referers | [VisitProdecureDefinition](#VisitProdecureDefinition) | * (multiple) |
 
 ##### **InducedDataRecordingTasks** (childs of this TaskSchedule)
-Target: [InducedDataRecordingTask](#Type: InducedDataRecordingTask)
+Target: [InducedDataRecordingTask](#InducedDataRecordingTask)
 ```
 self describing ...
 ```
 ##### **InducedDrugApplymentTasks** (childs of this TaskSchedule)
-Target: [InducedDrugApplymentTask](#Type: InducedDrugApplymentTask)
+Target: [InducedDrugApplymentTask](#InducedDrugApplymentTask)
 ```
 self describing ...
 ```
 ##### **InducedSubTaskSchedules** (childs of this TaskSchedule)
-Target: [InducedSubTaskSchedule](#Type: InducedSubTaskSchedule)
+Target: [InducedSubTaskSchedule](#InducedSubTaskSchedule)
 ```
 self describing ...
 ```
 ##### **InducingTaskSchedules** (refering to this TaskSchedule)
-Target: [InducedSubTaskSchedule](#Type: InducedSubTaskSchedule)
+Target: [InducedSubTaskSchedule](#InducedSubTaskSchedule)
 ```
 self describing ...
 ```
 ##### **InducedTreatmentTasks** (childs of this TaskSchedule)
-Target: [InducedTreatmentTask](#Type: InducedTreatmentTask)
+Target: [InducedTreatmentTask](#InducedTreatmentTask)
 ```
 self describing ...
 ```
 ##### **ResearchStudy** (parent of this TaskSchedule)
-Target Type: [ResearchStudy](#Type: ResearchStudy)
-Addressed by: [StudyWorkflowName](#TaskSchedule.StudyWorkflowName (Field)), [StudyWorkflowVersion](#TaskSchedule.StudyWorkflowVersion (Field)).
+Target Type: [ResearchStudy](#ResearchStudy)
+Addressed by: [StudyWorkflowName](#TaskScheduleStudyWorkflowName-Field), [StudyWorkflowVersion](#TaskScheduleStudyWorkflowVersion-Field).
 ```
 self describing ...
 ```
 ##### **CycleDefinition** (child of this TaskSchedule)
-Target: [TaskCycleDefinition](#Type: TaskCycleDefinition)
+Target: [TaskCycleDefinition](#TaskCycleDefinition)
 ```
 self describing ...
 ```
 ##### **EntryVisitProdecureDefinitions** (refering to this TaskSchedule)
-Target: [VisitProdecureDefinition](#Type: VisitProdecureDefinition)
+Target: [VisitProdecureDefinition](#VisitProdecureDefinition)
 ```
 self describing ...
 ```
@@ -894,23 +894,23 @@ self describing ...
 
 
 
-## Type: InducedSubProcedureSchedule
+## InducedSubProcedureSchedule
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedSubProcedureSchedule.**Id** (Field)) **(KEY)** | *guid* | YES | no |
-| [ParentProcedureScheduleId](#InducedSubProcedureSchedule.**ParentProcedureScheduleId** (Field)) (FK) | *guid* | YES | no |
-| [InducedProcedureScheduleId](#InducedSubProcedureSchedule.**InducedProcedureScheduleId** (Field)) (FK) | *guid* | YES | no |
-| [Offset](#InducedSubProcedureSchedule.**Offset** (Field)) | *int32* | YES | no |
-| [OffsetUnit](#InducedSubProcedureSchedule.**OffsetUnit** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityBefore](#InducedSubProcedureSchedule.**SchedulingVariabilityBefore** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityAfter](#InducedSubProcedureSchedule.**SchedulingVariabilityAfter** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityUnit](#InducedSubProcedureSchedule.**SchedulingVariabilityUnit** (Field)) | *string* | YES | no |
-| [SharedSkipCounters](#InducedSubProcedureSchedule.**SharedSkipCounters** (Field)) | *boolean* | YES | no |
-| [SharedLostCounters](#InducedSubProcedureSchedule.**SharedLostCounters** (Field)) | *boolean* | YES | no |
+| [Id](#InducedSubProcedureScheduleId-Field) **(KEY)** | *guid* | YES | no |
+| [ParentProcedureScheduleId](#InducedSubProcedureScheduleParentProcedureScheduleId-Field) (FK) | *guid* | YES | no |
+| [InducedProcedureScheduleId](#InducedSubProcedureScheduleInducedProcedureScheduleId-Field) (FK) | *guid* | YES | no |
+| [Offset](#InducedSubProcedureScheduleOffset-Field) | *int32* | YES | no |
+| [OffsetUnit](#InducedSubProcedureScheduleOffsetUnit-Field) | *string* | YES | no |
+| [SchedulingVariabilityBefore](#InducedSubProcedureScheduleSchedulingVariabilityBefore-Field) | *string* | YES | no |
+| [SchedulingVariabilityAfter](#InducedSubProcedureScheduleSchedulingVariabilityAfter-Field) | *string* | YES | no |
+| [SchedulingVariabilityUnit](#InducedSubProcedureScheduleSchedulingVariabilityUnit-Field) | *string* | YES | no |
+| [SharedSkipCounters](#InducedSubProcedureScheduleSharedSkipCounters-Field) | *boolean* | YES | no |
+| [SharedLostCounters](#InducedSubProcedureScheduleSharedLostCounters-Field) | *boolean* | YES | no |
 ##### InducedSubProcedureSchedule.**Id** (Field)
 ```
 self describing ...
@@ -960,18 +960,18 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [ParentProcedureSchedule](#**ParentProcedureSchedule** (parent of this InducedSubProcedureSchedule)) | Parent | [ProcedureSchedule](#Type: ProcedureSchedule) | 0/1 (optional) |
-| [InducedProcedureSchedule](#**InducedProcedureSchedule** (lookup from this InducedSubProcedureSchedule)) | Lookup | [ProcedureSchedule](#Type: ProcedureSchedule) | 0/1 (optional) |
+| [ParentProcedureSchedule](#ParentProcedureSchedule-parent-of-this-InducedSubProcedureSchedule) | Parent | [ProcedureSchedule](#ProcedureSchedule) | 0/1 (optional) |
+| [InducedProcedureSchedule](#InducedProcedureSchedule-lookup-from-this-InducedSubProcedureSchedule) | Lookup | [ProcedureSchedule](#ProcedureSchedule) | 0/1 (optional) |
 
 ##### **ParentProcedureSchedule** (parent of this InducedSubProcedureSchedule)
-Target Type: [ProcedureSchedule](#Type: ProcedureSchedule)
-Addressed by: [ParentProcedureScheduleId](#InducedSubProcedureSchedule.ParentProcedureScheduleId (Field)).
+Target Type: [ProcedureSchedule](#ProcedureSchedule)
+Addressed by: [ParentProcedureScheduleId](#InducedSubProcedureScheduleParentProcedureScheduleId-Field).
 ```
 self describing ...
 ```
 ##### **InducedProcedureSchedule** (lookup from this InducedSubProcedureSchedule)
-Target Type: [ProcedureSchedule](#Type: ProcedureSchedule)
-Addressed by: [InducedProcedureScheduleId](#InducedSubProcedureSchedule.InducedProcedureScheduleId (Field)).
+Target Type: [ProcedureSchedule](#ProcedureSchedule)
+Addressed by: [InducedProcedureScheduleId](#InducedSubProcedureScheduleInducedProcedureScheduleId-Field).
 ```
 self describing ...
 ```
@@ -979,23 +979,23 @@ self describing ...
 
 
 
-## Type: InducedSubTaskSchedule
+## InducedSubTaskSchedule
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedSubTaskSchedule.**Id** (Field)) **(KEY)** | *guid* | YES | no |
-| [ParentTaskScheduleId](#InducedSubTaskSchedule.**ParentTaskScheduleId** (Field)) (FK) | *guid* | YES | no |
-| [InducedTaskScheduleId](#InducedSubTaskSchedule.**InducedTaskScheduleId** (Field)) (FK) | *guid* | YES | no |
-| [Offset](#InducedSubTaskSchedule.**Offset** (Field)) | *int32* | YES | no |
-| [OffsetUnit](#InducedSubTaskSchedule.**OffsetUnit** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityBefore](#InducedSubTaskSchedule.**SchedulingVariabilityBefore** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityAfter](#InducedSubTaskSchedule.**SchedulingVariabilityAfter** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityUnit](#InducedSubTaskSchedule.**SchedulingVariabilityUnit** (Field)) | *string* | YES | no |
-| [SharedSkipCounters](#InducedSubTaskSchedule.**SharedSkipCounters** (Field)) | *boolean* | YES | no |
-| [SharedLostCounters](#InducedSubTaskSchedule.**SharedLostCounters** (Field)) | *boolean* | YES | no |
+| [Id](#InducedSubTaskScheduleId-Field) **(KEY)** | *guid* | YES | no |
+| [ParentTaskScheduleId](#InducedSubTaskScheduleParentTaskScheduleId-Field) (FK) | *guid* | YES | no |
+| [InducedTaskScheduleId](#InducedSubTaskScheduleInducedTaskScheduleId-Field) (FK) | *guid* | YES | no |
+| [Offset](#InducedSubTaskScheduleOffset-Field) | *int32* | YES | no |
+| [OffsetUnit](#InducedSubTaskScheduleOffsetUnit-Field) | *string* | YES | no |
+| [SchedulingVariabilityBefore](#InducedSubTaskScheduleSchedulingVariabilityBefore-Field) | *string* | YES | no |
+| [SchedulingVariabilityAfter](#InducedSubTaskScheduleSchedulingVariabilityAfter-Field) | *string* | YES | no |
+| [SchedulingVariabilityUnit](#InducedSubTaskScheduleSchedulingVariabilityUnit-Field) | *string* | YES | no |
+| [SharedSkipCounters](#InducedSubTaskScheduleSharedSkipCounters-Field) | *boolean* | YES | no |
+| [SharedLostCounters](#InducedSubTaskScheduleSharedLostCounters-Field) | *boolean* | YES | no |
 ##### InducedSubTaskSchedule.**Id** (Field)
 ```
 self describing ...
@@ -1046,18 +1046,18 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [ParentTaskSchedule](#**ParentTaskSchedule** (parent of this InducedSubTaskSchedule)) | Parent | [TaskSchedule](#Type: TaskSchedule) | 0/1 (optional) |
-| [InducedTaskSchedule](#**InducedTaskSchedule** (lookup from this InducedSubTaskSchedule)) | Lookup | [TaskSchedule](#Type: TaskSchedule) | 0/1 (optional) |
+| [ParentTaskSchedule](#ParentTaskSchedule-parent-of-this-InducedSubTaskSchedule) | Parent | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
+| [InducedTaskSchedule](#InducedTaskSchedule-lookup-from-this-InducedSubTaskSchedule) | Lookup | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
 
 ##### **ParentTaskSchedule** (parent of this InducedSubTaskSchedule)
-Target Type: [TaskSchedule](#Type: TaskSchedule)
-Addressed by: [ParentTaskScheduleId](#InducedSubTaskSchedule.ParentTaskScheduleId (Field)).
+Target Type: [TaskSchedule](#TaskSchedule)
+Addressed by: [ParentTaskScheduleId](#InducedSubTaskScheduleParentTaskScheduleId-Field).
 ```
 self describing ...
 ```
 ##### **InducedTaskSchedule** (lookup from this InducedSubTaskSchedule)
-Target Type: [TaskSchedule](#Type: TaskSchedule)
-Addressed by: [InducedTaskScheduleId](#InducedSubTaskSchedule.InducedTaskScheduleId (Field)).
+Target Type: [TaskSchedule](#TaskSchedule)
+Addressed by: [InducedTaskScheduleId](#InducedSubTaskScheduleInducedTaskScheduleId-Field).
 ```
 self describing ...
 ```
@@ -1065,25 +1065,25 @@ self describing ...
 
 
 
-## Type: InducedTreatmentTask
+## InducedTreatmentTask
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedTreatmentTask.**Id** (Field)) **(KEY)** | *guid* | YES | no |
-| [TaskScheduleId](#InducedTreatmentTask.**TaskScheduleId** (Field)) (FK) | *guid* | YES | no |
-| [InducedTreatmentName](#InducedTreatmentTask.**InducedTreatmentName** (Field)) (FK) | *string* (50) | YES | no |
-| [Offset](#InducedTreatmentTask.**Offset** (Field)) | *int32* | YES | no |
-| [OffsetUnit](#InducedTreatmentTask.**OffsetUnit** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityBefore](#InducedTreatmentTask.**SchedulingVariabilityBefore** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityAfter](#InducedTreatmentTask.**SchedulingVariabilityAfter** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityUnit](#InducedTreatmentTask.**SchedulingVariabilityUnit** (Field)) | *string* | YES | no |
-| [InducedTaskExecutionTitle](#InducedTreatmentTask.**InducedTaskExecutionTitle** (Field)) | *string* | YES | no |
-| [Skipable](#InducedTreatmentTask.**Skipable** (Field)) | *boolean* | YES | no |
-| [EventOnSkip](#InducedTreatmentTask.**EventOnSkip** (Field)) | *string* | YES | no |
-| [EventOnLost](#InducedTreatmentTask.**EventOnLost** (Field)) | *string* | YES | no |
+| [Id](#InducedTreatmentTaskId-Field) **(KEY)** | *guid* | YES | no |
+| [TaskScheduleId](#InducedTreatmentTaskTaskScheduleId-Field) (FK) | *guid* | YES | no |
+| [InducedTreatmentName](#InducedTreatmentTaskInducedTreatmentName-Field) (FK) | *string* (50) | YES | no |
+| [Offset](#InducedTreatmentTaskOffset-Field) | *int32* | YES | no |
+| [OffsetUnit](#InducedTreatmentTaskOffsetUnit-Field) | *string* | YES | no |
+| [SchedulingVariabilityBefore](#InducedTreatmentTaskSchedulingVariabilityBefore-Field) | *string* | YES | no |
+| [SchedulingVariabilityAfter](#InducedTreatmentTaskSchedulingVariabilityAfter-Field) | *string* | YES | no |
+| [SchedulingVariabilityUnit](#InducedTreatmentTaskSchedulingVariabilityUnit-Field) | *string* | YES | no |
+| [InducedTaskExecutionTitle](#InducedTreatmentTaskInducedTaskExecutionTitle-Field) | *string* | YES | no |
+| [Skipable](#InducedTreatmentTaskSkipable-Field) | *boolean* | YES | no |
+| [EventOnSkip](#InducedTreatmentTaskEventOnSkip-Field) | *string* | YES | no |
+| [EventOnLost](#InducedTreatmentTaskEventOnLost-Field) | *string* | YES | no |
 ##### InducedTreatmentTask.**Id** (Field)
 ```
 self describing ...
@@ -1142,18 +1142,18 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [TaskSchedule](#**TaskSchedule** (parent of this InducedTreatmentTask)) | Parent | [TaskSchedule](#Type: TaskSchedule) | 0/1 (optional) |
-| [InducedTask](#**InducedTask** (lookup from this InducedTreatmentTask)) | Lookup | [TreatmentTask](#Type: TreatmentTask) | 0/1 (optional) |
+| [TaskSchedule](#TaskSchedule-parent-of-this-InducedTreatmentTask) | Parent | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
+| [InducedTask](#InducedTask-lookup-from-this-InducedTreatmentTask) | Lookup | [TreatmentTask](#TreatmentTask) | 0/1 (optional) |
 
 ##### **TaskSchedule** (parent of this InducedTreatmentTask)
-Target Type: [TaskSchedule](#Type: TaskSchedule)
-Addressed by: [TaskScheduleId](#InducedTreatmentTask.TaskScheduleId (Field)).
+Target Type: [TaskSchedule](#TaskSchedule)
+Addressed by: [TaskScheduleId](#InducedTreatmentTaskTaskScheduleId-Field).
 ```
 self describing ...
 ```
 ##### **InducedTask** (lookup from this InducedTreatmentTask)
-Target Type: [TreatmentTask](#Type: TreatmentTask)
-Addressed by: [InducedTreatmentName](#InducedTreatmentTask.InducedTreatmentName (Field)).
+Target Type: [TreatmentTask](#TreatmentTask)
+Addressed by: [InducedTreatmentName](#InducedTreatmentTaskInducedTreatmentName-Field).
 ```
 self describing ...
 ```
@@ -1161,21 +1161,21 @@ self describing ...
 
 
 
-## Type: TreatmentTask
+## TreatmentTask
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TreatmentName](#TreatmentTask.**TreatmentName** (Field)) **(KEY)** | *string* (50) | YES | no |
-| [StudyWorkflowName](#TreatmentTask.**StudyWorkflowName** (Field)) (FK) | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#TreatmentTask.**StudyWorkflowVersion** (Field)) (FK) | *string* (20) | YES | no |
-| [BillablePriceOnCompletedExecution](#TreatmentTask.**BillablePriceOnCompletedExecution** (Field)) | *decimal* | no | no |
-| [ShortDescription](#TreatmentTask.**ShortDescription** (Field)) | *string* | YES | no |
-| [TaskSpecificDocumentationUrl](#TreatmentTask.**TaskSpecificDocumentationUrl** (Field)) | *string* | no | no |
-| [TreatmentDescription](#TreatmentTask.**TreatmentDescription** (Field)) | *string* | YES | no |
-| [ImportantNotices](#TreatmentTask.**ImportantNotices** (Field)) | *string* | no | no |
+| [TreatmentName](#TreatmentTaskTreatmentName-Field) **(KEY)** | *string* (50) | YES | no |
+| [StudyWorkflowName](#TreatmentTaskStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#TreatmentTaskStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
+| [BillablePriceOnCompletedExecution](#TreatmentTaskBillablePriceOnCompletedExecution-Field) | *decimal* | no | no |
+| [ShortDescription](#TreatmentTaskShortDescription-Field) | *string* | YES | no |
+| [TaskSpecificDocumentationUrl](#TreatmentTaskTaskSpecificDocumentationUrl-Field) | *string* | no | no |
+| [TreatmentDescription](#TreatmentTaskTreatmentDescription-Field) | *string* | YES | no |
+| [ImportantNotices](#TreatmentTaskImportantNotices-Field) | *string* | no | no |
 ##### TreatmentTask.**TreatmentName** (Field)
 ```
 self describing ...
@@ -1223,17 +1223,17 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [Inducements](#**Inducements** (refering to this TreatmentTask)) | Referers | [InducedTreatmentTask](#Type: InducedTreatmentTask) | * (multiple) |
-| [ResearchStudy](#**ResearchStudy** (parent of this TreatmentTask)) | Parent | [ResearchStudy](#Type: ResearchStudy) | 0/1 (optional) |
+| [Inducements](#Inducements-refering-to-this-TreatmentTask) | Referers | [InducedTreatmentTask](#InducedTreatmentTask) | * (multiple) |
+| [ResearchStudy](#ResearchStudy-parent-of-this-TreatmentTask) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 
 ##### **Inducements** (refering to this TreatmentTask)
-Target: [InducedTreatmentTask](#Type: InducedTreatmentTask)
+Target: [InducedTreatmentTask](#InducedTreatmentTask)
 ```
 self describing ...
 ```
 ##### **ResearchStudy** (parent of this TreatmentTask)
-Target Type: [ResearchStudy](#Type: ResearchStudy)
-Addressed by: [StudyWorkflowName](#TreatmentTask.StudyWorkflowName (Field)), [StudyWorkflowVersion](#TreatmentTask.StudyWorkflowVersion (Field)).
+Target Type: [ResearchStudy](#ResearchStudy)
+Addressed by: [StudyWorkflowName](#TreatmentTaskStudyWorkflowName-Field), [StudyWorkflowVersion](#TreatmentTaskStudyWorkflowVersion-Field).
 ```
 self describing ...
 ```
@@ -1241,25 +1241,25 @@ self describing ...
 
 
 
-## Type: InducedVisitProcedure
+## InducedVisitProcedure
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedVisitProcedure.**Id** (Field)) **(KEY)** | *guid* | YES | no |
-| [ProcedureScheduleId](#InducedVisitProcedure.**ProcedureScheduleId** (Field)) (FK) | *guid* | YES | no |
-| [Offset](#InducedVisitProcedure.**Offset** (Field)) | *int32* | YES | no |
-| [OffsetUnit](#InducedVisitProcedure.**OffsetUnit** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityBefore](#InducedVisitProcedure.**SchedulingVariabilityBefore** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityAfter](#InducedVisitProcedure.**SchedulingVariabilityAfter** (Field)) | *string* | YES | no |
-| [SchedulingVariabilityUnit](#InducedVisitProcedure.**SchedulingVariabilityUnit** (Field)) | *string* | YES | no |
-| [InducedVisitProdecureName](#InducedVisitProcedure.**InducedVisitProdecureName** (Field)) (FK) | *string* (50) | YES | no |
-| [InducedVisitExecutionTitle](#InducedVisitProcedure.**InducedVisitExecutionTitle** (Field)) | *string* | YES | no |
-| [Skipable](#InducedVisitProcedure.**Skipable** (Field)) | *boolean* | YES | no |
-| [EventOnSkip](#InducedVisitProcedure.**EventOnSkip** (Field)) | *string* | YES | no |
-| [EventOnLost](#InducedVisitProcedure.**EventOnLost** (Field)) | *string* | YES | no |
+| [Id](#InducedVisitProcedureId-Field) **(KEY)** | *guid* | YES | no |
+| [ProcedureScheduleId](#InducedVisitProcedureProcedureScheduleId-Field) (FK) | *guid* | YES | no |
+| [Offset](#InducedVisitProcedureOffset-Field) | *int32* | YES | no |
+| [OffsetUnit](#InducedVisitProcedureOffsetUnit-Field) | *string* | YES | no |
+| [SchedulingVariabilityBefore](#InducedVisitProcedureSchedulingVariabilityBefore-Field) | *string* | YES | no |
+| [SchedulingVariabilityAfter](#InducedVisitProcedureSchedulingVariabilityAfter-Field) | *string* | YES | no |
+| [SchedulingVariabilityUnit](#InducedVisitProcedureSchedulingVariabilityUnit-Field) | *string* | YES | no |
+| [InducedVisitProdecureName](#InducedVisitProcedureInducedVisitProdecureName-Field) (FK) | *string* (50) | YES | no |
+| [InducedVisitExecutionTitle](#InducedVisitProcedureInducedVisitExecutionTitle-Field) | *string* | YES | no |
+| [Skipable](#InducedVisitProcedureSkipable-Field) | *boolean* | YES | no |
+| [EventOnSkip](#InducedVisitProcedureEventOnSkip-Field) | *string* | YES | no |
+| [EventOnLost](#InducedVisitProcedureEventOnLost-Field) | *string* | YES | no |
 ##### InducedVisitProcedure.**Id** (Field)
 ```
 self describing ...
@@ -1318,18 +1318,18 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [ProcedureSchedule](#**ProcedureSchedule** (parent of this InducedVisitProcedure)) | Parent | [ProcedureSchedule](#Type: ProcedureSchedule) | 0/1 (optional) |
-| [InducedVisitProdecure](#**InducedVisitProdecure** (lookup from this InducedVisitProcedure)) | Lookup | [VisitProdecureDefinition](#Type: VisitProdecureDefinition) | 0/1 (optional) |
+| [ProcedureSchedule](#ProcedureSchedule-parent-of-this-InducedVisitProcedure) | Parent | [ProcedureSchedule](#ProcedureSchedule) | 0/1 (optional) |
+| [InducedVisitProdecure](#InducedVisitProdecure-lookup-from-this-InducedVisitProcedure) | Lookup | [VisitProdecureDefinition](#VisitProdecureDefinition) | 0/1 (optional) |
 
 ##### **ProcedureSchedule** (parent of this InducedVisitProcedure)
-Target Type: [ProcedureSchedule](#Type: ProcedureSchedule)
-Addressed by: [ProcedureScheduleId](#InducedVisitProcedure.ProcedureScheduleId (Field)).
+Target Type: [ProcedureSchedule](#ProcedureSchedule)
+Addressed by: [ProcedureScheduleId](#InducedVisitProcedureProcedureScheduleId-Field).
 ```
 self describing ...
 ```
 ##### **InducedVisitProdecure** (lookup from this InducedVisitProcedure)
-Target Type: [VisitProdecureDefinition](#Type: VisitProdecureDefinition)
-Addressed by: [InducedVisitProdecureName](#InducedVisitProcedure.InducedVisitProdecureName (Field)).
+Target Type: [VisitProdecureDefinition](#VisitProdecureDefinition)
+Addressed by: [InducedVisitProdecureName](#InducedVisitProcedureInducedVisitProdecureName-Field).
 ```
 self describing ...
 ```
@@ -1337,20 +1337,20 @@ self describing ...
 
 
 
-## Type: VisitProdecureDefinition
+## VisitProdecureDefinition
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [VisitProdecureName](#VisitProdecureDefinition.**VisitProdecureName** (Field)) **(KEY)** | *string* (50) | YES | no |
-| [StudyWorkflowName](#VisitProdecureDefinition.**StudyWorkflowName** (Field)) (FK) | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#VisitProdecureDefinition.**StudyWorkflowVersion** (Field)) (FK) | *string* (20) | YES | no |
-| [RootTaskScheduleId](#VisitProdecureDefinition.**RootTaskScheduleId** (Field)) (FK) | *guid* | no | no |
-| [BillablePriceOnAbortedExecution](#VisitProdecureDefinition.**BillablePriceOnAbortedExecution** (Field)) | *decimal* | no | no |
-| [BillablePriceOnCompletedExecution](#VisitProdecureDefinition.**BillablePriceOnCompletedExecution** (Field)) | *decimal* | no | no |
-| [VisitSpecificDocumentationUrl](#VisitProdecureDefinition.**VisitSpecificDocumentationUrl** (Field)) | *string* | no | no |
+| [VisitProdecureName](#VisitProdecureDefinitionVisitProdecureName-Field) **(KEY)** | *string* (50) | YES | no |
+| [StudyWorkflowName](#VisitProdecureDefinitionStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#VisitProdecureDefinitionStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
+| [RootTaskScheduleId](#VisitProdecureDefinitionRootTaskScheduleId-Field) (FK) | *guid* | no | no |
+| [BillablePriceOnAbortedExecution](#VisitProdecureDefinitionBillablePriceOnAbortedExecution-Field) | *decimal* | no | no |
+| [BillablePriceOnCompletedExecution](#VisitProdecureDefinitionBillablePriceOnCompletedExecution-Field) | *decimal* | no | no |
+| [VisitSpecificDocumentationUrl](#VisitProdecureDefinitionVisitSpecificDocumentationUrl-Field) | *string* | no | no |
 ##### VisitProdecureDefinition.**VisitProdecureName** (Field)
 ```
 self describing ...
@@ -1396,24 +1396,24 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [Inducements](#**Inducements** (refering to this VisitProdecureDefinition)) | Referers | [InducedVisitProcedure](#Type: InducedVisitProcedure) | * (multiple) |
-| [ResearchStudy](#**ResearchStudy** (parent of this VisitProdecureDefinition)) | Parent | [ResearchStudy](#Type: ResearchStudy) | 0/1 (optional) |
-| [RootTaskSchedule](#**RootTaskSchedule** (lookup from this VisitProdecureDefinition)) | Lookup | [TaskSchedule](#Type: TaskSchedule) | 1 (required) |
+| [Inducements](#Inducements-refering-to-this-VisitProdecureDefinition) | Referers | [InducedVisitProcedure](#InducedVisitProcedure) | * (multiple) |
+| [ResearchStudy](#ResearchStudy-parent-of-this-VisitProdecureDefinition) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
+| [RootTaskSchedule](#RootTaskSchedule-lookup-from-this-VisitProdecureDefinition) | Lookup | [TaskSchedule](#TaskSchedule) | 1 (required) |
 
 ##### **Inducements** (refering to this VisitProdecureDefinition)
-Target: [InducedVisitProcedure](#Type: InducedVisitProcedure)
+Target: [InducedVisitProcedure](#InducedVisitProcedure)
 ```
 self describing ...
 ```
 ##### **ResearchStudy** (parent of this VisitProdecureDefinition)
-Target Type: [ResearchStudy](#Type: ResearchStudy)
-Addressed by: [StudyWorkflowName](#VisitProdecureDefinition.StudyWorkflowName (Field)), [StudyWorkflowVersion](#VisitProdecureDefinition.StudyWorkflowVersion (Field)).
+Target Type: [ResearchStudy](#ResearchStudy)
+Addressed by: [StudyWorkflowName](#VisitProdecureDefinitionStudyWorkflowName-Field), [StudyWorkflowVersion](#VisitProdecureDefinitionStudyWorkflowVersion-Field).
 ```
 self describing ...
 ```
 ##### **RootTaskSchedule** (lookup from this VisitProdecureDefinition)
-Target Type: [TaskSchedule](#Type: TaskSchedule)
-Addressed by: [RootTaskScheduleId](#VisitProdecureDefinition.RootTaskScheduleId (Field)).
+Target Type: [TaskSchedule](#TaskSchedule)
+Addressed by: [RootTaskScheduleId](#VisitProdecureDefinitionRootTaskScheduleId-Field).
 ```
 the TaskSchedule which is representing the primary-/entry-workflow (estimated tasks) when executing this visit
 ```
@@ -1421,20 +1421,20 @@ the TaskSchedule which is representing the primary-/entry-workflow (estimated ta
 
 
 
-## Type: ProcedureCycleDefinition
+## ProcedureCycleDefinition
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [ProcedureScheduleId](#ProcedureCycleDefinition.**ProcedureScheduleId** (Field)) **(KEY)** (FK) | *guid* | YES | no |
-| [ReschedulingBase](#ProcedureCycleDefinition.**ReschedulingBase** (Field)) | *int32* | YES | no |
-| [ReschedulingOffset](#ProcedureCycleDefinition.**ReschedulingOffset** (Field)) | *string* | YES | no |
-| [ReschedulingOffsetUnit](#ProcedureCycleDefinition.**ReschedulingOffsetUnit** (Field)) | *string* | YES | no |
-| [CycleLimit](#ProcedureCycleDefinition.**CycleLimit** (Field)) | *int32* | no | no |
-| [SharedSkipCounters](#ProcedureCycleDefinition.**SharedSkipCounters** (Field)) | *boolean* | YES | no |
-| [SharedLostCounters](#ProcedureCycleDefinition.**SharedLostCounters** (Field)) | *boolean* | YES | no |
+| [ProcedureScheduleId](#ProcedureCycleDefinitionProcedureScheduleId-Field) **(KEY)** (FK) | *guid* | YES | no |
+| [ReschedulingBase](#ProcedureCycleDefinitionReschedulingBase-Field) | *int32* | YES | no |
+| [ReschedulingOffset](#ProcedureCycleDefinitionReschedulingOffset-Field) | *string* | YES | no |
+| [ReschedulingOffsetUnit](#ProcedureCycleDefinitionReschedulingOffsetUnit-Field) | *string* | YES | no |
+| [CycleLimit](#ProcedureCycleDefinitionCycleLimit-Field) | *int32* | no | no |
+| [SharedSkipCounters](#ProcedureCycleDefinitionSharedSkipCounters-Field) | *boolean* | YES | no |
+| [SharedLostCounters](#ProcedureCycleDefinitionSharedLostCounters-Field) | *boolean* | YES | no |
 ##### ProcedureCycleDefinition.**ProcedureScheduleId** (Field)
 ```
 self describing ...
@@ -1472,11 +1472,11 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [ProcedureSchedule](#**ProcedureSchedule** (parent of this ProcedureCycleDefinition)) | Parent | [ProcedureSchedule](#Type: ProcedureSchedule) | 0/1 (optional) |
+| [ProcedureSchedule](#ProcedureSchedule-parent-of-this-ProcedureCycleDefinition) | Parent | [ProcedureSchedule](#ProcedureSchedule) | 0/1 (optional) |
 
 ##### **ProcedureSchedule** (parent of this ProcedureCycleDefinition)
-Target Type: [ProcedureSchedule](#Type: ProcedureSchedule)
-Addressed by: [ProcedureScheduleId](#ProcedureCycleDefinition.ProcedureScheduleId (Field)).
+Target Type: [ProcedureSchedule](#ProcedureSchedule)
+Addressed by: [ProcedureScheduleId](#ProcedureCycleDefinitionProcedureScheduleId-Field).
 ```
 self describing ...
 ```
@@ -1484,20 +1484,20 @@ self describing ...
 
 
 
-## Type: StudyEvent
+## StudyEvent
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyEventName](#StudyEvent.**StudyEventName** (Field)) **(KEY)** | *string* (50) | YES | no |
-| [StudyWorkflowName](#StudyEvent.**StudyWorkflowName** (Field)) (FK) | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#StudyEvent.**StudyWorkflowVersion** (Field)) (FK) | *string* (20) | YES | no |
-| [MaxOccourrencesBeforeExclusion](#StudyEvent.**MaxOccourrencesBeforeExclusion** (Field)) | *int32* | no | no |
-| [AllowManualTrigger](#StudyEvent.**AllowManualTrigger** (Field)) | *boolean* | YES | no |
-| [Description](#StudyEvent.**Description** (Field)) | *string* | YES | no |
-| [EvenSpecificDocumentationUrl](#StudyEvent.**EvenSpecificDocumentationUrl** (Field)) | *string* | no | no |
+| [StudyEventName](#StudyEventStudyEventName-Field) **(KEY)** | *string* (50) | YES | no |
+| [StudyWorkflowName](#StudyEventStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#StudyEventStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
+| [MaxOccourrencesBeforeExclusion](#StudyEventMaxOccourrencesBeforeExclusion-Field) | *int32* | no | no |
+| [AllowManualTrigger](#StudyEventAllowManualTrigger-Field) | *boolean* | YES | no |
+| [Description](#StudyEventDescription-Field) | *string* | YES | no |
+| [EvenSpecificDocumentationUrl](#StudyEventEvenSpecificDocumentationUrl-Field) | *string* | no | no |
 ##### StudyEvent.**StudyEventName** (Field)
 ```
 self describing ...
@@ -1540,11 +1540,11 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [ResearchStudy](#**ResearchStudy** (parent of this StudyEvent)) | Parent | [ResearchStudy](#Type: ResearchStudy) | 0/1 (optional) |
+| [ResearchStudy](#ResearchStudy-parent-of-this-StudyEvent) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 
 ##### **ResearchStudy** (parent of this StudyEvent)
-Target Type: [ResearchStudy](#Type: ResearchStudy)
-Addressed by: [StudyWorkflowName](#StudyEvent.StudyWorkflowName (Field)), [StudyWorkflowVersion](#StudyEvent.StudyWorkflowVersion (Field)).
+Target Type: [ResearchStudy](#ResearchStudy)
+Addressed by: [StudyWorkflowName](#StudyEventStudyWorkflowName-Field), [StudyWorkflowVersion](#StudyEventStudyWorkflowVersion-Field).
 ```
 self describing ...
 ```
@@ -1552,20 +1552,20 @@ self describing ...
 
 
 
-## Type: TaskCycleDefinition
+## TaskCycleDefinition
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskScheduleId](#TaskCycleDefinition.**TaskScheduleId** (Field)) **(KEY)** (FK) | *guid* | YES | no |
-| [ReschedulingBase](#TaskCycleDefinition.**ReschedulingBase** (Field)) | *string* | YES | no |
-| [ReschedulingOffset](#TaskCycleDefinition.**ReschedulingOffset** (Field)) | *string* | YES | no |
-| [ReschedulingOffsetUnit](#TaskCycleDefinition.**ReschedulingOffsetUnit** (Field)) | *string* | YES | no |
-| [CycleLimit](#TaskCycleDefinition.**CycleLimit** (Field)) | *int32* | no | no |
-| [SharedSkipCounters](#TaskCycleDefinition.**SharedSkipCounters** (Field)) | *boolean* | YES | no |
-| [SharedLostCounters](#TaskCycleDefinition.**SharedLostCounters** (Field)) | *boolean* | YES | no |
+| [TaskScheduleId](#TaskCycleDefinitionTaskScheduleId-Field) **(KEY)** (FK) | *guid* | YES | no |
+| [ReschedulingBase](#TaskCycleDefinitionReschedulingBase-Field) | *string* | YES | no |
+| [ReschedulingOffset](#TaskCycleDefinitionReschedulingOffset-Field) | *string* | YES | no |
+| [ReschedulingOffsetUnit](#TaskCycleDefinitionReschedulingOffsetUnit-Field) | *string* | YES | no |
+| [CycleLimit](#TaskCycleDefinitionCycleLimit-Field) | *int32* | no | no |
+| [SharedSkipCounters](#TaskCycleDefinitionSharedSkipCounters-Field) | *boolean* | YES | no |
+| [SharedLostCounters](#TaskCycleDefinitionSharedLostCounters-Field) | *boolean* | YES | no |
 ##### TaskCycleDefinition.**TaskScheduleId** (Field)
 ```
 self describing ...
@@ -1603,11 +1603,11 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [TaskSchedule](#**TaskSchedule** (parent of this TaskCycleDefinition)) | Parent | [TaskSchedule](#Type: TaskSchedule) | 0/1 (optional) |
+| [TaskSchedule](#TaskSchedule-parent-of-this-TaskCycleDefinition) | Parent | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
 
 ##### **TaskSchedule** (parent of this TaskCycleDefinition)
-Target Type: [TaskSchedule](#Type: TaskSchedule)
-Addressed by: [TaskScheduleId](#TaskCycleDefinition.TaskScheduleId (Field)).
+Target Type: [TaskSchedule](#TaskSchedule)
+Addressed by: [TaskScheduleId](#TaskCycleDefinitionTaskScheduleId-Field).
 ```
 self describing ...
 ```
