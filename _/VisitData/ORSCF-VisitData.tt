@@ -9,10 +9,14 @@
 <#@ import namespace="Newtonsoft.Json" #>
 <#@ output extension=".md"#><#
 ///////////////////////////////////////////////////////////////////////////////////////////////
-//     copyright: Tobias Korn / version: 13.03.2021                                          //
+//     copyright: Tobias Korn / version: 20.03.2021                                          //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
        const string inputFile = "ORSCF-VisitData.Schema.json";
+
+       const string heading = "ORSCF-VisitData Schema Specification";
+       const string author  = "[ORSCF](https://www.orscf.org) (\"Open Research Study Communication Formats\") / T.Korn";
+       const string license = "[Apache-2](https://choosealicense.com/licenses/apache-2.0/)";
 
        const string entityClassNamePattern = "{E}";
 
@@ -23,24 +27,53 @@
        const bool generateReverseNavPropsToReferers   = true;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
+
+string rawSchema = File.ReadAllText(Host.ResolvePath(inputFile), System.Text.Encoding.Default);
+SchemaRoot schema = JsonConvert.DeserializeObject<SchemaRoot>(rawSchema);
+
+// build the principal-tree
+Dictionary<String, EntitySchema> entitiesByPath = new Dictionary<String, EntitySchema>();
+foreach (EntitySchema entity in schema.Entities) {
+  String path = BuildDependencyPath(schema, entity);
+  entitiesByPath.Add(path,entity);
+}
+
 #>
-# ORSCF-VisitData Schema Specification
-author: ORSCF ("Open Research Study Communication Formats")
-license: [Apache-2](https://choosealicense.com/licenses/apache-2.0/)
-last update: <#=DateTime.Now.ToShortDateString() #>
-add. info: [orscf.org](https://www.orscf.org)
- 
- 
+# <#=heading #>
+
+|          | Info                                    |
+|----------|-----------------------------------------|
+|author:   |<#=author #>|
+|license:  |<#=license #>|
+|version:  |<#=schema.SemanticVersion #>|
+|timestamp:|<#=DateTime.Parse(schema.TimestampUtc).ToString("yyyy-MM-dd HH:mm") #>|
+
+### Contents
+
+<#
+
+foreach (var kvp in entitiesByPath.OrderBy((kvp)=>kvp.Key)) {
+  int depth = kvp.Key.Split('/').Length - 1;
+  string sep = ".";
+  if(depth > 0 ){
+    sep = "\\";
+  }
+#>
+  <#=new String(' ', depth).Replace(" ", "       ") #><#=sep#>  [<#=entityClassNamePattern.Replace("{E}", kvp.Value.Name) #>](#<#=entityClassNamePattern.Replace("{E}", kvp.Value.Name) #>)
+<#
+
+}
+
+#>
+
 # Model:
 
 ![chart](./chart.png)
 
 <#
 
-string rawSchema = File.ReadAllText(Host.ResolvePath(inputFile), System.Text.Encoding.Default);
-SchemaRoot schema = JsonConvert.DeserializeObject<SchemaRoot>(rawSchema);
-
-foreach (EntitySchema entity in schema.Entities) {
+foreach (var kvp in entitiesByPath.OrderBy((kvp)=>kvp.Key)) {
+  EntitySchema entity = kvp.Value;
 
   Dictionary<String, List<String>> attributesPerField = new Dictionary<String, List<String>>();
   foreach (FieldSchema field in entity.Fields) {
@@ -380,6 +413,23 @@ public static string ExcapeHeadingToMdLink(string heading)
   return heading.Replace("(", "").Replace(")", "").Replace("*", "").Replace(".", "").Replace(" ", "-");
 }
 
+String BuildDependencyPath(SchemaRoot schema, EntitySchema entity){
+
+  EntitySchema firstExistingPrincipal = null;
+  foreach (RelationSchema rel in schema.Relations) {
+    if(rel.ForeignEntityName == entity.Name && !rel.IsLookupRelation){
+      firstExistingPrincipal = schema.Entities.Where((e)=>e.Name ==  rel.PrimaryEntityName).SingleOrDefault();
+      break;
+    }
+  }
+  if(firstExistingPrincipal == null){
+    return entity.Name;
+  }
+  else{
+    return BuildDependencyPath(schema, firstExistingPrincipal) + "/" + entity.Name;
+  }
+}
+
 public static string RenderMdTable(params List<string>[] columns)
 {
 
@@ -434,6 +484,11 @@ public static string RenderMdTable(params List<string>[] columns)
 
 class SchemaRoot{
 
+  public string DescriptionFormat;
+
+  public string TimestampUtc;
+  public string SemanticVersion;
+
   public EntitySchema[] Entities = {};
 
   public RelationSchema[] Relations = {};
@@ -443,7 +498,7 @@ class SchemaRoot{
 class EntitySchema{
 
   public string Name = "";
-  public string Table = "";
+  public string NamePlural = "";
   public string InheritedEntityName = null;
   public string Summary = "";
 
