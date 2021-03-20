@@ -1,8 +1,11 @@
 {
+  "DescriptionFormat": "v1.0",
+  "TimestampUtc": "2021-03-20T11:23:47.3189329Z",
+  "SemanticVersion": "1.3.0",
   "Entities": [
     {
       "Name": "Arm",
-      "Table": "Arms",
+      "NamePlural": "Arms",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -159,7 +162,7 @@
     },
     {
       "Name": "ResearchStudy",
-      "Table": "ResearchStudies",
+      "NamePlural": "ResearchStudies",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -333,7 +336,7 @@
     },
     {
       "Name": "ProcedureSchedule",
-      "Table": "ProcedureSchedules",
+      "NamePlural": "ProcedureSchedules",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -503,7 +506,7 @@
     },
     {
       "Name": "DataRecordingTask",
-      "Table": "DataRecordingTasks",
+      "NamePlural": "DataRecordingTasks",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -629,7 +632,7 @@
     },
     {
       "Name": "InducedDataRecordingTask",
-      "Table": "InducedDataRecordingTasks",
+      "NamePlural": "InducedDataRecordingTasks",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -794,7 +797,7 @@
     },
     {
       "Name": "DrugApplymentTask",
-      "Table": "DrugAppliymentTasks",
+      "NamePlural": "DrugAppliymentTasks",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -942,7 +945,7 @@
     },
     {
       "Name": "InducedDrugApplymentTask",
-      "Table": "InducedDrugApplymentTasks",
+      "NamePlural": "InducedDrugApplymentTasks",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -1107,7 +1110,7 @@
     },
     {
       "Name": "TaskSchedule",
-      "Table": "TaskSchedules",
+      "NamePlural": "TaskSchedules",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -1277,7 +1280,7 @@
     },
     {
       "Name": "InducedSubProcedureSchedule",
-      "Table": "InducedSubProcedureSchedules",
+      "NamePlural": "InducedSubProcedureSchedules",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -1420,7 +1423,7 @@
     },
     {
       "Name": "InducedSubTaskSchedule",
-      "Table": "InducedSubTaskSchedules",
+      "NamePlural": "InducedSubTaskSchedules",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -1563,7 +1566,7 @@
     },
     {
       "Name": "InducedTreatmentTask",
-      "Table": "InducedTreatmentTasks",
+      "NamePlural": "InducedTreatmentTasks",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -1728,7 +1731,7 @@
     },
     {
       "Name": "TreatmentTask",
-      "Table": "TreatmentTasks",
+      "NamePlural": "TreatmentTasks",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -1843,7 +1846,7 @@
     },
     {
       "Name": "InducedVisitProcedure",
-      "Table": "InducedVisitProcedures",
+      "NamePlural": "InducedVisitProcedures",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -2008,7 +2011,7 @@
     },
     {
       "Name": "VisitProdecureDefinition",
-      "Table": "VisitProdecureDefinitions",
+      "NamePlural": "VisitProdecureDefinitions",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -2119,7 +2122,7 @@
     },
     {
       "Name": "ProcedureCycleDefinition",
-      "Table": "ProcedureCycleDefinitions",
+      "NamePlural": "ProcedureCycleDefinitions",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -2215,7 +2218,7 @@
     },
     {
       "Name": "StudyEvent",
-      "Table": "StudyEvents",
+      "NamePlural": "StudyEvents",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -2319,7 +2322,7 @@
     },
     {
       "Name": "TaskCycleDefinition",
-      "Table": "TaskCycleDefinitions",
+      "NamePlural": "TaskCycleDefinitions",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,

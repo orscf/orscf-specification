@@ -1,8 +1,11 @@
 {
+  "DescriptionFormat": "v1.0",
+  "TimestampUtc": "2021-03-20T11:24:17.6685222Z",
+  "SemanticVersion": "1.3.0",
   "Entities": [
     {
       "Name": "BillableTask",
-      "Table": "BillableTasks",
+      "NamePlural": "BillableTasks",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -72,7 +75,7 @@
     },
     {
       "Name": "BillableVisit",
-      "Table": "BillableVisits",
+      "NamePlural": "BillableVisits",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -222,7 +225,7 @@
     },
     {
       "Name": "StudyExecutionScope",
-      "Table": "StudyExecutionScopes",
+      "NamePlural": "StudyExecutionScopes",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
@@ -296,7 +299,7 @@
     },
     {
       "Name": "BillingDemand",
-      "Table": "BillingDemands",
+      "NamePlural": "BillingDemands",
       "InheritedEntityName": null,
       "Summary": "created by the sponsor",
       "IsBlEntrypoint": false,
@@ -388,7 +391,7 @@
     },
     {
       "Name": "Invoice",
-      "Table": "Invoices",
+      "NamePlural": "Invoices",
       "InheritedEntityName": null,
       "Summary": "created by the executor-company",
       "IsBlEntrypoint": false,
