@@ -1,44 +1,54 @@
 # ORSCF-IdentityManagement Schema Specification
-author: ORSCF ("Open Research Study Communication Formats")
-license: [Apache-2](https://choosealicense.com/licenses/apache-2.0/)
-last update: 13.03.2021
-add. info: [orscf.org](https://www.orscf.org)
- 
- 
+
+|          | Info                                    |
+|----------|-----------------------------------------|
+|author:   |[ORSCF](https://www.orscf.org) ("Open Research Study Communication Formats") / T.Korn|
+|license:  |[Apache-2](https://choosealicense.com/licenses/apache-2.0/)|
+|version:  |1.3.0|
+|timestamp:|2021-03-20 12:23|
+
+### Contents
+
+  .  [StudyScope](#StudyScope)
+         \  [StudyExecutionScope](#StudyExecutionScope)
+         \  [SubjectParticipation](#SubjectParticipation)
+                \  [AdditionalSubjectParticipationIdentifier](#AdditionalSubjectParticipationIdentifier)
+  .  [SubjectAddress](#SubjectAddress)
+  .  [SubjectIdentity](#SubjectIdentity)
+
 # Model:
 
 ![chart](./chart.png)
 
 
 
-## AdditionalSubjectParticipationIdentifier
+## StudyScope
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [ParticipantIdentifier](#AdditionalSubjectParticipationIdentifierParticipantIdentifier-Field) **(KEY)** (FK) | *string* (50) | YES | YES |
-| [IdentifierName](#AdditionalSubjectParticipationIdentifierIdentifierName-Field) **(KEY)** | *string* (30) | YES | YES |
-| [IdentifierValue](#AdditionalSubjectParticipationIdentifierIdentifierValue-Field) | *string* | YES | no |
-##### AdditionalSubjectParticipationIdentifier.**ParticipantIdentifier** (Field)
+| [StudyWorkflowName](#StudyScopeStudyWorkflowName-Field) **(KEY)** | *string* (100) | YES | YES |
+| [StudyWorkflowVersion](#StudyScopeStudyWorkflowVersion-Field) **(KEY)** | *string* (20) | YES | YES |
+| [ParticipantIdentifierSemantic](#StudyScopeParticipantIdentifierSemantic-Field) | *string* | YES | no |
+##### StudyScope.**StudyWorkflowName** (Field)
 ```
-self describing ...
-```
-* this field represents the identity (PK) of the record
-* this field is used as foreign key to address the related 'Participation'
-* the maximum length of the content within this field is 50 characters.
-* after the record has been created, the value of this field must not be changed any more!
-##### AdditionalSubjectParticipationIdentifier.**IdentifierName** (Field)
-```
-self describing ...
+the official invariant name of the study as given by the sponsor
 ```
 * this field represents the identity (PK) of the record
-* the maximum length of the content within this field is 30 characters.
+* the maximum length of the content within this field is 100 characters.
 * after the record has been created, the value of this field must not be changed any more!
-##### AdditionalSubjectParticipationIdentifier.**IdentifierValue** (Field)
+##### StudyScope.**StudyWorkflowVersion** (Field)
 ```
-self describing ...
+version of the workflow
+```
+* this field represents the identity (PK) of the record
+* the maximum length of the content within this field is 20 characters.
+* after the record has been created, the value of this field must not be changed any more!
+##### StudyScope.**ParticipantIdentifierSemantic** (Field)
+```
+ for example "Screening-Number" or "Randomization-Number"
 ```
 
 
@@ -46,11 +56,72 @@ self describing ...
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [Participation](#Participation-parent-of-this-AdditionalSubjectParticipationIdentifier) | Parent | [SubjectParticipation](#SubjectParticipation) | 0/1 (optional) |
+| [ExecutionScopes](#ExecutionScopes-childs-of-this-StudyScope) | Childs | [StudyExecutionScope](#StudyExecutionScope) | * (multiple) |
+| [Participations](#Participations-childs-of-this-StudyScope) | Childs | [SubjectParticipation](#SubjectParticipation) | * (multiple) |
 
-##### **Participation** (parent of this AdditionalSubjectParticipationIdentifier)
-Target Type: [SubjectParticipation](#SubjectParticipation)
-Addressed by: [ParticipantIdentifier](#AdditionalSubjectParticipationIdentifierParticipantIdentifier-Field).
+##### **ExecutionScopes** (childs of this StudyScope)
+Target: [StudyExecutionScope](#StudyExecutionScope)
+```
+self describing ...
+```
+##### **Participations** (childs of this StudyScope)
+Target: [SubjectParticipation](#SubjectParticipation)
+```
+self describing ...
+```
+
+
+
+
+## StudyExecutionScope
+
+
+### Fields
+
+| Name | Type | Required | Fix |
+| ---- | ---- | -------- | --- |
+| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(KEY)** | *guid* | YES | no |
+| [ExecutingInstituteIdentifier](#StudyExecutionScopeExecutingInstituteIdentifier-Field) | *string* | YES | no |
+| [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
+##### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
+```
+a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
+```
+* this field represents the identity (PK) of the record
+##### StudyExecutionScope.**ExecutingInstituteIdentifier** (Field)
+```
+the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)
+```
+##### StudyExecutionScope.**StudyWorkflowName** (Field)
+```
+self describing ...
+```
+* this field is used as foreign key to address the related 'StudyScope'
+* the maximum length of the content within this field is 100 characters.
+##### StudyExecutionScope.**StudyWorkflowVersion** (Field)
+```
+self describing ...
+```
+* this field is used as foreign key to address the related 'StudyScope'
+* the maximum length of the content within this field is 20 characters.
+
+
+### Relations
+
+| Name | Role | Target-Type | Target-Multiplicity |
+| ---- | ---- | ----------- | ------------------- |
+| [StudyScope](#StudyScope-parent-of-this-StudyExecutionScope) | Parent | [StudyScope](#StudyScope) | 0/1 (optional) |
+| [CreatedParticipations](#CreatedParticipations-refering-to-this-StudyExecutionScope) | Referers | [SubjectParticipation](#SubjectParticipation) | * (multiple) |
+
+##### **StudyScope** (parent of this StudyExecutionScope)
+Target Type: [StudyScope](#StudyScope)
+Addressed by: [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field), [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field).
+```
+self describing ...
+```
+##### **CreatedParticipations** (refering to this StudyExecutionScope)
+Target: [SubjectParticipation](#SubjectParticipation)
 ```
 self describing ...
 ```
@@ -142,89 +213,34 @@ self describing ...
 
 
 
-## StudyExecutionScope
+## AdditionalSubjectParticipationIdentifier
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(KEY)** | *guid* | YES | no |
-| [ExecutingInstituteIdentifier](#StudyExecutionScopeExecutingInstituteIdentifier-Field) | *string* | YES | no |
-| [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
-##### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
+| [ParticipantIdentifier](#AdditionalSubjectParticipationIdentifierParticipantIdentifier-Field) **(KEY)** (FK) | *string* (50) | YES | YES |
+| [IdentifierName](#AdditionalSubjectParticipationIdentifierIdentifierName-Field) **(KEY)** | *string* (30) | YES | YES |
+| [IdentifierValue](#AdditionalSubjectParticipationIdentifierIdentifierValue-Field) | *string* | YES | no |
+##### AdditionalSubjectParticipationIdentifier.**ParticipantIdentifier** (Field)
 ```
-a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
+self describing ...
 ```
 * this field represents the identity (PK) of the record
-##### StudyExecutionScope.**ExecutingInstituteIdentifier** (Field)
-```
-the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)
-```
-##### StudyExecutionScope.**StudyWorkflowName** (Field)
-```
-self describing ...
-```
-* this field is used as foreign key to address the related 'StudyScope'
-* the maximum length of the content within this field is 100 characters.
-##### StudyExecutionScope.**StudyWorkflowVersion** (Field)
-```
-self describing ...
-```
-* this field is used as foreign key to address the related 'StudyScope'
-* the maximum length of the content within this field is 20 characters.
-
-
-### Relations
-
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
-| [StudyScope](#StudyScope-parent-of-this-StudyExecutionScope) | Parent | [StudyScope](#StudyScope) | 0/1 (optional) |
-| [CreatedParticipations](#CreatedParticipations-refering-to-this-StudyExecutionScope) | Referers | [SubjectParticipation](#SubjectParticipation) | * (multiple) |
-
-##### **StudyScope** (parent of this StudyExecutionScope)
-Target Type: [StudyScope](#StudyScope)
-Addressed by: [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field), [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field).
-```
-self describing ...
-```
-##### **CreatedParticipations** (refering to this StudyExecutionScope)
-Target: [SubjectParticipation](#SubjectParticipation)
-```
-self describing ...
-```
-
-
-
-
-## StudyScope
-
-
-### Fields
-
-| Name | Type | Required | Fix |
-| ---- | ---- | -------- | --- |
-| [StudyWorkflowName](#StudyScopeStudyWorkflowName-Field) **(KEY)** | *string* (100) | YES | YES |
-| [StudyWorkflowVersion](#StudyScopeStudyWorkflowVersion-Field) **(KEY)** | *string* (20) | YES | YES |
-| [ParticipantIdentifierSemantic](#StudyScopeParticipantIdentifierSemantic-Field) | *string* | YES | no |
-##### StudyScope.**StudyWorkflowName** (Field)
-```
-the official invariant name of the study as given by the sponsor
-```
-* this field represents the identity (PK) of the record
-* the maximum length of the content within this field is 100 characters.
+* this field is used as foreign key to address the related 'Participation'
+* the maximum length of the content within this field is 50 characters.
 * after the record has been created, the value of this field must not be changed any more!
-##### StudyScope.**StudyWorkflowVersion** (Field)
+##### AdditionalSubjectParticipationIdentifier.**IdentifierName** (Field)
 ```
-version of the workflow
+self describing ...
 ```
 * this field represents the identity (PK) of the record
-* the maximum length of the content within this field is 20 characters.
+* the maximum length of the content within this field is 30 characters.
 * after the record has been created, the value of this field must not be changed any more!
-##### StudyScope.**ParticipantIdentifierSemantic** (Field)
+##### AdditionalSubjectParticipationIdentifier.**IdentifierValue** (Field)
 ```
- for example "Screening-Number" or "Randomization-Number"
+self describing ...
 ```
 
 
@@ -232,16 +248,11 @@ version of the workflow
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [ExecutionScopes](#ExecutionScopes-childs-of-this-StudyScope) | Childs | [StudyExecutionScope](#StudyExecutionScope) | * (multiple) |
-| [Participations](#Participations-childs-of-this-StudyScope) | Childs | [SubjectParticipation](#SubjectParticipation) | * (multiple) |
+| [Participation](#Participation-parent-of-this-AdditionalSubjectParticipationIdentifier) | Parent | [SubjectParticipation](#SubjectParticipation) | 0/1 (optional) |
 
-##### **ExecutionScopes** (childs of this StudyScope)
-Target: [StudyExecutionScope](#StudyExecutionScope)
-```
-self describing ...
-```
-##### **Participations** (childs of this StudyScope)
-Target: [SubjectParticipation](#SubjectParticipation)
+##### **Participation** (parent of this AdditionalSubjectParticipationIdentifier)
+Target Type: [SubjectParticipation](#SubjectParticipation)
+Addressed by: [ParticipantIdentifier](#AdditionalSubjectParticipationIdentifierParticipantIdentifier-Field).
 ```
 self describing ...
 ```

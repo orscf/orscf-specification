@@ -1,60 +1,88 @@
 # ORSCF-BillingData Schema Specification
-author: ORSCF ("Open Research Study Communication Formats")
-license: [Apache-2](https://choosealicense.com/licenses/apache-2.0/)
-last update: 13.03.2021
-add. info: [orscf.org](https://www.orscf.org)
- 
- 
+
+|          | Info                                    |
+|----------|-----------------------------------------|
+|author:   |[ORSCF](https://www.orscf.org) ("Open Research Study Communication Formats") / T.Korn|
+|license:  |[Apache-2](https://choosealicense.com/licenses/apache-2.0/)|
+|version:  |1.3.0|
+|timestamp:|2021-03-20 12:24|
+
+### Contents
+
+  .  [StudyExecutionScope](#StudyExecutionScope)
+         \  [BillableVisit](#BillableVisit)
+                \  [BillableTask](#BillableTask)
+         \  [BillingDemand](#BillingDemand)
+         \  [Invoice](#Invoice)
+
 # Model:
 
 ![chart](./chart.png)
 
 
 
-## BillableTask
+## StudyExecutionScope
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskGuid](#BillableTaskTaskGuid-Field) **(KEY)** | *guid* | YES | YES |
-| [VisitGuid](#BillableTaskVisitGuid-Field) (FK) | *guid* | YES | YES |
-| [TaskName](#BillableTaskTaskName-Field) | *string* | YES | YES |
-| [TaskExecutionTitle](#BillableTaskTaskExecutionTitle-Field) | *string* | YES | YES |
-##### BillableTask.**TaskGuid** (Field)
+| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(KEY)** | *guid* | YES | YES |
+| [ExecutingInstituteIdentifier](#StudyExecutionScopeExecutingInstituteIdentifier-Field) | *string* | YES | YES |
+| [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field) | *string* (100) | YES | YES |
+| [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field) | *string* (20) | YES | YES |
+| [ExtendedMetaData](#StudyExecutionScopeExtendedMetaData-Field) | *string* | no | no |
+##### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
 ```
-a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')
+a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
 ```
 * this field represents the identity (PK) of the record
 * after the record has been created, the value of this field must not be changed any more!
-##### BillableTask.**VisitGuid** (Field)
+##### StudyExecutionScope.**ExecutingInstituteIdentifier** (Field)
 ```
-a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')
-```
-* this field is used as foreign key to address the related 'BillableVisit'
-* after the record has been created, the value of this field must not be changed any more!
-##### BillableTask.**TaskName** (Field)
-```
-unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
+the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)
 ```
 * after the record has been created, the value of this field must not be changed any more!
-##### BillableTask.**TaskExecutionTitle** (Field)
+##### StudyExecutionScope.**StudyWorkflowName** (Field)
 ```
-title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
+the official invariant name of the study as given by the sponsor
 ```
+* the maximum length of the content within this field is 100 characters.
 * after the record has been created, the value of this field must not be changed any more!
+##### StudyExecutionScope.**StudyWorkflowVersion** (Field)
+```
+version of the workflow
+```
+* the maximum length of the content within this field is 20 characters.
+* after the record has been created, the value of this field must not be changed any more!
+##### StudyExecutionScope.**ExtendedMetaData** (Field)
+```
+optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema
+```
+* this field is optional, so that '*null*' values are supported
 
 
 ### Relations
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [BillableVisit](#BillableVisit-parent-of-this-BillableTask) | Parent | [BillableVisit](#BillableVisit) | 0/1 (optional) |
+| [BillableVisits](#BillableVisits-childs-of-this-StudyExecutionScope) | Childs | [BillableVisit](#BillableVisit) | * (multiple) |
+| [BillingDemands](#BillingDemands-childs-of-this-StudyExecutionScope) | Childs | [BillingDemand](#BillingDemand) | * (multiple) |
+| [Invoices](#Invoices-childs-of-this-StudyExecutionScope) | Childs | [Invoice](#Invoice) | * (multiple) |
 
-##### **BillableVisit** (parent of this BillableTask)
-Target Type: [BillableVisit](#BillableVisit)
-Addressed by: [VisitGuid](#BillableTaskVisitGuid-Field).
+##### **BillableVisits** (childs of this StudyExecutionScope)
+Target: [BillableVisit](#BillableVisit)
+```
+self describing ...
+```
+##### **BillingDemands** (childs of this StudyExecutionScope)
+Target: [BillingDemand](#BillingDemand)
+```
+self describing ...
+```
+##### **Invoices** (childs of this StudyExecutionScope)
+Target: [Invoice](#Invoice)
 ```
 self describing ...
 ```
@@ -167,68 +195,50 @@ self describing ...
 
 
 
-## StudyExecutionScope
+## BillableTask
 
 
 ### Fields
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(KEY)** | *guid* | YES | YES |
-| [ExecutingInstituteIdentifier](#StudyExecutionScopeExecutingInstituteIdentifier-Field) | *string* | YES | YES |
-| [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field) | *string* (100) | YES | YES |
-| [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field) | *string* (20) | YES | YES |
-| [ExtendedMetaData](#StudyExecutionScopeExtendedMetaData-Field) | *string* | no | no |
-##### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
+| [TaskGuid](#BillableTaskTaskGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [VisitGuid](#BillableTaskVisitGuid-Field) (FK) | *guid* | YES | YES |
+| [TaskName](#BillableTaskTaskName-Field) | *string* | YES | YES |
+| [TaskExecutionTitle](#BillableTaskTaskExecutionTitle-Field) | *string* | YES | YES |
+##### BillableTask.**TaskGuid** (Field)
 ```
-a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
+a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')
 ```
 * this field represents the identity (PK) of the record
 * after the record has been created, the value of this field must not be changed any more!
-##### StudyExecutionScope.**ExecutingInstituteIdentifier** (Field)
+##### BillableTask.**VisitGuid** (Field)
 ```
-the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)
+a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')
+```
+* this field is used as foreign key to address the related 'BillableVisit'
+* after the record has been created, the value of this field must not be changed any more!
+##### BillableTask.**TaskName** (Field)
+```
+unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
 ```
 * after the record has been created, the value of this field must not be changed any more!
-##### StudyExecutionScope.**StudyWorkflowName** (Field)
+##### BillableTask.**TaskExecutionTitle** (Field)
 ```
-the official invariant name of the study as given by the sponsor
+title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
 ```
-* the maximum length of the content within this field is 100 characters.
 * after the record has been created, the value of this field must not be changed any more!
-##### StudyExecutionScope.**StudyWorkflowVersion** (Field)
-```
-version of the workflow
-```
-* the maximum length of the content within this field is 20 characters.
-* after the record has been created, the value of this field must not be changed any more!
-##### StudyExecutionScope.**ExtendedMetaData** (Field)
-```
-optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema
-```
-* this field is optional, so that '*null*' values are supported
 
 
 ### Relations
 
 | Name | Role | Target-Type | Target-Multiplicity |
 | ---- | ---- | ----------- | ------------------- |
-| [BillableVisits](#BillableVisits-childs-of-this-StudyExecutionScope) | Childs | [BillableVisit](#BillableVisit) | * (multiple) |
-| [BillingDemands](#BillingDemands-childs-of-this-StudyExecutionScope) | Childs | [BillingDemand](#BillingDemand) | * (multiple) |
-| [Invoices](#Invoices-childs-of-this-StudyExecutionScope) | Childs | [Invoice](#Invoice) | * (multiple) |
+| [BillableVisit](#BillableVisit-parent-of-this-BillableTask) | Parent | [BillableVisit](#BillableVisit) | 0/1 (optional) |
 
-##### **BillableVisits** (childs of this StudyExecutionScope)
-Target: [BillableVisit](#BillableVisit)
-```
-self describing ...
-```
-##### **BillingDemands** (childs of this StudyExecutionScope)
-Target: [BillingDemand](#BillingDemand)
-```
-self describing ...
-```
-##### **Invoices** (childs of this StudyExecutionScope)
-Target: [Invoice](#Invoice)
+##### **BillableVisit** (parent of this BillableTask)
+Target Type: [BillableVisit](#BillableVisit)
+Addressed by: [VisitGuid](#BillableTaskVisitGuid-Field).
 ```
 self describing ...
 ```
