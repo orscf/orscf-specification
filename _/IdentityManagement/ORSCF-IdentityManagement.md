@@ -9,12 +9,12 @@
 
 ### Contents
 
-  .  [StudyScope](#StudyScope)
-         \  [StudyExecutionScope](#StudyExecutionScope)
-         \  [SubjectParticipation](#SubjectParticipation)
-                \  [AdditionalSubjectParticipationIdentifier](#AdditionalSubjectParticipationIdentifier)
-  .  [SubjectAddress](#SubjectAddress)
-  .  [SubjectIdentity](#SubjectIdentity)
+  * .  [StudyScope](#StudyScope)
+  * ........\  [StudyExecutionScope](#StudyExecutionScope)
+  * ........\  [SubjectParticipation](#SubjectParticipation)
+  * ................\  [AdditionalSubjectParticipationIdentifier](#AdditionalSubjectParticipationIdentifier)
+  * .  [SubjectAddress](#SubjectAddress)
+  * .  [SubjectIdentity](#SubjectIdentity)
 
 # Model:
 

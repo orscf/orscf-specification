@@ -51,7 +51,7 @@ foreach (EntitySchema entity in schema.Entities) {
 ### Contents
 
 <#
-
+int counter = 1;
 foreach (var kvp in entitiesByPath.OrderBy((kvp)=>kvp.Key)) {
   int depth = kvp.Key.Split('/').Length - 1;
   string sep = ".";
@@ -59,9 +59,9 @@ foreach (var kvp in entitiesByPath.OrderBy((kvp)=>kvp.Key)) {
     sep = "\\";
   }
 #>
-  <#=new String(' ', depth).Replace(" ", "       ") #><#=sep#>  [<#=entityClassNamePattern.Replace("{E}", kvp.Value.Name) #>](#<#=entityClassNamePattern.Replace("{E}", kvp.Value.Name) #>)
+  * <#=new String('.', depth*8) #><#=sep#>  [<#=entityClassNamePattern.Replace("{E}", kvp.Value.Name) #>](#<#=entityClassNamePattern.Replace("{E}", kvp.Value.Name) #>)
 <#
-
+  counter++;
 }
 
 #>

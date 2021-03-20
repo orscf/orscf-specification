@@ -5,16 +5,16 @@
 |author:   |[ORSCF](https://www.orscf.org) ("Open Research Study Communication Formats") / T.Korn|
 |license:  |[Apache-2](https://choosealicense.com/licenses/apache-2.0/)|
 |version:  |1.3.0|
-|timestamp:|2021-03-20 12:23|
+|timestamp:|2021-03-19 12:27|
 
 ### Contents
 
-  .  [StudyEvent](#StudyEvent)
-  .  [StudyExecutionScope](#StudyExecutionScope)
-  .  [Visit](#Visit)
-         \  [DataRecording](#DataRecording)
-         \  [DrugApplyment](#DrugApplyment)
-         \  [Treatment](#Treatment)
+  * .  [StudyEvent](#StudyEvent)
+  * .  [StudyExecutionScope](#StudyExecutionScope)
+  * .  [Visit](#Visit)
+  * ........\  [DataRecording](#DataRecording)
+  * ........\  [DrugApplyment](#DrugApplyment)
+  * ........\  [Treatment](#Treatment)
 
 # Model:
 

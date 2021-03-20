@@ -9,11 +9,11 @@
 
 ### Contents
 
-  .  [StudyExecutionScope](#StudyExecutionScope)
-         \  [BillableVisit](#BillableVisit)
-                \  [BillableTask](#BillableTask)
-         \  [BillingDemand](#BillingDemand)
-         \  [Invoice](#Invoice)
+  * .  [StudyExecutionScope](#StudyExecutionScope)
+  * ........\  [BillableVisit](#BillableVisit)
+  * ................\  [BillableTask](#BillableTask)
+  * ........\  [BillingDemand](#BillingDemand)
+  * ........\  [Invoice](#Invoice)
 
 # Model:
 
