@@ -8,9 +8,707 @@
       "url": "https://orscf.org",
       "email": "info@orscf.org"
     },
-    "version": "v1.0.0"
+    "version": "1.3.0"
   },
   "paths": {
+    "/dataRecordings/-": {
+      "get": {
+        "tags": [
+          "DataRecordings"
+        ],
+        "summary": "Returns an info object, which specifies the possible operations (accessor specific permissions) when accessing DataRecordings.",
+        "description": "GetDataRecordingAccessSpecs",
+        "operationId": "GetDataRecordingAccessSpecs",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessSpecs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dataRecordings/{taskGuid}": {
+      "get": {
+        "tags": [
+          "DataRecordings"
+        ],
+        "summary": "Loads a specific DataRecording addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetDataRecordingByTaskGuid",
+        "operationId": "GetDataRecordingByTaskGuid",
+        "parameters": [
+          {
+            "name": "taskGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataRecording"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DataRecordings"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given DataRecording addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateDataRecordingByTaskGuid",
+        "operationId": "UpdateDataRecordingByTaskGuid",
+        "parameters": [
+          {
+            "name": "taskGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "DataRecording containing the new values (the primary identifier fields within the given DataRecording will be ignored)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataRecording"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataRecording"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataRecording"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DataRecordings"
+        ],
+        "summary": "Deletes a specific DataRecording addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteDataRecordingByTaskGuid",
+        "operationId": "DeleteDataRecordingByTaskGuid",
+        "parameters": [
+          {
+            "name": "taskGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dataRecordings": {
+      "get": {
+        "tags": [
+          "DataRecordings"
+        ],
+        "summary": "Loads DataRecordings.",
+        "description": "GetDataRecordings",
+        "operationId": "GetDataRecordings",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of DataRecordings which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of DataRecordings which should be returned",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataRecording"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DataRecordings"
+        ],
+        "summary": "Adds a new DataRecording and returns its primary identifier (or null on failure).",
+        "description": "AddNewDataRecording",
+        "operationId": "AddNewDataRecording",
+        "requestBody": {
+          "description": "DataRecording containing the new values",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataRecording"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataRecording"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataRecording"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DataRecordings"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given DataRecording addressed by the primary identifier fields within the given DataRecording. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateDataRecording",
+        "operationId": "UpdateDataRecording",
+        "requestBody": {
+          "description": "DataRecording containing the new values (the primary identifier fields within the given DataRecording will be used to address the target record)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataRecording"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataRecording"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataRecording"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dataRecordings/search": {
+      "post": {
+        "tags": [
+          "DataRecordings"
+        ],
+        "summary": "Loads DataRecordings where values matching to ALL fields of the given 'filterValues' object.",
+        "description": "SearchDataRecordings",
+        "operationId": "SearchDataRecordings",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of DataRecordings which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of DataRecordings which should be returned",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Anonymous object containing filter values (field names must be equal to field names of a DataRecording)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a DataRecording)",
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a DataRecording)",
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a DataRecording)",
+                "nullable": true
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataRecording"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drugApplyments/-": {
+      "get": {
+        "tags": [
+          "DrugApplyments"
+        ],
+        "summary": "Returns an info object, which specifies the possible operations (accessor specific permissions) when accessing DrugApplyments.",
+        "description": "GetDrugApplymentAccessSpecs",
+        "operationId": "GetDrugApplymentAccessSpecs",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessSpecs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drugApplyments/{taskGuid}": {
+      "get": {
+        "tags": [
+          "DrugApplyments"
+        ],
+        "summary": "Loads a specific DrugApplyment addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetDrugApplymentByTaskGuid",
+        "operationId": "GetDrugApplymentByTaskGuid",
+        "parameters": [
+          {
+            "name": "taskGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DrugApplyment"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DrugApplyments"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given DrugApplyment addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateDrugApplymentByTaskGuid",
+        "operationId": "UpdateDrugApplymentByTaskGuid",
+        "parameters": [
+          {
+            "name": "taskGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "DrugApplyment containing the new values (the primary identifier fields within the given DrugApplyment will be ignored)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrugApplyment"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrugApplyment"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrugApplyment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DrugApplyments"
+        ],
+        "summary": "Deletes a specific DrugApplyment addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteDrugApplymentByTaskGuid",
+        "operationId": "DeleteDrugApplymentByTaskGuid",
+        "parameters": [
+          {
+            "name": "taskGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drugApplyments": {
+      "get": {
+        "tags": [
+          "DrugApplyments"
+        ],
+        "summary": "Loads DrugApplyments.",
+        "description": "GetDrugApplyments",
+        "operationId": "GetDrugApplyments",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of DrugApplyments which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of DrugApplyments which should be returned",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DrugApplyment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DrugApplyments"
+        ],
+        "summary": "Adds a new DrugApplyment and returns its primary identifier (or null on failure).",
+        "description": "AddNewDrugApplyment",
+        "operationId": "AddNewDrugApplyment",
+        "requestBody": {
+          "description": "DrugApplyment containing the new values",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrugApplyment"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrugApplyment"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrugApplyment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DrugApplyments"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given DrugApplyment addressed by the primary identifier fields within the given DrugApplyment. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateDrugApplyment",
+        "operationId": "UpdateDrugApplyment",
+        "requestBody": {
+          "description": "DrugApplyment containing the new values (the primary identifier fields within the given DrugApplyment will be used to address the target record)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrugApplyment"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrugApplyment"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrugApplyment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drugApplyments/search": {
+      "post": {
+        "tags": [
+          "DrugApplyments"
+        ],
+        "summary": "Loads DrugApplyments where values matching to ALL fields of the given 'filterValues' object.",
+        "description": "SearchDrugApplyments",
+        "operationId": "SearchDrugApplyments",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of DrugApplyments which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of DrugApplyments which should be returned",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Anonymous object containing filter values (field names must be equal to field names of a DrugApplyment)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a DrugApplyment)",
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a DrugApplyment)",
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a DrugApplyment)",
+                "nullable": true
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DrugApplyment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Permissions": {
       "get": {
         "tags": [
@@ -36,72 +734,1226 @@
         }
       }
     },
-    "/Visits": {
+    "/studyEvents/-": {
+      "get": {
+        "tags": [
+          "StudyEvents"
+        ],
+        "summary": "Returns an info object, which specifies the possible operations (accessor specific permissions) when accessing StudyEvents.",
+        "description": "GetStudyEventAccessSpecs",
+        "operationId": "GetStudyEventAccessSpecs",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessSpecs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyEvents/{eventGuid}": {
+      "get": {
+        "tags": [
+          "StudyEvents"
+        ],
+        "summary": "Loads a specific StudyEvent addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetStudyEventByEventGuid",
+        "operationId": "GetStudyEventByEventGuid",
+        "parameters": [
+          {
+            "name": "eventGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyEvent"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "StudyEvents"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given StudyEvent addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateStudyEventByEventGuid",
+        "operationId": "UpdateStudyEventByEventGuid",
+        "parameters": [
+          {
+            "name": "eventGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "StudyEvent containing the new values (the primary identifier fields within the given StudyEvent will be ignored)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyEvent"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyEvent"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyEvent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "StudyEvents"
+        ],
+        "summary": "Deletes a specific StudyEvent addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteStudyEventByEventGuid",
+        "operationId": "DeleteStudyEventByEventGuid",
+        "parameters": [
+          {
+            "name": "eventGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyEvents": {
+      "get": {
+        "tags": [
+          "StudyEvents"
+        ],
+        "summary": "Loads StudyEvents.",
+        "description": "GetStudyEvents",
+        "operationId": "GetStudyEvents",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of StudyEvents which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of StudyEvents which should be returned",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudyEvent"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "StudyEvents"
+        ],
+        "summary": "Adds a new StudyEvent and returns its primary identifier (or null on failure).",
+        "description": "AddNewStudyEvent",
+        "operationId": "AddNewStudyEvent",
+        "requestBody": {
+          "description": "StudyEvent containing the new values",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyEvent"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyEvent"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyEvent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "StudyEvents"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given StudyEvent addressed by the primary identifier fields within the given StudyEvent. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateStudyEvent",
+        "operationId": "UpdateStudyEvent",
+        "requestBody": {
+          "description": "StudyEvent containing the new values (the primary identifier fields within the given StudyEvent will be used to address the target record)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyEvent"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyEvent"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyEvent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyEvents/search": {
+      "post": {
+        "tags": [
+          "StudyEvents"
+        ],
+        "summary": "Loads StudyEvents where values matching to ALL fields of the given 'filterValues' object.",
+        "description": "SearchStudyEvents",
+        "operationId": "SearchStudyEvents",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of StudyEvents which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of StudyEvents which should be returned",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Anonymous object containing filter values (field names must be equal to field names of a StudyEvent)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a StudyEvent)",
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a StudyEvent)",
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a StudyEvent)",
+                "nullable": true
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudyEvent"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/-": {
+      "get": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Returns an info object, which specifies the possible operations (accessor specific permissions) when accessing StudyExecutionScopes.",
+        "description": "GetStudyExecutionScopeAccessSpecs",
+        "operationId": "GetStudyExecutionScopeAccessSpecs",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessSpecs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/{studyExecutionIdentifier}": {
+      "get": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Loads a specific StudyExecutionScope addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetStudyExecutionScopeByStudyExecutionIdentifier",
+        "operationId": "GetStudyExecutionScopeByStudyExecutionIdentifier",
+        "parameters": [
+          {
+            "name": "studyExecutionIdentifier",
+            "in": "path",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyExecutionScope"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given StudyExecutionScope addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateStudyExecutionScopeByStudyExecutionIdentifier",
+        "operationId": "UpdateStudyExecutionScopeByStudyExecutionIdentifier",
+        "parameters": [
+          {
+            "name": "studyExecutionIdentifier",
+            "in": "path",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "StudyExecutionScope containing the new values (the primary identifier fields within the given StudyExecutionScope will be ignored)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyExecutionScope"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyExecutionScope"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyExecutionScope"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Deletes a specific StudyExecutionScope addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteStudyExecutionScopeByStudyExecutionIdentifier",
+        "operationId": "DeleteStudyExecutionScopeByStudyExecutionIdentifier",
+        "parameters": [
+          {
+            "name": "studyExecutionIdentifier",
+            "in": "path",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes": {
+      "get": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Loads StudyExecutionScopes.",
+        "description": "GetStudyExecutionScopes",
+        "operationId": "GetStudyExecutionScopes",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of StudyExecutionScopes which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of StudyExecutionScopes which should be returned",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudyExecutionScope"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Adds a new StudyExecutionScope and returns its primary identifier (or null on failure).",
+        "description": "AddNewStudyExecutionScope",
+        "operationId": "AddNewStudyExecutionScope",
+        "requestBody": {
+          "description": "StudyExecutionScope containing the new values",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyExecutionScope"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyExecutionScope"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyExecutionScope"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given StudyExecutionScope addressed by the primary identifier fields within the given StudyExecutionScope. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateStudyExecutionScope",
+        "operationId": "UpdateStudyExecutionScope",
+        "requestBody": {
+          "description": "StudyExecutionScope containing the new values (the primary identifier fields within the given StudyExecutionScope will be used to address the target record)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyExecutionScope"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyExecutionScope"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyExecutionScope"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/search": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Loads StudyExecutionScopes where values matching to ALL fields of the given 'filterValues' object.",
+        "description": "SearchStudyExecutionScopes",
+        "operationId": "SearchStudyExecutionScopes",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of StudyExecutionScopes which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of StudyExecutionScopes which should be returned",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Anonymous object containing filter values (field names must be equal to field names of a StudyExecutionScope)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a StudyExecutionScope)",
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a StudyExecutionScope)",
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a StudyExecutionScope)",
+                "nullable": true
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudyExecutionScope"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/treatments/-": {
+      "get": {
+        "tags": [
+          "Treatments"
+        ],
+        "summary": "Returns an info object, which specifies the possible operations (accessor specific permissions) when accessing Treatments.",
+        "description": "GetTreatmentAccessSpecs",
+        "operationId": "GetTreatmentAccessSpecs",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessSpecs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/treatments/{taskGuid}": {
+      "get": {
+        "tags": [
+          "Treatments"
+        ],
+        "summary": "Loads a specific Treatment addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetTreatmentByTaskGuid",
+        "operationId": "GetTreatmentByTaskGuid",
+        "parameters": [
+          {
+            "name": "taskGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Treatment"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Treatments"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given Treatment addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateTreatmentByTaskGuid",
+        "operationId": "UpdateTreatmentByTaskGuid",
+        "parameters": [
+          {
+            "name": "taskGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Treatment containing the new values (the primary identifier fields within the given Treatment will be ignored)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Treatment"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Treatment"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Treatment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Treatments"
+        ],
+        "summary": "Deletes a specific Treatment addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteTreatmentByTaskGuid",
+        "operationId": "DeleteTreatmentByTaskGuid",
+        "parameters": [
+          {
+            "name": "taskGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/treatments": {
+      "get": {
+        "tags": [
+          "Treatments"
+        ],
+        "summary": "Loads Treatments.",
+        "description": "GetTreatments",
+        "operationId": "GetTreatments",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of Treatments which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of Treatments which should be returned",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Treatment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Treatments"
+        ],
+        "summary": "Adds a new Treatment and returns its primary identifier (or null on failure).",
+        "description": "AddNewTreatment",
+        "operationId": "AddNewTreatment",
+        "requestBody": {
+          "description": "Treatment containing the new values",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Treatment"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Treatment"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Treatment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Treatments"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given Treatment addressed by the primary identifier fields within the given Treatment. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateTreatment",
+        "operationId": "UpdateTreatment",
+        "requestBody": {
+          "description": "Treatment containing the new values (the primary identifier fields within the given Treatment will be used to address the target record)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Treatment"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Treatment"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Treatment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/treatments/search": {
+      "post": {
+        "tags": [
+          "Treatments"
+        ],
+        "summary": "Loads Treatments where values matching to ALL fields of the given 'filterValues' object.",
+        "description": "SearchTreatments",
+        "operationId": "SearchTreatments",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of Treatments which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of Treatments which should be returned",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Anonymous object containing filter values (field names must be equal to field names of a Treatment)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a Treatment)",
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a Treatment)",
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a Treatment)",
+                "nullable": true
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Treatment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/visits/-": {
       "get": {
         "tags": [
           "Visits"
         ],
-        "summary": "searches Visits matching the given criteria",
-        "description": "SearchVisits",
-        "operationId": "SearchVisits",
+        "summary": "Returns an info object, which specifies the possible operations (accessor specific permissions) when accessing Visits.",
+        "description": "GetVisitAccessSpecs",
+        "operationId": "GetVisitAccessSpecs",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessSpecs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/visits/{visitGuid}": {
+      "get": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Loads a specific Visit addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetVisitByVisitGuid",
+        "operationId": "GetVisitByVisitGuid",
         "parameters": [
           {
-            "name": "withParticipantIdentifier",
-            "in": "query",
-            "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)",
+            "name": "visitGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
             "schema": {
               "type": "string",
-              "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)",
-              "nullable": true
+              "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
             }
-          },
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Visit"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given Visit addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateVisitByVisitGuid",
+        "operationId": "UpdateVisitByVisitGuid",
+        "parameters": [
           {
-            "name": "withExecutingInstituteIdentifier",
-            "in": "query",
-            "description": "the institute which is executing the study",
+            "name": "visitGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
             "schema": {
               "type": "string",
-              "description": "the institute which is executing the study",
-              "nullable": true
+              "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Visit containing the new values (the primary identifier fields within the given Visit will be ignored)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Visit"
+              }
             }
           },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Deletes a specific Visit addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteVisitByVisitGuid",
+        "operationId": "DeleteVisitByVisitGuid",
+        "parameters": [
           {
-            "name": "withStudyIdentifier",
-            "in": "query",
-            "description": "the study itself (this value is not related to any specific execution or institute)",
+            "name": "visitGuid",
+            "in": "path",
+            "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "required": true,
             "schema": {
               "type": "string",
-              "description": "the study itself (this value is not related to any specific execution or institute)",
-              "nullable": true
+              "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+              "format": "uuid"
             }
-          },
-          {
-            "name": "withVisitIdentifier",
-            "in": "query",
-            "description": "the VisitIdentifier as defined in the 'StudyWorkflowDefinition'",
-            "schema": {
-              "type": "string",
-              "description": "the VisitIdentifier as defined in the 'StudyWorkflowDefinition'",
-              "nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
             }
-          },
+          }
+        }
+      }
+    },
+    "/visits": {
+      "get": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Loads Visits.",
+        "description": "GetVisits",
+        "operationId": "GetVisits",
+        "parameters": [
           {
-            "name": "withExecutionState",
+            "name": "page",
             "in": "query",
-            "description": "0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed",
+            "description": "Number of the page, which should be returned",
             "schema": {
-              "enum": [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5
-              ],
               "type": "integer",
-              "description": "0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed",
+              "description": "Number of the page, which should be returned",
               "format": "int32",
-              "nullable": true
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of Visits which should be returned",
+            "schema": {
+              "type": "integer",
+              "description": "Max count of Visits which should be returned",
+              "format": "int32",
+              "default": 20
             }
           }
         ],
@@ -125,11 +1977,11 @@
         "tags": [
           "Visits"
         ],
-        "summary": "adds the given Visit as new Record to the Repository. A new RecordId will be assigned\r\n(any value of the 'RecordId'-Property of the given Visit will be ignored).",
+        "summary": "Adds a new Visit and returns its primary identifier (or null on failure).",
         "description": "AddNewVisit",
         "operationId": "AddNewVisit",
         "requestBody": {
-          "description": "the new Visit",
+          "description": "Visit containing the new values",
           "content": {
             "application/json": {
               "schema": {
@@ -153,9 +2005,10 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "uuid"
                 }
               }
             }
@@ -166,11 +2019,11 @@
         "tags": [
           "Visits"
         ],
-        "summary": "updates the Visit which is addressed by the value of the 'RecordId'-Property of the given Visit using the Contents of the given Visit",
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given Visit addressed by the primary identifier fields within the given Visit. Returns false on failure or if no target record was found, otherwise true.",
         "description": "UpdateVisit",
         "operationId": "UpdateVisit",
         "requestBody": {
-          "description": "the visit",
+          "description": "Visit containing the new values (the primary identifier fields within the given Visit will be used to address the target record)",
           "content": {
             "application/json": {
               "schema": {
@@ -194,7 +2047,7 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
                   "type": "boolean"
                 }
@@ -204,76 +2057,57 @@
         }
       }
     },
-    "/Visits/{recordId}": {
-      "get": {
+    "/visits/search": {
+      "post": {
         "tags": [
           "Visits"
         ],
-        "summary": "picks the Visit which is addressed by the given RecordId",
-        "description": "GetVisitById",
-        "operationId": "GetVisitById",
+        "summary": "Loads Visits where values matching to ALL fields of the given 'filterValues' object.",
+        "description": "SearchVisits",
+        "operationId": "SearchVisits",
         "parameters": [
           {
-            "name": "recordId",
-            "in": "path",
-            "description": "target RecordId (specific for this repository)",
-            "required": true,
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page, which should be returned",
             "schema": {
-              "type": "string",
-              "description": "target RecordId (specific for this repository)",
-              "nullable": true
+              "type": "integer",
+              "description": "Number of the page, which should be returned",
+              "format": "int32",
+              "default": 1
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Visit"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Visits"
-        ],
-        "summary": "updates the Visit which is addressed by the given RecordId using the Contents of the given Visit\r\n(any value of the 'RecordId'-Property of the given Visit will be ignored).",
-        "description": "UpdateVisitById",
-        "operationId": "UpdateVisitById",
-        "parameters": [
+          },
           {
-            "name": "recordId",
-            "in": "path",
-            "description": "target RecordId (specific for this repository)",
-            "required": true,
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max count of Visits which should be returned",
             "schema": {
-              "type": "string",
-              "description": "target RecordId (specific for this repository)",
-              "nullable": true
+              "type": "integer",
+              "description": "Max count of Visits which should be returned",
+              "format": "int32",
+              "default": 20
             }
           }
         ],
         "requestBody": {
-          "description": "the visit",
+          "description": "Anonymous object containing filter values (field names must be equal to field names of a Visit)",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Visit"
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a Visit)",
+                "nullable": true
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Visit"
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a Visit)",
+                "nullable": true
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Visit"
+                "description": "Anonymous object containing filter values (field names must be equal to field names of a Visit)",
+                "nullable": true
               }
             }
           },
@@ -283,42 +2117,12 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Visits"
-        ],
-        "summary": "deletes the Visit which is addressed by the given RecordId",
-        "description": "DeleteVisit",
-        "operationId": "DeleteVisit",
-        "parameters": [
-          {
-            "name": "recordId",
-            "in": "path",
-            "description": "target RecordId (specific for this repository)",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "description": "target RecordId (specific for this repository)",
-              "nullable": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "boolean"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Visit"
+                  }
                 }
               }
             }
@@ -329,245 +2133,384 @@
   },
   "components": {
     "schemas": {
-      "DataRecording": {
+      "AccessSpecs": {
         "type": "object",
         "properties": {
-          "recordId": {
-            "type": "string",
-            "description": "a repository-specific id",
-            "nullable": true
+          "canRead": {
+            "type": "boolean"
           },
-          "taskIdentifier": {
-            "type": "string",
-            "description": "Identifier as defined in the 'StudyWorkflowDefinition' (only one is possible per visit)\r\nor 'null' which indicates, that this was a unplanned task which is not defined in the 'StudyWorkflowDefinition'",
-            "nullable": true
+          "canAddNew": {
+            "type": "boolean"
           },
-          "shortSubject": {
+          "canUpdate": {
+            "type": "boolean"
+          },
+          "canDelete": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DataRecording": {
+        "required": [
+          "dataRecordingName",
+          "dataSchemaUrl",
+          "executionState",
+          "extendedMetaData",
+          "recordedData",
+          "taskExecutionTitle",
+          "taskGuid",
+          "visitGuid"
+        ],
+        "type": "object",
+        "properties": {
+          "taskGuid": {
             "type": "string",
-            "nullable": true
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "visitGuid": {
+            "type": "string",
+            "description": "the guid of the visit in which this task was executed",
+            "format": "uuid"
+          },
+          "dataRecordingName": {
+            "type": "string",
+            "description": "unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
+          },
+          "taskExecutionTitle": {
+            "type": "string",
+            "description": "title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
           },
           "scheduledDateTimeUtc": {
             "type": "string",
+            "description": "the estimated date when the visit is scheduled *this field is optional",
             "format": "date-time",
             "nullable": true
           },
           "executionDateTimeUtc": {
             "type": "string",
+            "description": "the real time, when the data was recorded *this field is optional",
             "format": "date-time",
             "nullable": true
           },
           "executionState": {
-            "enum": [
-              1,
-              2,
-              3,
-              4
-            ],
             "type": "integer",
+            "description": "0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed",
             "format": "int32"
           },
-          "dataSchemaInfo": {
+          "dataSchemaUrl": {
             "type": "string",
-            "nullable": true
+            "description": "schema-url of the data which were stored inside of the 'RecordedData' field"
           },
           "recordedData": {
             "type": "string",
-            "nullable": true
-          },
-          "instructionsForExecution": {
-            "type": "string",
-            "nullable": true
+            "description": "RAW data, in the schema as defined at the 'DataSchemaUrl'"
           },
           "notesRegardingOutcome": {
             "type": "string",
+            "description": "additional notes regarding this dedcated execution (supplied by the execution person) *this field is optional (use null as value)",
+            "nullable": true
+          },
+          "extendedMetaData": {
+            "type": "string",
+            "description": "optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema"
+          },
+          "executingPerson": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
             "nullable": true
           }
         },
         "additionalProperties": false
       },
       "DrugApplyment": {
+        "required": [
+          "appliedUnits",
+          "drugApplymentName",
+          "drugDoseMgPerUnitMg",
+          "drugName",
+          "executionState",
+          "extendedMetaData",
+          "taskExecutionTitle",
+          "taskGuid",
+          "visitGuid"
+        ],
         "type": "object",
         "properties": {
-          "recordId": {
+          "taskGuid": {
             "type": "string",
-            "description": "a repository-specific id",
-            "nullable": true
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
           },
-          "taskIdentifier": {
+          "visitGuid": {
             "type": "string",
-            "description": "Identifier as defined in the 'StudyWorkflowDefinition' (only one is possible per visit)\r\nor 'null' which indicates, that this was a unplanned task which is not defined in the 'StudyWorkflowDefinition'",
-            "nullable": true
+            "description": "the guid of the visit in which this task was executed",
+            "format": "uuid"
           },
-          "shortSubject": {
+          "drugApplymentName": {
             "type": "string",
-            "nullable": true
+            "description": "unique invariant name of the study itself as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
+          },
+          "taskExecutionTitle": {
+            "type": "string",
+            "description": "title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
           },
           "scheduledDateTimeUtc": {
             "type": "string",
+            "description": "the estimated time when the drug applyment is scheduled *this field is optional",
             "format": "date-time",
             "nullable": true
           },
           "executionDateTimeUtc": {
             "type": "string",
+            "description": "the real date, when the visits was executed *this field is optional",
             "format": "date-time",
             "nullable": true
           },
           "executionState": {
-            "enum": [
-              1,
-              2,
-              3,
-              4
-            ],
             "type": "integer",
+            "description": "0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed",
             "format": "int32"
           },
           "drugName": {
             "type": "string",
-            "nullable": true
+            "description": "name of the drug"
           },
-          "drugDoseMgPerUnit": {
+          "drugDoseMgPerUnitMg": {
             "type": "number",
+            "description": "dose (mg) which is inside of one unit",
             "format": "double"
           },
           "appliedUnits": {
             "type": "number",
+            "description": "amount of applied units",
             "format": "double"
-          },
-          "instructionsForExecution": {
-            "type": "string",
-            "nullable": true
           },
           "notesRegardingOutcome": {
             "type": "string",
+            "description": "additional notes regarding this dedcated execution (supplied by the execution person) *this field is optional (use null as value)",
+            "nullable": true
+          },
+          "extendedMetaData": {
+            "type": "string",
+            "description": "optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema"
+          },
+          "executingPerson": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudyEvent": {
+        "required": [
+          "causeInfo",
+          "eventGuid",
+          "occourrenceDateTimeUtc",
+          "participantIdentifier",
+          "studyEventName",
+          "studyExecutionIdentifier"
+        ],
+        "type": "object",
+        "properties": {
+          "eventGuid": {
+            "type": "string",
+            "description": "a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "participantIdentifier": {
+            "type": "string",
+            "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)"
+          },
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "studyEventName": {
+            "type": "string",
+            "description": "unique invariant name of the event as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
+          },
+          "extendedMetaData": {
+            "type": "string",
+            "description": "optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema *this field is optional (use null as value)",
+            "nullable": true
+          },
+          "occourrenceDateTimeUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "causeInfo": {
+            "type": "string"
+          },
+          "additionalNotes": {
+            "type": "string",
+            "description": "additional notes (supplied by the execution person) *this field is optional (use null as value)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudyExecutionScope": {
+        "required": [
+          "executingInstituteIdentifier",
+          "studyExecutionIdentifier",
+          "studyWorkflowName",
+          "studyWorkflowVersion"
+        ],
+        "type": "object",
+        "properties": {
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "executingInstituteIdentifier": {
+            "type": "string",
+            "description": "the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)"
+          },
+          "studyWorkflowName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "the official invariant name of the study as given by the sponsor *this field has a max length of 100"
+          },
+          "studyWorkflowVersion": {
+            "maxLength": 20,
+            "type": "string",
+            "description": "version of the workflow *this field has a max length of 20"
+          },
+          "extendedMetaData": {
+            "type": "string",
+            "description": "optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema *this field is optional (use null as value)",
             "nullable": true
           }
         },
         "additionalProperties": false
       },
       "Treatment": {
+        "required": [
+          "executionState",
+          "extendedMetaData",
+          "taskExecutionTitle",
+          "taskGuid",
+          "treatmentName",
+          "visitGuid"
+        ],
         "type": "object",
         "properties": {
-          "recordId": {
+          "taskGuid": {
             "type": "string",
-            "description": "a repository-specific id",
-            "nullable": true
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
           },
-          "taskIdentifier": {
+          "visitGuid": {
             "type": "string",
-            "description": "Identifier as defined in the 'StudyWorkflowDefinition' (only one is possible per visit)\r\nor 'null' which indicates, that this was a unplanned task which is not defined in the 'StudyWorkflowDefinition'",
-            "nullable": true
+            "description": "the guid of the visit in which this task was executed",
+            "format": "uuid"
           },
-          "shortSubject": {
+          "treatmentName": {
             "type": "string",
-            "nullable": true
+            "description": "unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
+          },
+          "taskExecutionTitle": {
+            "type": "string",
+            "description": "title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
           },
           "scheduledDateTimeUtc": {
             "type": "string",
+            "description": "the estimated time when the treatment is scheduled *this field is optional",
             "format": "date-time",
             "nullable": true
           },
           "executionDateTimeUtc": {
             "type": "string",
+            "description": "the real time, when the treatment was executed *this field is optional",
             "format": "date-time",
             "nullable": true
           },
           "executionState": {
-            "enum": [
-              1,
-              2,
-              3,
-              4
-            ],
             "type": "integer",
+            "description": "0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed",
             "format": "int32"
-          },
-          "instructionsForExecution": {
-            "type": "string",
-            "nullable": true
           },
           "notesRegardingOutcome": {
             "type": "string",
+            "description": "additional notes regarding this dedcated execution (supplied by the execution person) *this field is optional (use null as value)",
+            "nullable": true
+          },
+          "extendedMetaData": {
+            "type": "string",
+            "description": "optional structure of additional metadata regarding this record in JSON-format, which can be used by study execution systems to extend the schema"
+          },
+          "executingPerson": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
             "nullable": true
           }
         },
         "additionalProperties": false
       },
       "Visit": {
+        "required": [
+          "executionState",
+          "participantIdentifier",
+          "studyExecutionIdentifier",
+          "visitExecutionTitle",
+          "visitGuid",
+          "visitProdecureName"
+        ],
         "type": "object",
         "properties": {
-          "recordId": {
+          "visitGuid": {
             "type": "string",
-            "description": "a repository-specific id",
-            "nullable": true
+            "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
           },
           "participantIdentifier": {
+            "maxLength": 50,
             "type": "string",
-            "description": "identity of the patient which can be a randomization or screening number\r\n(the exact semantic is defined per study)",
-            "nullable": true
-          },
-          "executingInstituteIdentifier": {
-            "type": "string",
-            "description": "the institute which is executing the study",
-            "nullable": true
-          },
-          "studyIdentifier": {
-            "type": "string",
-            "description": "the study itself (this value is not related to any specific execution or institute)",
-            "nullable": true
-          },
-          "visitIdentifier": {
-            "type": "string",
-            "description": "as defined in the 'StudyWorkflowDefinition'\r\nonly one is possible per visit",
-            "nullable": true
+            "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study) *this field has a max length of 50"
           },
           "studyExecutionIdentifier": {
             "type": "string",
-            "description": "the study itself (this value is related to the institute specific execution of the study)",
-            "nullable": true
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "visitProdecureName": {
+            "type": "string",
+            "description": "unique invariant name of the visit-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
+          },
+          "visitExecutionTitle": {
+            "type": "string",
+            "description": "title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
           },
           "scheduledDateUtc": {
             "type": "string",
+            "description": "the estimated date when the visit is scheduled for execution *this field is optional",
             "format": "date-time",
             "nullable": true
           },
           "executionDateUtc": {
             "type": "string",
+            "description": "the real date, when the visits was executed *this field is optional",
             "format": "date-time",
             "nullable": true
           },
           "executionState": {
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ],
             "type": "integer",
             "description": "0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed",
             "format": "int32"
           },
-          "dataRecordings": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DataRecording"
-            },
+          "extendedMetaData": {
+            "type": "string",
+            "description": "optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema *this field is optional (use null as value)",
             "nullable": true
           },
-          "drugApplyments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DrugApplyment"
-            },
-            "nullable": true
-          },
-          "treatments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Treatment"
-            },
+          "executingPerson": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
             "nullable": true
           }
         },
