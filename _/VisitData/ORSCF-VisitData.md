@@ -35,6 +35,7 @@
 | [OccourrenceDateTimeUtc](#StudyEventOccourrenceDateTimeUtc-Field) | *datetime* | YES | no |
 | [CauseInfo](#StudyEventCauseInfo-Field) | *string* | YES | no |
 | [AdditionalNotes](#StudyEventAdditionalNotes-Field) | *string* | no | no |
+
 ##### Unique Keys
 * EventGuid **(primary)**
 ##### StudyEvent.**EventGuid** (Field)
