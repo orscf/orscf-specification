@@ -5,7 +5,7 @@
 |author:   |[ORSCF](https://www.orscf.org) ("Open Research Study Communication Formats") / T.Korn|
 |license:  |[Apache-2](https://choosealicense.com/licenses/apache-2.0/)|
 |version:  |1.3.0|
-|timestamp:|2021-03-19 12:27|
+|timestamp:|2021-04-17 09:27|
 
 ### Contents
 
@@ -18,8 +18,6 @@
 
 # Model:
 
-![chart](./chart.png)
-
 
 
 ## StudyEvent
@@ -29,7 +27,7 @@
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [EventGuid](#StudyEventEventGuid-Field) **(KEY)** | *guid* | YES | no |
+| [EventGuid](#StudyEventEventGuid-Field) **(PK)** | *guid* | YES | no |
 | [ParticipantIdentifier](#StudyEventParticipantIdentifier-Field) | *string* | YES | no |
 | [StudyExecutionIdentifier](#StudyEventStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
 | [StudyEventName](#StudyEventStudyEventName-Field) | *string* | YES | no |
@@ -37,6 +35,8 @@
 | [OccourrenceDateTimeUtc](#StudyEventOccourrenceDateTimeUtc-Field) | *datetime* | YES | no |
 | [CauseInfo](#StudyEventCauseInfo-Field) | *string* | YES | no |
 | [AdditionalNotes](#StudyEventAdditionalNotes-Field) | *string* | no | no |
+##### Unique Keys
+* EventGuid **(primary)**
 ##### StudyEvent.**EventGuid** (Field)
 ```
 a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')
@@ -98,11 +98,13 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(KEY)** | *guid* | YES | YES |
+| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(PK)** | *guid* | YES | YES |
 | [ExecutingInstituteIdentifier](#StudyExecutionScopeExecutingInstituteIdentifier-Field) | *string* | YES | YES |
 | [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field) | *string* (100) | YES | YES |
 | [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field) | *string* (20) | YES | YES |
 | [ExtendedMetaData](#StudyExecutionScopeExtendedMetaData-Field) | *string* | no | no |
+##### Unique Keys
+* StudyExecutionIdentifier **(primary)**
 ##### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
 ```
 a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
@@ -161,7 +163,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [VisitGuid](#VisitVisitGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [VisitGuid](#VisitVisitGuid-Field) **(PK)** | *guid* | YES | YES |
 | [ParticipantIdentifier](#VisitParticipantIdentifier-Field) | *string* (50) | YES | YES |
 | [StudyExecutionIdentifier](#VisitStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
 | [VisitProdecureName](#VisitVisitProdecureName-Field) | *string* | YES | no |
@@ -171,6 +173,9 @@ self describing ...
 | [ExecutionState](#VisitExecutionState-Field) | *int32* | YES | no |
 | [ExtendedMetaData](#VisitExtendedMetaData-Field) | *string* | no | no |
 | [ExecutingPerson](#VisitExecutingPerson-Field) | *string* | no | no |
+##### Unique Keys
+* VisitGuid **(primary)**
+* ParticipantIdentifier + StudyExecutionIdentifier + VisitExecutionTitle
 ##### Visit.**VisitGuid** (Field)
 ```
 a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -194,7 +199,7 @@ unique invariant name of the visit-procedure as defined in the 'StudyWorkflowDef
 ```
 ##### Visit.**VisitExecutionTitle** (Field)
 ```
-title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
+unique title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
 ```
 ##### Visit.**ScheduledDateUtc** (Field)
 ```
@@ -263,7 +268,7 @@ all the treatments which have been executed for this visit
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskGuid](#DataRecordingTaskGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [TaskGuid](#DataRecordingTaskGuid-Field) **(PK)** | *guid* | YES | YES |
 | [VisitGuid](#DataRecordingVisitGuid-Field) (FK) | *guid* | YES | no |
 | [DataRecordingName](#DataRecordingDataRecordingName-Field) | *string* | YES | no |
 | [TaskExecutionTitle](#DataRecordingTaskExecutionTitle-Field) | *string* | YES | no |
@@ -275,6 +280,8 @@ all the treatments which have been executed for this visit
 | [NotesRegardingOutcome](#DataRecordingNotesRegardingOutcome-Field) | *string* | no | no |
 | [ExtendedMetaData](#DataRecordingExtendedMetaData-Field) | *string* | YES | no |
 | [ExecutingPerson](#DataRecordingExecutingPerson-Field) | *string* | no | no |
+##### Unique Keys
+* TaskGuid **(primary)**
 ##### DataRecording.**TaskGuid** (Field)
 ```
 a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -355,7 +362,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskGuid](#DrugApplymentTaskGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [TaskGuid](#DrugApplymentTaskGuid-Field) **(PK)** | *guid* | YES | YES |
 | [VisitGuid](#DrugApplymentVisitGuid-Field) (FK) | *guid* | YES | no |
 | [DrugApplymentName](#DrugApplymentDrugApplymentName-Field) | *string* | YES | no |
 | [TaskExecutionTitle](#DrugApplymentTaskExecutionTitle-Field) | *string* | YES | no |
@@ -368,6 +375,8 @@ self describing ...
 | [NotesRegardingOutcome](#DrugApplymentNotesRegardingOutcome-Field) | *string* | no | no |
 | [ExtendedMetaData](#DrugApplymentExtendedMetaData-Field) | *string* | YES | no |
 | [ExecutingPerson](#DrugApplymentExecutingPerson-Field) | *string* | no | no |
+##### Unique Keys
+* TaskGuid **(primary)**
 ##### DrugApplyment.**TaskGuid** (Field)
 ```
 a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -452,7 +461,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskGuid](#TreatmentTaskGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [TaskGuid](#TreatmentTaskGuid-Field) **(PK)** | *guid* | YES | YES |
 | [VisitGuid](#TreatmentVisitGuid-Field) (FK) | *guid* | YES | no |
 | [TreatmentName](#TreatmentTreatmentName-Field) | *string* | YES | no |
 | [TaskExecutionTitle](#TreatmentTaskExecutionTitle-Field) | *string* | YES | no |
@@ -462,6 +471,8 @@ self describing ...
 | [NotesRegardingOutcome](#TreatmentNotesRegardingOutcome-Field) | *string* | no | no |
 | [ExtendedMetaData](#TreatmentExtendedMetaData-Field) | *string* | YES | no |
 | [ExecutingPerson](#TreatmentExecutingPerson-Field) | *string* | no | no |
+##### Unique Keys
+* TaskGuid **(primary)**
 ##### Treatment.**TaskGuid** (Field)
 ```
 a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')

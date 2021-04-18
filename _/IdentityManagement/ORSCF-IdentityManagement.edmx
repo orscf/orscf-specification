@@ -145,8 +145,16 @@
           </Key>
           <Property Name="RecordId" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="Participations" Relationship="DomainModel.SubjectIdentitySubjectParticipation" FromRole="SubjectIdentity" ToRole="SubjectParticipation" />
-          <Property Name="FirstName" Type="String" Nullable="true" />
-          <Property Name="LastName" Type="String" Nullable="true" />
+          <Property Name="FirstName" Type="String" Nullable="true" >
+            <Documentation>
+              <LongDescription>IX1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="LastName" Type="String" Nullable="true" >
+            <Documentation>
+              <LongDescription>IX1</LongDescription>
+            </Documentation>
+          </Property>
           <Property Name="Gender" Type="Int32" Nullable="true" >
             <Documentation>
               <Summary>0=Male / 1=Female / 2=Other</Summary>
@@ -228,12 +236,36 @@
           </Key>
           <Property Name="InternalRecordId" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="SubjectIdentities" Relationship="DomainModel.SubjectAddressSubjectIdentity" FromRole="SubjectAddress" ToRole="SubjectIdentity" />
-          <Property Name="Street" Type="String" Nullable="false" />
-          <Property Name="HouseNumber" Type="String" Nullable="false" />
-          <Property Name="PostCode" Type="String" Nullable="false" />
-          <Property Name="City" Type="String" Nullable="false" />
-          <Property Name="State" Type="String" Nullable="false" />
-          <Property Name="Country" Type="String" Nullable="false" />
+          <Property Name="Street" Type="String" Nullable="false" >
+            <Documentation>
+              <LongDescription>UQ1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="HouseNumber" Type="String" Nullable="false" >
+            <Documentation>
+              <LongDescription>UQ1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="PostCode" Type="String" Nullable="false" >
+            <Documentation>
+              <LongDescription>UQ1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="City" Type="String" Nullable="false" >
+            <Documentation>
+              <LongDescription>UQ1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="State" Type="String" Nullable="false" >
+            <Documentation>
+              <LongDescription>UQ1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="Country" Type="String" Nullable="false" >
+            <Documentation>
+              <LongDescription>UQ1</LongDescription>
+            </Documentation>
+          </Property>
           <Property Name="PhoneNumber" Type="String" Nullable="true" />
         </EntityType>
         <Association Name="SubjectAddressSubjectIdentity">

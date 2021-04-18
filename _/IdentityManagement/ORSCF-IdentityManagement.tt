@@ -9,7 +9,7 @@
 <#@ import namespace="Newtonsoft.Json" #>
 <#@ output extension=".md"#><#
 ///////////////////////////////////////////////////////////////////////////////////////////////
-//     copyright: Tobias Korn / version: 20.03.2021                                          //
+//     copyright: Tobias Korn / version: 10.04.2021                                          //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
        const string inputFile = "ORSCF-IdentityManagement.Schema.json";
@@ -56,7 +56,12 @@ foreach (var kvp in entitiesByPath.OrderBy((kvp)=>kvp.Key)) {
   int depth = kvp.Key.Split('/').Length - 1;
   string sep = ".";
   if(depth > 0 ){
-    sep = "\\";
+    if(kvp.Key.EndsWith("#")){
+      sep = "\\ **(spec.)**";
+    }
+    else{
+      sep = "\\";
+    }
   }
 #>
   * <#=new String('.', depth*8) #><#=sep#>  [<#=entityClassNamePattern.Replace("{E}", kvp.Value.Name) #>](#<#=entityClassNamePattern.Replace("{E}", kvp.Value.Name) #>)
@@ -67,8 +72,6 @@ foreach (var kvp in entitiesByPath.OrderBy((kvp)=>kvp.Key)) {
 #>
 
 # Model:
-
-![chart](./chart.png)
 
 <#
 
@@ -108,7 +111,7 @@ foreach (var kvp in entitiesByPath.OrderBy((kvp)=>kvp.Key)) {
   if(!String.IsNullOrWhiteSpace(entity.InheritedEntityName)){
 #>
 ### Inheritance
-This type is a specialization of (<#=entityClassNamePattern.Replace("{E}", entity.InheritedEntityName)#>)[#<#=entityClassNamePattern.Replace("{E}", entity.InheritedEntityName)#>]{
+This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entity.InheritedEntityName)#>](#<#=entityClassNamePattern.Replace("{E}", entity.InheritedEntityName)#>)
 <#
   }
 
@@ -124,6 +127,20 @@ This type is a specialization of (<#=entityClassNamePattern.Replace("{E}", entit
   /////////////////////////////////////////////////////////////////////////////////////////////
 
   StringBuilder fieldDetails = new System.Text.StringBuilder();
+
+  if(entity.Indices.Any()){
+    fieldDetails.AppendLine("##### Unique Keys");
+  }
+  foreach (IndexSchema idx in entity.Indices) {
+    if(idx.Unique){
+      if(idx.Name == entity.PrimaryKeyIndexName){
+        fieldDetails.AppendLine("* " + String.Join(" + ", idx.MemberFieldNames) + " **(primary)**");
+      }
+      else{
+        fieldDetails.AppendLine("* " + String.Join(" + ", idx.MemberFieldNames));
+      }
+    }
+  }
 
   foreach (FieldSchema field in entity.Fields) {
     List<String> attributes = attributesPerField[field.Name];
@@ -162,7 +179,7 @@ This type is a specialization of (<#=entityClassNamePattern.Replace("{E}", entit
       if(idx.MemberFieldNames.Contains(field.Name)){
         if(idx.Name == entity.PrimaryKeyIndexName){
           isKeyField = true;
-          fieldsuffix = " **(KEY)**";
+          fieldsuffix = " **(PK)**";
           //reqStr = "KEY";
           fieldDetails.AppendLine("* this field represents the identity (PK) of the record");
           if(field.DbGeneratedIdentity){
@@ -416,11 +433,17 @@ public static string ExcapeHeadingToMdLink(string heading)
 String BuildDependencyPath(SchemaRoot schema, EntitySchema entity){
 
   EntitySchema firstExistingPrincipal = null;
-  foreach (RelationSchema rel in schema.Relations) {
-    if(rel.ForeignEntityName == entity.Name && !rel.IsLookupRelation){
-      firstExistingPrincipal = schema.Entities.Where((e)=>e.Name ==  rel.PrimaryEntityName).SingleOrDefault();
-      break;
-    }
+  if(!String.IsNullOrWhiteSpace(entity.InheritedEntityName)){
+    firstExistingPrincipal = schema.Entities.Where((e)=>e.Name == entity.InheritedEntityName).SingleOrDefault();
+    return BuildDependencyPath(schema, firstExistingPrincipal) + "/" + entity.Name + "#";
+  }
+  else{
+    foreach (RelationSchema rel in schema.Relations) {
+      if(rel.ForeignEntityName == entity.Name && !rel.IsLookupRelation){
+        firstExistingPrincipal = schema.Entities.Where((e)=>e.Name == rel.PrimaryEntityName).SingleOrDefault();
+        break;
+      }
+    } 
   }
   if(firstExistingPrincipal == null){
     return entity.Name;

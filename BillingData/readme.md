@@ -28,11 +28,13 @@
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(KEY)** | *guid* | YES | YES |
+| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(PK)** | *guid* | YES | YES |
 | [ExecutingInstituteIdentifier](#StudyExecutionScopeExecutingInstituteIdentifier-Field) | *string* | YES | YES |
 | [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field) | *string* (100) | YES | YES |
 | [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field) | *string* (20) | YES | YES |
 | [ExtendedMetaData](#StudyExecutionScopeExtendedMetaData-Field) | *string* | no | no |
+##### Unique Keys
+* StudyExecutionIdentifier **(primary)**
 ##### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
 ```
 a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
@@ -97,7 +99,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [VisitGuid](#BillableVisitVisitGuid-Field) **(KEY)** | *guid* | YES | no |
+| [VisitGuid](#BillableVisitVisitGuid-Field) **(PK)** | *guid* | YES | no |
 | [StudyExecutionIdentifier](#BillableVisitStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
 | [ParticipantIdentifier](#BillableVisitParticipantIdentifier-Field) | *string* (50) | YES | no |
 | [VisitProdecureName](#BillableVisitVisitProdecureName-Field) | *string* | YES | no |
@@ -107,6 +109,8 @@ self describing ...
 | [ExecutionEndDateUtc](#BillableVisitExecutionEndDateUtc-Field) | *datetime* | no | no |
 | [SponsorValidationDateUtc](#BillableVisitSponsorValidationDateUtc-Field) | *datetime* | no | no |
 | [ExecutorValidationDateUtc](#BillableVisitExecutorValidationDateUtc-Field) | *datetime* | no | no |
+##### Unique Keys
+* VisitGuid **(primary)**
 ##### BillableVisit.**VisitGuid** (Field)
 ```
 a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -202,10 +206,12 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskGuid](#BillableTaskTaskGuid-Field) **(KEY)** | *guid* | YES | YES |
+| [TaskGuid](#BillableTaskTaskGuid-Field) **(PK)** | *guid* | YES | YES |
 | [VisitGuid](#BillableTaskVisitGuid-Field) (FK) | *guid* | YES | YES |
 | [TaskName](#BillableTaskTaskName-Field) | *string* | YES | YES |
 | [TaskExecutionTitle](#BillableTaskTaskExecutionTitle-Field) | *string* | YES | YES |
+##### Unique Keys
+* TaskGuid **(primary)**
 ##### BillableTask.**TaskGuid** (Field)
 ```
 a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')
@@ -253,12 +259,14 @@ created by the sponsor
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#BillingDemandId-Field) **(KEY)** | *guid* | YES | no |
+| [Id](#BillingDemandId-Field) **(PK)** | *guid* | YES | no |
 | [OfficialNumber](#BillingDemandOfficialNumber-Field) | *string* | YES | no |
 | [StudyExecutionIdentifier](#BillingDemandStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
 | [TransmissionDateUtc](#BillingDemandTransmissionDateUtc-Field) | *datetime* | no | no |
 | [CreationDateUtc](#BillingDemandCreationDateUtc-Field) | *datetime* | YES | no |
 | [CreatedByPerson](#BillingDemandCreatedByPerson-Field) | *string* | YES | no |
+##### Unique Keys
+* Id **(primary)**
 ##### BillingDemand.**Id** (Field)
 ```
 self describing ...
@@ -317,7 +325,7 @@ created by the executor-company
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InvoiceId-Field) **(KEY)** | *guid* | YES | YES |
+| [Id](#InvoiceId-Field) **(PK)** | *guid* | YES | YES |
 | [OfficialNumber](#InvoiceOfficialNumber-Field) | *string* | YES | YES |
 | [StudyExecutionIdentifier](#InvoiceStudyExecutionIdentifier-Field) (FK) | *guid* | YES | YES |
 | [OffcialInvoiceDate](#InvoiceOffcialInvoiceDate-Field) | *datetime* | YES | YES |
@@ -326,6 +334,8 @@ created by the executor-company
 | [CreatedByPerson](#InvoiceCreatedByPerson-Field) | *string* | YES | no |
 | [PaymentSubmittedDateUtc](#InvoicePaymentSubmittedDateUtc-Field) | *datetime* | no | no |
 | [PaymentReceivedDateUtc](#InvoicePaymentReceivedDateUtc-Field) | *datetime* | no | no |
+##### Unique Keys
+* Id **(primary)**
 ##### Invoice.**Id** (Field)
 ```
 self describing ...

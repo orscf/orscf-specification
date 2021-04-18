@@ -5,7 +5,7 @@
 |author:   |[ORSCF](https://www.orscf.org) ("Open Research Study Communication Formats") / T.Korn|
 |license:  |[Apache-2](https://choosealicense.com/licenses/apache-2.0/)|
 |version:  |1.3.0|
-|timestamp:|2021-03-20 12:23|
+|timestamp:|2021-04-17 09:28|
 
 ### Contents
 
@@ -29,8 +29,6 @@
 
 # Model:
 
-![chart](./chart.png)
-
 
 
 ## ResearchStudy
@@ -40,8 +38,8 @@
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyWorkflowName](#ResearchStudyStudyWorkflowName-Field) **(KEY)** | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#ResearchStudyStudyWorkflowVersion-Field) **(KEY)** | *string* (20) | YES | no |
+| [StudyWorkflowName](#ResearchStudyStudyWorkflowName-Field) **(PK)** | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#ResearchStudyStudyWorkflowVersion-Field) **(PK)** | *string* (20) | YES | no |
 | [OfficialLabel](#ResearchStudyOfficialLabel-Field) | *string* | YES | no |
 | [DefinitionOwner](#ResearchStudyDefinitionOwner-Field) | *string* | YES | no |
 | [DocumentationUrl](#ResearchStudyDocumentationUrl-Field) | *string* | YES | no |
@@ -54,6 +52,8 @@
 | [BillablePriceForGeneralPreparation](#ResearchStudyBillablePriceForGeneralPreparation-Field) | *decimal* | no | no |
 | [StudyDocumentationUrl](#ResearchStudyStudyDocumentationUrl-Field) | *string* | no | no |
 | [CaseReportFormUrl](#ResearchStudyCaseReportFormUrl-Field) | *string* | no | no |
+##### Unique Keys
+* StudyWorkflowName + StudyWorkflowVersion **(primary)**
 ##### ResearchStudy.**StudyWorkflowName** (Field)
 ```
 the official invariant name of the study as given by the sponsor
@@ -184,9 +184,9 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyArmName](#ArmStudyArmName-Field) **(KEY)** | *string* (50) | YES | no |
-| [StudyWorkflowName](#ArmStudyWorkflowName-Field) **(KEY)** (FK) | *string* (100) | YES | no |
-| [StudyWorkflowVersion](#ArmStudyWorkflowVersion-Field) **(KEY)** (FK) | *string* (20) | YES | no |
+| [StudyArmName](#ArmStudyArmName-Field) **(PK)** | *string* (50) | YES | no |
+| [StudyWorkflowName](#ArmStudyWorkflowName-Field) **(PK)** (FK) | *string* (100) | YES | no |
+| [StudyWorkflowVersion](#ArmStudyWorkflowVersion-Field) **(PK)** (FK) | *string* (20) | YES | no |
 | [RootProcedureScheduleId](#ArmRootProcedureScheduleId-Field) (FK) | *guid* | no | no |
 | [BillablePriceOnFailedInclusion](#ArmBillablePriceOnFailedInclusion-Field) | *decimal* | no | no |
 | [BillablePriceOnSuccessfullInclusion](#ArmBillablePriceOnSuccessfullInclusion-Field) | *decimal* | no | no |
@@ -195,6 +195,8 @@ self describing ...
 | [ArmSpecificDocumentationUrl](#ArmArmSpecificDocumentationUrl-Field) | *string* | no | no |
 | [InclusionCriteria](#ArmInclusionCriteria-Field) | *string* | no | no |
 | [Substudy](#ArmSubstudy-Field) | *string* | no | no |
+##### Unique Keys
+* StudyArmName + StudyWorkflowName + StudyWorkflowVersion **(primary)**
 ##### Arm.**StudyArmName** (Field)
 ```
 self describing ...
@@ -288,7 +290,7 @@ the ProcedureSchedule which is representing the primary-/entry-workflow (estimat
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [DataRecordingName](#DataRecordingTaskDataRecordingName-Field) **(KEY)** | *string* (50) | YES | no |
+| [DataRecordingName](#DataRecordingTaskDataRecordingName-Field) **(PK)** | *string* (50) | YES | no |
 | [StudyWorkflowName](#DataRecordingTaskStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
 | [StudyWorkflowVersion](#DataRecordingTaskStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
 | [BillablePriceOnCompletedExecution](#DataRecordingTaskBillablePriceOnCompletedExecution-Field) | *decimal* | no | no |
@@ -297,6 +299,8 @@ the ProcedureSchedule which is representing the primary-/entry-workflow (estimat
 | [ImportantNotices](#DataRecordingTaskImportantNotices-Field) | *string* | no | no |
 | [DataSchemaUrl](#DataRecordingTaskDataSchemaUrl-Field) | *string* | YES | no |
 | [DefaultData](#DataRecordingTaskDefaultData-Field) | *string* | no | no |
+##### Unique Keys
+* DataRecordingName **(primary)**
 ##### DataRecordingTask.**DataRecordingName** (Field)
 ```
 self describing ...
@@ -374,7 +378,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [DrugApplymentName](#DrugApplymentTaskDrugApplymentName-Field) **(KEY)** | *string* (50) | YES | no |
+| [DrugApplymentName](#DrugApplymentTaskDrugApplymentName-Field) **(PK)** | *string* (50) | YES | no |
 | [StudyWorkflowName](#DrugApplymentTaskStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
 | [StudyWorkflowVersion](#DrugApplymentTaskStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
 | [BillablePriceOnCompletedExecution](#DrugApplymentTaskBillablePriceOnCompletedExecution-Field) | *decimal* | no | no |
@@ -385,6 +389,8 @@ self describing ...
 | [UnitsToApply](#DrugApplymentTaskUnitsToApply-Field) | *decimal* | YES | no |
 | [ApplymentRoute](#DrugApplymentTaskApplymentRoute-Field) | *string* | YES | no |
 | [ImportantNotices](#DrugApplymentTaskImportantNotices-Field) | *string* | no | no |
+##### Unique Keys
+* DrugApplymentName **(primary)**
 ##### DrugApplymentTask.**DrugApplymentName** (Field)
 ```
 self describing ...
@@ -469,7 +475,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [ProcedureScheduleId](#ProcedureScheduleProcedureScheduleId-Field) **(KEY)** | *guid* | YES | no |
+| [ProcedureScheduleId](#ProcedureScheduleProcedureScheduleId-Field) **(PK)** | *guid* | YES | no |
 | [StudyWorkflowName](#ProcedureScheduleStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
 | [StudyWorkflowVersion](#ProcedureScheduleStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
 | [Title](#ProcedureScheduleTitle-Field) | *string* | YES | no |
@@ -482,6 +488,8 @@ self describing ...
 | [EventOnAllCyclesEnded](#ProcedureScheduleEventOnAllCyclesEnded-Field) | *string* | YES | no |
 | [InducingEvents](#ProcedureScheduleInducingEvents-Field) | *string* | YES | no |
 | [AbortCausingEvents](#ProcedureScheduleAbortCausingEvents-Field) | *string* | YES | no |
+##### Unique Keys
+* ProcedureScheduleId **(primary)**
 ##### ProcedureSchedule.**ProcedureScheduleId** (Field)
 ```
 self describing ...
@@ -594,7 +602,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedSubProcedureScheduleId-Field) **(KEY)** | *guid* | YES | no |
+| [Id](#InducedSubProcedureScheduleId-Field) **(PK)** | *guid* | YES | no |
 | [ParentProcedureScheduleId](#InducedSubProcedureScheduleParentProcedureScheduleId-Field) (FK) | *guid* | YES | no |
 | [InducedProcedureScheduleId](#InducedSubProcedureScheduleInducedProcedureScheduleId-Field) (FK) | *guid* | YES | no |
 | [Offset](#InducedSubProcedureScheduleOffset-Field) | *int32* | YES | no |
@@ -604,6 +612,8 @@ self describing ...
 | [SchedulingVariabilityUnit](#InducedSubProcedureScheduleSchedulingVariabilityUnit-Field) | *string* | YES | no |
 | [SharedSkipCounters](#InducedSubProcedureScheduleSharedSkipCounters-Field) | *boolean* | YES | no |
 | [SharedLostCounters](#InducedSubProcedureScheduleSharedLostCounters-Field) | *boolean* | YES | no |
+##### Unique Keys
+* Id **(primary)**
 ##### InducedSubProcedureSchedule.**Id** (Field)
 ```
 self describing ...
@@ -679,7 +689,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedVisitProcedureId-Field) **(KEY)** | *guid* | YES | no |
+| [Id](#InducedVisitProcedureId-Field) **(PK)** | *guid* | YES | no |
 | [ProcedureScheduleId](#InducedVisitProcedureProcedureScheduleId-Field) (FK) | *guid* | YES | no |
 | [Offset](#InducedVisitProcedureOffset-Field) | *int32* | YES | no |
 | [OffsetUnit](#InducedVisitProcedureOffsetUnit-Field) | *string* | YES | no |
@@ -691,6 +701,8 @@ self describing ...
 | [Skipable](#InducedVisitProcedureSkipable-Field) | *boolean* | YES | no |
 | [EventOnSkip](#InducedVisitProcedureEventOnSkip-Field) | *string* | YES | no |
 | [EventOnLost](#InducedVisitProcedureEventOnLost-Field) | *string* | YES | no |
+##### Unique Keys
+* Id **(primary)**
 ##### InducedVisitProcedure.**Id** (Field)
 ```
 self describing ...
@@ -775,13 +787,15 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [ProcedureScheduleId](#ProcedureCycleDefinitionProcedureScheduleId-Field) **(KEY)** (FK) | *guid* | YES | no |
+| [ProcedureScheduleId](#ProcedureCycleDefinitionProcedureScheduleId-Field) **(PK)** (FK) | *guid* | YES | no |
 | [ReschedulingBase](#ProcedureCycleDefinitionReschedulingBase-Field) | *int32* | YES | no |
 | [ReschedulingOffset](#ProcedureCycleDefinitionReschedulingOffset-Field) | *string* | YES | no |
 | [ReschedulingOffsetUnit](#ProcedureCycleDefinitionReschedulingOffsetUnit-Field) | *string* | YES | no |
 | [CycleLimit](#ProcedureCycleDefinitionCycleLimit-Field) | *int32* | no | no |
 | [SharedSkipCounters](#ProcedureCycleDefinitionSharedSkipCounters-Field) | *boolean* | YES | no |
 | [SharedLostCounters](#ProcedureCycleDefinitionSharedLostCounters-Field) | *boolean* | YES | no |
+##### Unique Keys
+* ProcedureScheduleId **(primary)**
 ##### ProcedureCycleDefinition.**ProcedureScheduleId** (Field)
 ```
 self describing ...
@@ -838,13 +852,15 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyEventName](#StudyEventStudyEventName-Field) **(KEY)** | *string* (50) | YES | no |
+| [StudyEventName](#StudyEventStudyEventName-Field) **(PK)** | *string* (50) | YES | no |
 | [StudyWorkflowName](#StudyEventStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
 | [StudyWorkflowVersion](#StudyEventStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
 | [MaxOccourrencesBeforeExclusion](#StudyEventMaxOccourrencesBeforeExclusion-Field) | *int32* | no | no |
 | [AllowManualTrigger](#StudyEventAllowManualTrigger-Field) | *boolean* | YES | no |
 | [Description](#StudyEventDescription-Field) | *string* | YES | no |
 | [EvenSpecificDocumentationUrl](#StudyEventEvenSpecificDocumentationUrl-Field) | *string* | no | no |
+##### Unique Keys
+* StudyEventName **(primary)**
 ##### StudyEvent.**StudyEventName** (Field)
 ```
 self describing ...
@@ -906,7 +922,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskScheduleId](#TaskScheduleTaskScheduleId-Field) **(KEY)** | *guid* | YES | no |
+| [TaskScheduleId](#TaskScheduleTaskScheduleId-Field) **(PK)** | *guid* | YES | no |
 | [StudyWorkflowName](#TaskScheduleStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
 | [StudyWorkflowVersion](#TaskScheduleStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
 | [Title](#TaskScheduleTitle-Field) | *string* | YES | no |
@@ -919,6 +935,8 @@ self describing ...
 | [EventOnAllCyclesEnded](#TaskScheduleEventOnAllCyclesEnded-Field) | *string* | YES | no |
 | [InducingEvents](#TaskScheduleInducingEvents-Field) | *string* | YES | no |
 | [AbortCausingEvents](#TaskScheduleAbortCausingEvents-Field) | *string* | YES | no |
+##### Unique Keys
+* TaskScheduleId **(primary)**
 ##### TaskSchedule.**TaskScheduleId** (Field)
 ```
 self describing ...
@@ -1043,7 +1061,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedDataRecordingTaskId-Field) **(KEY)** | *guid* | YES | no |
+| [Id](#InducedDataRecordingTaskId-Field) **(PK)** | *guid* | YES | no |
 | [TaskScheduleId](#InducedDataRecordingTaskTaskScheduleId-Field) (FK) | *guid* | YES | no |
 | [InducedDataRecordingName](#InducedDataRecordingTaskInducedDataRecordingName-Field) (FK) | *string* (50) | YES | no |
 | [Offset](#InducedDataRecordingTaskOffset-Field) | *int32* | YES | no |
@@ -1055,6 +1073,8 @@ self describing ...
 | [Skipable](#InducedDataRecordingTaskSkipable-Field) | *boolean* | YES | no |
 | [EventOnSkip](#InducedDataRecordingTaskEventOnSkip-Field) | *string* | YES | no |
 | [EventOnLost](#InducedDataRecordingTaskEventOnLost-Field) | *string* | YES | no |
+##### Unique Keys
+* Id **(primary)**
 ##### InducedDataRecordingTask.**Id** (Field)
 ```
 self describing ...
@@ -1139,7 +1159,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedDrugApplymentTaskId-Field) **(KEY)** | *guid* | YES | no |
+| [Id](#InducedDrugApplymentTaskId-Field) **(PK)** | *guid* | YES | no |
 | [TaskScheduleId](#InducedDrugApplymentTaskTaskScheduleId-Field) (FK) | *guid* | YES | no |
 | [InducedDrugApplymentName](#InducedDrugApplymentTaskInducedDrugApplymentName-Field) (FK) | *string* (50) | YES | no |
 | [Offset](#InducedDrugApplymentTaskOffset-Field) | *int32* | YES | no |
@@ -1151,6 +1171,8 @@ self describing ...
 | [Skipable](#InducedDrugApplymentTaskSkipable-Field) | *boolean* | YES | no |
 | [EventOnSkip](#InducedDrugApplymentTaskEventOnSkip-Field) | *string* | YES | no |
 | [EventOnLost](#InducedDrugApplymentTaskEventOnLost-Field) | *string* | YES | no |
+##### Unique Keys
+* Id **(primary)**
 ##### InducedDrugApplymentTask.**Id** (Field)
 ```
 self describing ...
@@ -1235,7 +1257,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedSubTaskScheduleId-Field) **(KEY)** | *guid* | YES | no |
+| [Id](#InducedSubTaskScheduleId-Field) **(PK)** | *guid* | YES | no |
 | [ParentTaskScheduleId](#InducedSubTaskScheduleParentTaskScheduleId-Field) (FK) | *guid* | YES | no |
 | [InducedTaskScheduleId](#InducedSubTaskScheduleInducedTaskScheduleId-Field) (FK) | *guid* | YES | no |
 | [Offset](#InducedSubTaskScheduleOffset-Field) | *int32* | YES | no |
@@ -1245,6 +1267,8 @@ self describing ...
 | [SchedulingVariabilityUnit](#InducedSubTaskScheduleSchedulingVariabilityUnit-Field) | *string* | YES | no |
 | [SharedSkipCounters](#InducedSubTaskScheduleSharedSkipCounters-Field) | *boolean* | YES | no |
 | [SharedLostCounters](#InducedSubTaskScheduleSharedLostCounters-Field) | *boolean* | YES | no |
+##### Unique Keys
+* Id **(primary)**
 ##### InducedSubTaskSchedule.**Id** (Field)
 ```
 self describing ...
@@ -1321,7 +1345,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [Id](#InducedTreatmentTaskId-Field) **(KEY)** | *guid* | YES | no |
+| [Id](#InducedTreatmentTaskId-Field) **(PK)** | *guid* | YES | no |
 | [TaskScheduleId](#InducedTreatmentTaskTaskScheduleId-Field) (FK) | *guid* | YES | no |
 | [InducedTreatmentName](#InducedTreatmentTaskInducedTreatmentName-Field) (FK) | *string* (50) | YES | no |
 | [Offset](#InducedTreatmentTaskOffset-Field) | *int32* | YES | no |
@@ -1333,6 +1357,8 @@ self describing ...
 | [Skipable](#InducedTreatmentTaskSkipable-Field) | *boolean* | YES | no |
 | [EventOnSkip](#InducedTreatmentTaskEventOnSkip-Field) | *string* | YES | no |
 | [EventOnLost](#InducedTreatmentTaskEventOnLost-Field) | *string* | YES | no |
+##### Unique Keys
+* Id **(primary)**
 ##### InducedTreatmentTask.**Id** (Field)
 ```
 self describing ...
@@ -1417,13 +1443,15 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TaskScheduleId](#TaskCycleDefinitionTaskScheduleId-Field) **(KEY)** (FK) | *guid* | YES | no |
+| [TaskScheduleId](#TaskCycleDefinitionTaskScheduleId-Field) **(PK)** (FK) | *guid* | YES | no |
 | [ReschedulingBase](#TaskCycleDefinitionReschedulingBase-Field) | *string* | YES | no |
 | [ReschedulingOffset](#TaskCycleDefinitionReschedulingOffset-Field) | *string* | YES | no |
 | [ReschedulingOffsetUnit](#TaskCycleDefinitionReschedulingOffsetUnit-Field) | *string* | YES | no |
 | [CycleLimit](#TaskCycleDefinitionCycleLimit-Field) | *int32* | no | no |
 | [SharedSkipCounters](#TaskCycleDefinitionSharedSkipCounters-Field) | *boolean* | YES | no |
 | [SharedLostCounters](#TaskCycleDefinitionSharedLostCounters-Field) | *boolean* | YES | no |
+##### Unique Keys
+* TaskScheduleId **(primary)**
 ##### TaskCycleDefinition.**TaskScheduleId** (Field)
 ```
 self describing ...
@@ -1480,7 +1508,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [TreatmentName](#TreatmentTaskTreatmentName-Field) **(KEY)** | *string* (50) | YES | no |
+| [TreatmentName](#TreatmentTaskTreatmentName-Field) **(PK)** | *string* (50) | YES | no |
 | [StudyWorkflowName](#TreatmentTaskStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
 | [StudyWorkflowVersion](#TreatmentTaskStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
 | [BillablePriceOnCompletedExecution](#TreatmentTaskBillablePriceOnCompletedExecution-Field) | *decimal* | no | no |
@@ -1488,6 +1516,8 @@ self describing ...
 | [TaskSpecificDocumentationUrl](#TreatmentTaskTaskSpecificDocumentationUrl-Field) | *string* | no | no |
 | [TreatmentDescription](#TreatmentTaskTreatmentDescription-Field) | *string* | YES | no |
 | [ImportantNotices](#TreatmentTaskImportantNotices-Field) | *string* | no | no |
+##### Unique Keys
+* TreatmentName **(primary)**
 ##### TreatmentTask.**TreatmentName** (Field)
 ```
 self describing ...
@@ -1560,13 +1590,15 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [VisitProdecureName](#VisitProdecureDefinitionVisitProdecureName-Field) **(KEY)** | *string* (50) | YES | no |
+| [VisitProdecureName](#VisitProdecureDefinitionVisitProdecureName-Field) **(PK)** | *string* (50) | YES | no |
 | [StudyWorkflowName](#VisitProdecureDefinitionStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
 | [StudyWorkflowVersion](#VisitProdecureDefinitionStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
 | [RootTaskScheduleId](#VisitProdecureDefinitionRootTaskScheduleId-Field) (FK) | *guid* | no | no |
 | [BillablePriceOnAbortedExecution](#VisitProdecureDefinitionBillablePriceOnAbortedExecution-Field) | *decimal* | no | no |
 | [BillablePriceOnCompletedExecution](#VisitProdecureDefinitionBillablePriceOnCompletedExecution-Field) | *decimal* | no | no |
 | [VisitSpecificDocumentationUrl](#VisitProdecureDefinitionVisitSpecificDocumentationUrl-Field) | *string* | no | no |
+##### Unique Keys
+* VisitProdecureName **(primary)**
 ##### VisitProdecureDefinition.**VisitProdecureName** (Field)
 ```
 self describing ...

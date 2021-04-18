@@ -5,7 +5,7 @@
 |author:   |[ORSCF](https://www.orscf.org) ("Open Research Study Communication Formats") / T.Korn|
 |license:  |[Apache-2](https://choosealicense.com/licenses/apache-2.0/)|
 |version:  |1.3.0|
-|timestamp:|2021-03-20 12:23|
+|timestamp:|2021-04-17 09:28|
 
 ### Contents
 
@@ -18,8 +18,6 @@
 
 # Model:
 
-![chart](./chart.png)
-
 
 
 ## StudyScope
@@ -29,9 +27,11 @@
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyWorkflowName](#StudyScopeStudyWorkflowName-Field) **(KEY)** | *string* (100) | YES | YES |
-| [StudyWorkflowVersion](#StudyScopeStudyWorkflowVersion-Field) **(KEY)** | *string* (20) | YES | YES |
+| [StudyWorkflowName](#StudyScopeStudyWorkflowName-Field) **(PK)** | *string* (100) | YES | YES |
+| [StudyWorkflowVersion](#StudyScopeStudyWorkflowVersion-Field) **(PK)** | *string* (20) | YES | YES |
 | [ParticipantIdentifierSemantic](#StudyScopeParticipantIdentifierSemantic-Field) | *string* | YES | no |
+##### Unique Keys
+* StudyWorkflowName + StudyWorkflowVersion **(primary)**
 ##### StudyScope.**StudyWorkflowName** (Field)
 ```
 the official invariant name of the study as given by the sponsor
@@ -80,10 +80,12 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(KEY)** | *guid* | YES | no |
+| [StudyExecutionIdentifier](#StudyExecutionScopeStudyExecutionIdentifier-Field) **(PK)** | *guid* | YES | no |
 | [ExecutingInstituteIdentifier](#StudyExecutionScopeExecutingInstituteIdentifier-Field) | *string* | YES | no |
 | [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
 | [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
+##### Unique Keys
+* StudyExecutionIdentifier **(primary)**
 ##### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
 ```
 a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
@@ -136,12 +138,14 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [ParticipantIdentifier](#SubjectParticipationParticipantIdentifier-Field) **(KEY)** | *string* (50) | YES | no |
+| [ParticipantIdentifier](#SubjectParticipationParticipantIdentifier-Field) **(PK)** | *string* (50) | YES | no |
 | [StudyWorkflowName](#SubjectParticipationStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
 | [StudyWorkflowVersion](#SubjectParticipationStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
 | [CreationDateUtc](#SubjectParticipationCreationDateUtc-Field) | *datetime* | YES | no |
 | [CreatedForStudyExecutionIdentifier](#SubjectParticipationCreatedForStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
 | [SubjectIdentityRecordId](#SubjectParticipationSubjectIdentityRecordId-Field) (FK) | *guid* | no | no |
+##### Unique Keys
+* ParticipantIdentifier **(primary)**
 ##### SubjectParticipation.**ParticipantIdentifier** (Field)
 ```
 identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)
@@ -220,9 +224,11 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [ParticipantIdentifier](#AdditionalSubjectParticipationIdentifierParticipantIdentifier-Field) **(KEY)** (FK) | *string* (50) | YES | YES |
-| [IdentifierName](#AdditionalSubjectParticipationIdentifierIdentifierName-Field) **(KEY)** | *string* (30) | YES | YES |
+| [ParticipantIdentifier](#AdditionalSubjectParticipationIdentifierParticipantIdentifier-Field) **(PK)** (FK) | *string* (50) | YES | YES |
+| [IdentifierName](#AdditionalSubjectParticipationIdentifierIdentifierName-Field) **(PK)** | *string* (30) | YES | YES |
 | [IdentifierValue](#AdditionalSubjectParticipationIdentifierIdentifierValue-Field) | *string* | YES | no |
+##### Unique Keys
+* ParticipantIdentifier + IdentifierName **(primary)**
 ##### AdditionalSubjectParticipationIdentifier.**ParticipantIdentifier** (Field)
 ```
 self describing ...
@@ -267,7 +273,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [InternalRecordId](#SubjectAddressInternalRecordId-Field) **(KEY)** | *guid* | YES | no |
+| [InternalRecordId](#SubjectAddressInternalRecordId-Field) **(PK)** | *guid* | YES | no |
 | [Street](#SubjectAddressStreet-Field) | *string* | YES | no |
 | [HouseNumber](#SubjectAddressHouseNumber-Field) | *string* | YES | no |
 | [PostCode](#SubjectAddressPostCode-Field) | *string* | YES | no |
@@ -275,6 +281,9 @@ self describing ...
 | [State](#SubjectAddressState-Field) | *string* | YES | no |
 | [Country](#SubjectAddressCountry-Field) | *string* | YES | no |
 | [PhoneNumber](#SubjectAddressPhoneNumber-Field) | *string* | no | no |
+##### Unique Keys
+* InternalRecordId **(primary)**
+* Street + HouseNumber + PostCode + City + State + Country
 ##### SubjectAddress.**InternalRecordId** (Field)
 ```
 self describing ...
@@ -333,7 +342,7 @@ self describing ...
 
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
-| [RecordId](#SubjectIdentityRecordId-Field) **(KEY)** | *guid* | YES | no |
+| [RecordId](#SubjectIdentityRecordId-Field) **(PK)** | *guid* | YES | no |
 | [FirstName](#SubjectIdentityFirstName-Field) | *string* | no | no |
 | [LastName](#SubjectIdentityLastName-Field) | *string* | no | no |
 | [Gender](#SubjectIdentityGender-Field) | *int32* | no | no |
@@ -345,6 +354,8 @@ self describing ...
 | [Email](#SubjectIdentityEmail-Field) | *string* | no | no |
 | [MobileNumber](#SubjectIdentityMobileNumber-Field) | *string* | no | no |
 | [ResidentAddressId](#SubjectIdentityResidentAddressId-Field) (FK) | *guid* | no | no |
+##### Unique Keys
+* RecordId **(primary)**
 ##### SubjectIdentity.**RecordId** (Field)
 ```
 self describing ...

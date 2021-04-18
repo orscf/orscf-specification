@@ -5,14 +5,27 @@
 <#@ import namespace="Newtonsoft.Json" #><#@ output extension=".json"#><#
 
 '///////////////////////////////////////////////////////////////////////////////////////////////
-'//     copyright: Tobias Korn / version: 20.03.2021                                          //
+'//     copyright: Tobias Korn / version: 10.04.2021                                          //
 '///////////////////////////////////////////////////////////////////////////////////////////////
 
        Const inputFile As String = "ORSCF-StudyWorkflowDefinition.edmx"
        Const schemaSemanticVersion = "1.3.0"
 
 '///////////////////////////////////////////////////////////////////////////////////////////////
-
+'
+'  Conventions: 
+'
+'    use Cascade-Delete to specify, if a relation is
+'      - Dependent-to-Principal (true) or 
+'      - Related-to-Lookup (false)
+'
+'    use the Entity.Documentation.LongDescription-Property for additional Tags ( ',' separated):
+'      "FIX" = fixed after creation (must not change any more)
+'      "SYS" = system internal (ui invisible)
+'      "UQ1"..."UQ9" = field is part of a additional unique index 1...9
+'      "IX1"..."IX9" = field is part of a additional non-unique index 1...9
+'
+'///////////////////////////////////////////////////////////////////////////////////////////////
 Dim code As New CodeGenerationTools(Me)
 Dim loader As New MetadataLoader(Me)
 Dim region As New CodeRegion(Me, 1)
@@ -171,6 +184,8 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
       Else
         oEntity.PrimaryKeyIndexName = Nothing
       End If
+     
+     Dim additionalIxs As New Dictionary(Of String, List(Of String))
 
      For Each edmProperty As EdmProperty In primitiveProperties
        Dim oField As New FieldSchema()
@@ -240,11 +255,37 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
         If (edmProperty.Documentation IsNot Nothing AndAlso Not String.IsNullOrEmpty(edmProperty.Documentation.Summary))
           oField.Summary = edmProperty.Documentation.Summary
         End If
+
         If (edmProperty.Documentation IsNot Nothing AndAlso Not String.IsNullOrEmpty(edmProperty.Documentation.LongDescription))
-          'Dim flags = edmProperty.Documentation.LongDescription.Split(","c)
-          oField.SystemInternal = oField.SystemInternal Or edmProperty.Documentation.LongDescription.Contains("SYS")
-          oField.FixedAfterCreation = oField.FixedAfterCreation Or edmProperty.Documentation.LongDescription.Contains("FIX")
+          Dim flags As String() = edmProperty.Documentation.LongDescription.Split(","c).Select(Function(f) f.Trim().ToUpper()).Where(Function(f) Not String.IsNullOrWhiteSpace(f)).ToArray()
+
+          For Each flag As String in flags.Where(Function(f) f.StartsWith("UQ") Or f.StartsWith("IX"))
+            If(additionalIxs.ContainsKey(flag))Then
+              additionalIxs(flag).Add(edmProperty.Name)
+            Else
+              Dim memberNameList As New List(Of String)
+              memberNameList.Add(edmProperty.Name)
+              additionalIxs.Add(flag, memberNameList)
+            End If
+          Next
+
+          oField.SystemInternal = oField.SystemInternal Or flags.Where(Function(f) f = "SYS").Any()
+          oField.FixedAfterCreation = oField.FixedAfterCreation Or flags.Where(Function(f) f = "FIX").Any()
         End If
+
+      Next
+
+      For Each additionalIxName As String in additionalIxs.Keys 
+        Dim idx As New IndexSchema      
+        idx.MemberFieldNames = additionalIxs(additionalIxName)
+        If(additionalIxName.StartsWith("UQ"))Then
+          idx.Name = "UQ_" + oEntity.NamePlural + "_" + String.Join("_", idx.MemberFieldNames.ToArray())
+          idx.Unique = True
+        Else
+          idx.Name = "IX_" + oEntity.NamePlural + "_" + String.Join("_", idx.MemberFieldNames.ToArray())
+          idx.Unique = False
+        End If
+        oEntity.Indices.Add(idx)
       Next
 
     End If
@@ -388,12 +429,12 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
           fkIndex.MemberFieldNames = foreignKeyDefinition.ToList()
           If(localIsPrimarySide)Then
             If(oRel.ForeignNavigationName Is Nothing)Then
-              fkIndex.Name = "FK_" + entitySetNames(oRemEntity.Name) + "_" + oEntity.NamePlural
+              fkIndex.Name = "FK_" + oRemEntity.NamePlural + "_" + oEntity.NamePlural
             Else
-              fkIndex.Name = "FK_" + entitySetNames(oRemEntity.Name) + "_" + oEntity.NamePlural + "_" + oRel.ForeignNavigationName
+              fkIndex.Name = "FK_" + oRemEntity.NamePlural + "_" + oEntity.NamePlural + "_" + oRel.ForeignNavigationName
             End If
           Else
-            fkIndex.Name = "FK_" + oEntity.NamePlural + "_" + entitySetNames(oRemEntity.Name) + "_" + oRel.ForeignNavigationName
+            fkIndex.Name = "FK_" + oEntity.NamePlural + "_" + oRemEntity.NamePlural + "_" + oRel.ForeignNavigationName
           End If
 
           If(Not oRel.ForeignEntityIsMultiple)Then

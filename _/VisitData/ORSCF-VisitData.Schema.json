@@ -1,6 +1,6 @@
 {
   "DescriptionFormat": "v1.0",
-  "TimestampUtc": "2021-03-19T11:27:22.7949884Z",
+  "TimestampUtc": "2021-04-17T07:27:47.2275430Z",
   "SemanticVersion": "1.3.0",
   "Entities": [
     {
@@ -19,7 +19,21 @@
           ]
         },
         {
-          "Name": "FK_DataRecordings_Visits_Visit",
+          "Name": "IX_DataRecordings_DataRecordingName",
+          "Unique": false,
+          "MemberFieldNames": [
+            "DataRecordingName"
+          ]
+        },
+        {
+          "Name": "IX_DataRecordings_TaskExecutionTitle",
+          "Unique": false,
+          "MemberFieldNames": [
+            "TaskExecutionTitle"
+          ]
+        },
+        {
+          "Name": "FK_DataRecordings__Visit",
           "Unique": false,
           "MemberFieldNames": [
             "VisitGuid"
@@ -170,7 +184,7 @@
       "PrimaryKeyIndexName": "PK_Visits",
       "Indices": [
         {
-          "Name": "FK_Visits_StudyExecutionScopes_StudyExecution",
+          "Name": "FK__StudyExecutionScopes_StudyExecution",
           "Unique": false,
           "MemberFieldNames": [
             "StudyExecutionIdentifier"
@@ -181,6 +195,39 @@
           "Unique": true,
           "MemberFieldNames": [
             "VisitGuid"
+          ]
+        },
+        {
+          "Name": "IX_Visits_ParticipantIdentifier_StudyExecutionIdentifier",
+          "Unique": false,
+          "MemberFieldNames": [
+            "ParticipantIdentifier",
+            "StudyExecutionIdentifier"
+          ]
+        },
+        {
+          "Name": "UQ_Visits_ParticipantIdentifier_StudyExecutionIdentifier_VisitExecutionTitle",
+          "Unique": true,
+          "MemberFieldNames": [
+            "ParticipantIdentifier",
+            "StudyExecutionIdentifier",
+            "VisitExecutionTitle"
+          ]
+        },
+        {
+          "Name": "IX_Visits_StudyExecutionIdentifier_VisitProdecureName",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyExecutionIdentifier",
+            "VisitProdecureName"
+          ]
+        },
+        {
+          "Name": "IX_Visits_StudyExecutionIdentifier_VisitExecutionTitle",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyExecutionIdentifier",
+            "VisitExecutionTitle"
           ]
         }
       ],
@@ -233,7 +280,7 @@
           "Name": "VisitExecutionTitle",
           "Type": "String",
           "MaxLength": 0,
-          "Summary": "title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)",
+          "Summary": "unique title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -313,7 +360,21 @@
           ]
         },
         {
-          "Name": "FK_DrugApplyments_Visits_Visit",
+          "Name": "IX_DrugApplyments_DrugApplymentName",
+          "Unique": false,
+          "MemberFieldNames": [
+            "DrugApplymentName"
+          ]
+        },
+        {
+          "Name": "IX_DrugApplyments_TaskExecutionTitle",
+          "Unique": false,
+          "MemberFieldNames": [
+            "TaskExecutionTitle"
+          ]
+        },
+        {
+          "Name": "FK_DrugApplyments__Visit",
           "Unique": false,
           "MemberFieldNames": [
             "VisitGuid"
@@ -482,7 +543,14 @@
           ]
         },
         {
-          "Name": "FK_StudyEvents_StudyExecutionScopes_StudyExecution",
+          "Name": "IX_StudyEvents_StudyEventName",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyEventName"
+          ]
+        },
+        {
+          "Name": "FK_StudyEvents__StudyExecution",
           "Unique": false,
           "MemberFieldNames": [
             "StudyExecutionIdentifier"
@@ -594,6 +662,21 @@
           "MemberFieldNames": [
             "StudyExecutionIdentifier"
           ]
+        },
+        {
+          "Name": "IX_StudyExecutionScopes_ExecutingInstituteIdentifier",
+          "Unique": false,
+          "MemberFieldNames": [
+            "ExecutingInstituteIdentifier"
+          ]
+        },
+        {
+          "Name": "IX_StudyExecutionScopes_StudyWorkflowName_StudyWorkflowVersion",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyWorkflowName",
+            "StudyWorkflowVersion"
+          ]
         }
       ],
       "Fields": [
@@ -670,7 +753,21 @@
           ]
         },
         {
-          "Name": "FK_Treatments_Visits_Visit",
+          "Name": "IX_Treatments_TreatmentName",
+          "Unique": false,
+          "MemberFieldNames": [
+            "TreatmentName"
+          ]
+        },
+        {
+          "Name": "IX_Treatments_TaskExecutionTitle",
+          "Unique": false,
+          "MemberFieldNames": [
+            "TaskExecutionTitle"
+          ]
+        },
+        {
+          "Name": "FK_Treatments__Visit",
           "Unique": false,
           "MemberFieldNames": [
             "VisitGuid"
@@ -796,7 +893,7 @@
       "Name": "VisitDataRecording",
       "PrimaryEntityName": "Visit",
       "ForeignEntityName": "DataRecording",
-      "ForeignKeyIndexName": "FK_DataRecordings_Visits_Visit",
+      "ForeignKeyIndexName": "FK_DataRecordings__Visit",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -810,7 +907,7 @@
       "Name": "VisitDrugApplyment",
       "PrimaryEntityName": "Visit",
       "ForeignEntityName": "DrugApplyment",
-      "ForeignKeyIndexName": "FK_DrugApplyments_Visits_Visit",
+      "ForeignKeyIndexName": "FK_DrugApplyments__Visit",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -824,7 +921,7 @@
       "Name": "StudyExecutionScopeStudyEvent",
       "PrimaryEntityName": "StudyExecutionScope",
       "ForeignEntityName": "StudyEvent",
-      "ForeignKeyIndexName": "FK_StudyEvents_StudyExecutionScopes_StudyExecution",
+      "ForeignKeyIndexName": "FK_StudyEvents__StudyExecution",
       "IsLookupRelation": true,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -838,7 +935,7 @@
       "Name": "StudyExecutionScopeVisit",
       "PrimaryEntityName": "StudyExecutionScope",
       "ForeignEntityName": "Visit",
-      "ForeignKeyIndexName": "FK_Visits_StudyExecutionScopes_StudyExecution",
+      "ForeignKeyIndexName": "FK__StudyExecutionScopes_StudyExecution",
       "IsLookupRelation": true,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -852,7 +949,7 @@
       "Name": "VisitTreatment",
       "PrimaryEntityName": "Visit",
       "ForeignEntityName": "Treatment",
-      "ForeignKeyIndexName": "FK_Treatments_Visits_Visit",
+      "ForeignKeyIndexName": "FK_Treatments__Visit",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,

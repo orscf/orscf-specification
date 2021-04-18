@@ -1,6 +1,6 @@
 {
   "DescriptionFormat": "v1.0",
-  "TimestampUtc": "2021-03-20T11:23:59.8768811Z",
+  "TimestampUtc": "2021-04-17T07:28:45.7735544Z",
   "SemanticVersion": "1.3.0",
   "Entities": [
     {
@@ -20,7 +20,7 @@
           ]
         },
         {
-          "Name": "FK_AdditionalSubjectParticipationIdentifiers_SubjectParticipations_Participation",
+          "Name": "FK_AdditionalSubjectParticipationIdentifiers__Participation",
           "Unique": false,
           "MemberFieldNames": [
             "ParticipantIdentifier"
@@ -72,14 +72,14 @@
       "PrimaryKeyIndexName": "PK_SubjectParticipations",
       "Indices": [
         {
-          "Name": "FK_SubjectParticipations_StudyExecutionScopes_StudyExecutionScope",
+          "Name": "FK__StudyExecutionScopes_StudyExecutionScope",
           "Unique": false,
           "MemberFieldNames": [
             "CreatedForStudyExecutionIdentifier"
           ]
         },
         {
-          "Name": "FK_SubjectParticipations_StudyScopes_StudyScope",
+          "Name": "FK__StudyScopes_StudyScope",
           "Unique": false,
           "MemberFieldNames": [
             "StudyWorkflowName",
@@ -87,7 +87,7 @@
           ]
         },
         {
-          "Name": "FK_SubjectParticipations_SubjectIdentities_Identity",
+          "Name": "FK__SubjectIdentities_Identity",
           "Unique": false,
           "MemberFieldNames": [
             "SubjectIdentityRecordId"
@@ -186,7 +186,7 @@
           ]
         },
         {
-          "Name": "FK_StudyExecutionScopes_StudyScopes_StudyScope",
+          "Name": "FK_StudyExecutionScopes__StudyScope",
           "Unique": false,
           "MemberFieldNames": [
             "StudyWorkflowName",
@@ -308,6 +308,18 @@
           "MemberFieldNames": [
             "InternalRecordId"
           ]
+        },
+        {
+          "Name": "UQ_SubjectAddresses_Street_HouseNumber_PostCode_City_State_Country",
+          "Unique": true,
+          "MemberFieldNames": [
+            "Street",
+            "HouseNumber",
+            "PostCode",
+            "City",
+            "State",
+            "Country"
+          ]
         }
       ],
       "Fields": [
@@ -410,7 +422,7 @@
       "PrimaryKeyIndexName": "PK_SubjectIdentities",
       "Indices": [
         {
-          "Name": "FK_SubjectIdentities_SubjectAddresses_ResidentAddress",
+          "Name": "FK__SubjectAddresses_ResidentAddress",
           "Unique": false,
           "MemberFieldNames": [
             "ResidentAddressId"
@@ -421,6 +433,14 @@
           "Unique": true,
           "MemberFieldNames": [
             "RecordId"
+          ]
+        },
+        {
+          "Name": "IX_SubjectIdentities_FirstName_LastName",
+          "Unique": false,
+          "MemberFieldNames": [
+            "FirstName",
+            "LastName"
           ]
         }
       ],
@@ -565,7 +585,7 @@
       "Name": "SubjectParticipationAdditionalSubjectParticipationIdentifier",
       "PrimaryEntityName": "SubjectParticipation",
       "ForeignEntityName": "AdditionalSubjectParticipationIdentifier",
-      "ForeignKeyIndexName": "FK_AdditionalSubjectParticipationIdentifiers_SubjectParticipations_Participation",
+      "ForeignKeyIndexName": "FK_AdditionalSubjectParticipationIdentifiers__Participation",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -579,7 +599,7 @@
       "Name": "StudyScopeStudyExecutionScope",
       "PrimaryEntityName": "StudyScope",
       "ForeignEntityName": "StudyExecutionScope",
-      "ForeignKeyIndexName": "FK_StudyExecutionScopes_StudyScopes_StudyScope",
+      "ForeignKeyIndexName": "FK_StudyExecutionScopes__StudyScope",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -593,7 +613,7 @@
       "Name": "StudyExecutionScopeSubjectParticipation",
       "PrimaryEntityName": "StudyExecutionScope",
       "ForeignEntityName": "SubjectParticipation",
-      "ForeignKeyIndexName": "FK_SubjectParticipations_StudyExecutionScopes_StudyExecutionScope",
+      "ForeignKeyIndexName": "FK__StudyExecutionScopes_StudyExecutionScope",
       "IsLookupRelation": true,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -607,7 +627,7 @@
       "Name": "StudyScopeSubjectIdentity",
       "PrimaryEntityName": "StudyScope",
       "ForeignEntityName": "SubjectParticipation",
-      "ForeignKeyIndexName": "FK_SubjectParticipations_StudyScopes_StudyScope",
+      "ForeignKeyIndexName": "FK__StudyScopes_StudyScope",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -621,7 +641,7 @@
       "Name": "SubjectAddressSubjectIdentity",
       "PrimaryEntityName": "SubjectAddress",
       "ForeignEntityName": "SubjectIdentity",
-      "ForeignKeyIndexName": "FK_SubjectIdentities_SubjectAddresses_ResidentAddress",
+      "ForeignKeyIndexName": "FK__SubjectAddresses_ResidentAddress",
       "IsLookupRelation": true,
       "PrimaryEntityIsOptional": true,
       "ForeignEntityIsMultiple": true,
@@ -635,7 +655,7 @@
       "Name": "SubjectIdentitySubjectParticipation",
       "PrimaryEntityName": "SubjectIdentity",
       "ForeignEntityName": "SubjectParticipation",
-      "ForeignKeyIndexName": "FK_SubjectParticipations_SubjectIdentities_Identity",
+      "ForeignKeyIndexName": "FK__SubjectIdentities_Identity",
       "IsLookupRelation": true,
       "PrimaryEntityIsOptional": true,
       "ForeignEntityIsMultiple": true,

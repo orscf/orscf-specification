@@ -59,11 +59,13 @@
           <Property Name="DataRecordingName" Type="String" Nullable="false" >
             <Documentation>
               <Summary>unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX2</LongDescription>
             </Documentation>
           </Property>
           <Property Name="TaskExecutionTitle" Type="String" Nullable="false" >
             <Documentation>
               <Summary>title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX1</LongDescription>
             </Documentation>
           </Property>
           <Property Name="ScheduledDateTimeUtc" Type="DateTime" Nullable="true" >
@@ -122,11 +124,13 @@
           <Property Name="DrugApplymentName" Type="String" Nullable="false" >
             <Documentation>
               <Summary>unique invariant name of the study itself as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX2</LongDescription>
             </Documentation>
           </Property>
           <Property Name="TaskExecutionTitle" Type="String" Nullable="false" >
             <Documentation>
               <Summary>title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX1</LongDescription>
             </Documentation>
           </Property>
           <Property Name="ScheduledDateTimeUtc" Type="DateTime" Nullable="true" >
@@ -190,11 +194,13 @@
           <Property Name="TreatmentName" Type="String" Nullable="false" >
             <Documentation>
               <Summary>unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX2</LongDescription>
             </Documentation>
           </Property>
           <Property Name="TaskExecutionTitle" Type="String" Nullable="false" >
             <Documentation>
               <Summary>title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX1</LongDescription>
             </Documentation>
           </Property>
           <Property Name="ScheduledDateTimeUtc" Type="DateTime" Nullable="true" >
@@ -237,22 +243,25 @@
           <Property Name="ParticipantIdentifier" Type="String" Nullable="false" MaxLength="50" >
             <Documentation>
               <Summary>identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)</Summary>
-              <LongDescription>FIX</LongDescription>
+              <LongDescription>FIX, IX1, UQ1</LongDescription>
             </Documentation>
           </Property>
           <Property Name="StudyExecutionIdentifier" Type="Guid" Nullable="false" >
             <Documentation>
               <Summary>a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+              <LongDescription>IX1, IX2, IX3, UQ1</LongDescription>
             </Documentation>
           </Property>
           <Property Name="VisitProdecureName" Type="String" Nullable="false" >
             <Documentation>
               <Summary>unique invariant name of the visit-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX2</LongDescription>
             </Documentation>
           </Property>
           <Property Name="VisitExecutionTitle" Type="String" Nullable="false" >
             <Documentation>
-              <Summary>title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <Summary>unique title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX3, UQ1</LongDescription>
             </Documentation>
           </Property>
           <Property Name="ScheduledDateUtc" Type="DateTime" Nullable="true" >
@@ -357,6 +366,7 @@
           <Property Name="StudyEventName" Type="String" Nullable="false" >
             <Documentation>
               <Summary>unique invariant name of the event as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX1</LongDescription>
             </Documentation>
           </Property>
           <Property Name="ExtendedMetaData" Type="String" Nullable="true" >
@@ -386,19 +396,19 @@
           <Property Name="ExecutingInstituteIdentifier" Type="String" Nullable="false" >
             <Documentation>
               <Summary>the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)</Summary>
-              <LongDescription>FIX</LongDescription>
+              <LongDescription>FIX, IX2</LongDescription>
             </Documentation>
           </Property>
           <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" >
             <Documentation>
               <Summary>the official invariant name of the study as given by the sponsor</Summary>
-              <LongDescription>FIX</LongDescription>
+              <LongDescription>FIX, IX1</LongDescription>
             </Documentation>
           </Property>
           <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" >
             <Documentation>
               <Summary>version of the workflow</Summary>
-              <LongDescription>FIX</LongDescription>
+              <LongDescription>FIX, IX1</LongDescription>
             </Documentation>
           </Property>
           <Property Name="ExtendedMetaData" Type="String" Nullable="true" >
@@ -462,7 +472,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1e673f0774584ac2be5350aef5de4487" Name="Schema" ZoomLevel="79">
+      <Diagram DiagramId="1e673f0774584ac2be5350aef5de4487" Name="Schema" ZoomLevel="90">
         <EntityTypeShape EntityType="DomainModel.DataRecording" Width="2.75" PointX="8.375" PointY="6" FillColor="Navy" />
         <EntityTypeShape EntityType="DomainModel.DrugApplyment" Width="2.75" PointX="11.375" PointY="6" FillColor="Navy" />
         <EntityTypeShape EntityType="DomainModel.Treatment" Width="2.75" PointX="5.375" PointY="6" FillColor="Navy" />
