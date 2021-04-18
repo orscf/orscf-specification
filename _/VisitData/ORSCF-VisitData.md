@@ -38,6 +38,7 @@
 
 ##### Unique Keys
 * EventGuid **(primary)**
+
 ##### StudyEvent.**EventGuid** (Field)
 ```
 a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')
