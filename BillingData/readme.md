@@ -68,7 +68,7 @@ optional structure (in JSON-format) containing additional metadata regarding thi
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [BillableVisits](#BillableVisits-childs-of-this-StudyExecutionScope) | Childs | [BillableVisit](#BillableVisit) | * (multiple) |
 | [BillingDemands](#BillingDemands-childs-of-this-StudyExecutionScope) | Childs | [BillingDemand](#BillingDemand) | * (multiple) |
 | [Invoices](#Invoices-childs-of-this-StudyExecutionScope) | Childs | [Invoice](#Invoice) | * (multiple) |
@@ -148,7 +148,7 @@ indicates, that the visit is ready to get assigned to a 'Invoice' (usually this 
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [BillableTasks](#BillableTasks-childs-of-this-BillableVisit) | Childs | [BillableTask](#BillableTask) | * (multiple) |
 | [StudyExecution](#StudyExecution-parent-of-this-BillableVisit) | Parent | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 | [AssignedBillingDemand](#AssignedBillingDemand-lookup-from-this-BillableVisit) | Lookup | [BillingDemand](#BillingDemand) | 1 (required) |
@@ -209,7 +209,7 @@ title of the task execution as defined in the 'StudyWorkflowDefinition' (origina
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [BillableVisit](#BillableVisit-parent-of-this-BillableTask) | Parent | [BillableVisit](#BillableVisit) | 0/1 (optional) |
 
 ##### **BillableVisit** (parent of this BillableTask)
@@ -245,7 +245,7 @@ created by the sponsor
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [AssignedVisits](#AssignedVisits-refering-to-this-BillingDemand) | Referers | [BillableVisit](#BillableVisit) | * (multiple) |
 | [StudyExecution](#StudyExecution-parent-of-this-BillingDemand) | Parent | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 
@@ -300,7 +300,7 @@ the invoice number
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [AssignedVisits](#AssignedVisits-refering-to-this-Invoice) | Referers | [BillableVisit](#BillableVisit) | * (multiple) |
 | [StudyExecution](#StudyExecution-parent-of-this-Invoice) | Parent | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 

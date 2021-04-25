@@ -89,7 +89,7 @@ IT MUST NOT be updated on every change during Draft! Format: the Author, which i
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [Arms](#Arms-childs-of-this-ResearchStudy) | Childs | [Arm](#Arm) | * (multiple) |
 | [DataRecordingTasks](#DataRecordingTasks-childs-of-this-ResearchStudy) | Childs | [DataRecordingTask](#DataRecordingTask) | * (multiple) |
 | [DrugApplymentTasks](#DrugApplymentTasks-childs-of-this-ResearchStudy) | Childs | [DrugApplymentTask](#DrugApplymentTask) | * (multiple) |
@@ -178,7 +178,7 @@ defines, that the arm is part of a SubStudy which is addressed by a UniqueName o
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [ResearchStudy](#ResearchStudy-parent-of-this-Arm) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 | [RootProcedureSchedule](#RootProcedureSchedule-lookup-from-this-Arm) | Lookup | [ProcedureSchedule](#ProcedureSchedule) | 1 (required) |
 
@@ -242,7 +242,7 @@ RAW data, in the schema as defined at the 'DataSchemaUrl'
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [Inducements](#Inducements-refering-to-this-DataRecordingTask) | Referers | [InducedDataRecordingTask](#InducedDataRecordingTask) | * (multiple) |
 | [ResearchStudy](#ResearchStudy-parent-of-this-DataRecordingTask) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 
@@ -295,7 +295,7 @@ Addressed by: [StudyWorkflowName](#DataRecordingTaskStudyWorkflowName-Field), [S
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [Inducements](#Inducements-refering-to-this-DrugApplymentTask) | Referers | [InducedDrugApplymentTask](#InducedDrugApplymentTask) | * (multiple) |
 | [ResearchStudy](#ResearchStudy-parent-of-this-DrugApplymentTask) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 
@@ -343,7 +343,7 @@ Addressed by: [StudyWorkflowName](#DrugApplymentTaskStudyWorkflowName-Field), [S
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [EntryArms](#EntryArms-refering-to-this-ProcedureSchedule) | Referers | [Arm](#Arm) | * (multiple) |
 | [InducedSubProcedureSchedules](#InducedSubProcedureSchedules-childs-of-this-ProcedureSchedule) | Childs | [InducedSubProcedureSchedule](#InducedSubProcedureSchedule) | * (multiple) |
 | [InducingSubProcedureSchedules](#InducingSubProcedureSchedules-refering-to-this-ProcedureSchedule) | Referers | [InducedSubProcedureSchedule](#InducedSubProcedureSchedule) | * (multiple) |
@@ -418,7 +418,7 @@ defines an additional variability RELATIVE to the estimated scheduling date (whi
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [ParentProcedureSchedule](#ParentProcedureSchedule-parent-of-this-InducedSubProcedureSchedule) | Parent | [ProcedureSchedule](#ProcedureSchedule) | 0/1 (optional) |
 | [InducedProcedureSchedule](#InducedProcedureSchedule-lookup-from-this-InducedSubProcedureSchedule) | Lookup | [ProcedureSchedule](#ProcedureSchedule) | 0/1 (optional) |
 
@@ -493,7 +493,7 @@ defines, if the study protocol tolerates this execution to be 'skipped' (if not,
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [ProcedureSchedule](#ProcedureSchedule-parent-of-this-InducedVisitProcedure) | Parent | [ProcedureSchedule](#ProcedureSchedule) | 0/1 (optional) |
 | [InducedVisitProdecure](#InducedVisitProdecure-lookup-from-this-InducedVisitProcedure) | Lookup | [VisitProdecureDefinition](#VisitProdecureDefinition) | 0/1 (optional) |
 
@@ -548,7 +548,7 @@ number of cycles (of null for a infinite number of cycles)
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [ProcedureSchedule](#ProcedureSchedule-parent-of-this-ProcedureCycleDefinition) | Parent | [ProcedureSchedule](#ProcedureSchedule) | 0/1 (optional) |
 
 ##### **ProcedureSchedule** (parent of this ProcedureCycleDefinition)
@@ -592,7 +592,7 @@ Addressed by: [ProcedureScheduleId](#ProcedureCycleDefinitionProcedureScheduleId
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [ResearchStudy](#ResearchStudy-parent-of-this-StudyEvent) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 
 ##### **ResearchStudy** (parent of this StudyEvent)
@@ -637,7 +637,7 @@ Addressed by: [StudyWorkflowName](#StudyEventStudyWorkflowName-Field), [StudyWor
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [InducedDataRecordingTasks](#InducedDataRecordingTasks-childs-of-this-TaskSchedule) | Childs | [InducedDataRecordingTask](#InducedDataRecordingTask) | * (multiple) |
 | [InducedDrugApplymentTasks](#InducedDrugApplymentTasks-childs-of-this-TaskSchedule) | Childs | [InducedDrugApplymentTask](#InducedDrugApplymentTask) | * (multiple) |
 | [InducedSubTaskSchedules](#InducedSubTaskSchedules-childs-of-this-TaskSchedule) | Childs | [InducedSubTaskSchedule](#InducedSubTaskSchedule) | * (multiple) |
@@ -729,7 +729,7 @@ defines, if the study protocol tolerates this execution to be 'skipped' (if not,
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [InducedTask](#InducedTask-lookup-from-this-InducedDataRecordingTask) | Lookup | [DataRecordingTask](#DataRecordingTask) | 0/1 (optional) |
 | [TaskSchedule](#TaskSchedule-parent-of-this-InducedDataRecordingTask) | Parent | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
 
@@ -804,7 +804,7 @@ defines, if the study protocol tolerates this execution to be 'skipped' (if not,
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [InducedTask](#InducedTask-lookup-from-this-InducedDrugApplymentTask) | Lookup | [DrugApplymentTask](#DrugApplymentTask) | 0/1 (optional) |
 | [TaskSchedule](#TaskSchedule-parent-of-this-InducedDrugApplymentTask) | Parent | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
 
@@ -869,7 +869,7 @@ defines an additional variability RELATIVE to the estimated scheduling time (whi
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [ParentTaskSchedule](#ParentTaskSchedule-parent-of-this-InducedSubTaskSchedule) | Parent | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
 | [InducedTaskSchedule](#InducedTaskSchedule-lookup-from-this-InducedSubTaskSchedule) | Lookup | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
 
@@ -944,7 +944,7 @@ defines, if the study protocol tolerates this execution to be 'skipped' (if not,
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [TaskSchedule](#TaskSchedule-parent-of-this-InducedTreatmentTask) | Parent | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
 | [InducedTask](#InducedTask-lookup-from-this-InducedTreatmentTask) | Lookup | [TreatmentTask](#TreatmentTask) | 0/1 (optional) |
 
@@ -999,7 +999,7 @@ number of cycles (of null for a infinite number of cycles)
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [TaskSchedule](#TaskSchedule-parent-of-this-TaskCycleDefinition) | Parent | [TaskSchedule](#TaskSchedule) | 0/1 (optional) |
 
 ##### **TaskSchedule** (parent of this TaskCycleDefinition)
@@ -1046,7 +1046,7 @@ Addressed by: [TaskScheduleId](#TaskCycleDefinitionTaskScheduleId-Field).
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [Inducements](#Inducements-refering-to-this-TreatmentTask) | Referers | [InducedTreatmentTask](#InducedTreatmentTask) | * (multiple) |
 | [ResearchStudy](#ResearchStudy-parent-of-this-TreatmentTask) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 
@@ -1101,7 +1101,7 @@ the TaskSchedule which is representing the primary-/entry-workflow (estimated ta
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [Inducements](#Inducements-refering-to-this-VisitProdecureDefinition) | Referers | [InducedVisitProcedure](#InducedVisitProcedure) | * (multiple) |
 | [ResearchStudy](#ResearchStudy-parent-of-this-VisitProdecureDefinition) | Parent | [ResearchStudy](#ResearchStudy) | 0/1 (optional) |
 | [RootTaskSchedule](#RootTaskSchedule-lookup-from-this-VisitProdecureDefinition) | Lookup | [TaskSchedule](#TaskSchedule) | 1 (required) |

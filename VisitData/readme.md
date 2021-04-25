@@ -72,7 +72,7 @@ additional notes (supplied by the execution person)
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [StudyExecution](#StudyExecution-lookup-from-this-StudyEvent) | Lookup | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 
 ##### **StudyExecution** (lookup from this StudyEvent)
@@ -129,7 +129,7 @@ optional structure (in JSON-format) containing additional metadata regarding thi
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [Events](#Events-refering-to-this-StudyExecutionScope) | Referers | [StudyEvent](#StudyEvent) | * (multiple) |
 | [Visits](#Visits-refering-to-this-StudyExecutionScope) | Referers | [Visit](#Visit) | * (multiple) |
 
@@ -212,7 +212,7 @@ optional structure (in JSON-format) containing additional metadata regarding thi
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [DataRecordings](#DataRecordings-childs-of-this-Visit) | Childs | [DataRecording](#DataRecording) | * (multiple) |
 | [DrugApplyments](#DrugApplyments-childs-of-this-Visit) | Childs | [DrugApplyment](#DrugApplyment) | * (multiple) |
 | [StudyExecution](#StudyExecution-lookup-from-this-Visit) | Lookup | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
@@ -318,7 +318,7 @@ optional structure (in JSON-format) containing additional metadata regarding thi
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [Visit](#Visit-parent-of-this-DataRecording) | Parent | [Visit](#Visit) | 0/1 (optional) |
 
 ##### **Visit** (parent of this DataRecording)
@@ -411,7 +411,7 @@ optional structure (in JSON-format) containing additional metadata regarding thi
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [Visit](#Visit-parent-of-this-DrugApplyment) | Parent | [Visit](#Visit) | 0/1 (optional) |
 
 ##### **Visit** (parent of this DrugApplyment)
@@ -489,7 +489,7 @@ optional structure of additional metadata regarding this record in JSON-format, 
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [Visit](#Visit-parent-of-this-Treatment) | Parent | [Visit](#Visit) | 0/1 (optional) |
 
 ##### **Visit** (parent of this Treatment)

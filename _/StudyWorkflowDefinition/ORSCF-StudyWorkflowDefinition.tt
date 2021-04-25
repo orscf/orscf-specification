@@ -281,7 +281,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 <#
 
   /////////////////////////////////////////////////////////////////////////////////////////////

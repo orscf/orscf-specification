@@ -57,7 +57,7 @@ version of the workflow
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [ExecutionScopes](#ExecutionScopes-childs-of-this-StudyScope) | Childs | [StudyExecutionScope](#StudyExecutionScope) | * (multiple) |
 | [Participations](#Participations-childs-of-this-StudyScope) | Childs | [SubjectParticipation](#SubjectParticipation) | * (multiple) |
 
@@ -102,7 +102,7 @@ the institute which is executing the study (this should be an invariant technica
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [StudyScope](#StudyScope-parent-of-this-StudyExecutionScope) | Parent | [StudyScope](#StudyScope) | 0/1 (optional) |
 | [CreatedParticipations](#CreatedParticipations-refering-to-this-StudyExecutionScope) | Referers | [SubjectParticipation](#SubjectParticipation) | * (multiple) |
 
@@ -152,7 +152,7 @@ identity of the patient which can be a randomization or screening number (the ex
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [AdditionalIdentifiers](#AdditionalIdentifiers-childs-of-this-SubjectParticipation) | Childs | [AdditionalSubjectParticipationIdentifier](#AdditionalSubjectParticipationIdentifier) | * (multiple) |
 | [StudyExecutionScope](#StudyExecutionScope-lookup-from-this-SubjectParticipation) | Lookup | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 | [StudyScope](#StudyScope-parent-of-this-SubjectParticipation) | Parent | [StudyScope](#StudyScope) | 0/1 (optional) |
@@ -199,7 +199,7 @@ Addressed by: [SubjectIdentityRecordId](#SubjectParticipationSubjectIdentityReco
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [Participation](#Participation-parent-of-this-AdditionalSubjectParticipationIdentifier) | Parent | [SubjectParticipation](#SubjectParticipation) | 0/1 (optional) |
 
 ##### **Participation** (parent of this AdditionalSubjectParticipationIdentifier)
@@ -236,7 +236,7 @@ Addressed by: [ParticipantIdentifier](#AdditionalSubjectParticipationIdentifierP
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [SubjectIdentities](#SubjectIdentities-refering-to-this-SubjectAddress) | Referers | [SubjectIdentity](#SubjectIdentity) | * (multiple) |
 
 ##### **SubjectIdentities** (refering to this SubjectAddress)
@@ -302,7 +302,7 @@ can be used to specify the full salutation including all academic grades by a st
 ### Relations
 
 | Navigation-Name | Role | Target-Type | Target-Multiplicity |
-| --------------- | ----------- | ------------------- |
+| --------------- | -----| ----------- | ------------------- |
 | [ResidentAddress](#ResidentAddress-lookup-from-this-SubjectIdentity) | Lookup | [SubjectAddress](#SubjectAddress) | 1 (required) |
 | [Participations](#Participations-refering-to-this-SubjectIdentity) | Referers | [SubjectParticipation](#SubjectParticipation) | * (multiple) |
 
