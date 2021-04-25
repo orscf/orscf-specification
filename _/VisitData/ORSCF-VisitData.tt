@@ -164,6 +164,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
 
     if(!String.IsNullOrWhiteSpace(field.Summary)){
       if(!hasDetailSection){
+        fieldDetails.AppendLine()
         fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
@@ -187,6 +188,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
     else {
       reqStr = "no";
       if(!hasDetailSection){
+        fieldDetails.AppendLine()
         fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
@@ -201,6 +203,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
           fieldsuffix = " **(PK)**";
           //reqStr = "KEY";
           if(!hasDetailSection){
+            fieldDetails.AppendLine()
             fieldDetails.AppendLine("#### " + fieldHeading);
             hasDetailSection = true;
           }
@@ -216,7 +219,8 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
     }
     
     foreach (String a in attributes) {
-      if(!hasDetailSection){
+      if(!hasDetailSection){  
+        fieldDetails.AppendLine()
         fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
@@ -225,6 +229,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
 
     if(typeName == "string" && field.MaxLength > 0){
       if(!hasDetailSection){
+        fieldDetails.AppendLine()
         fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
@@ -237,6 +242,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
 
     if(field.DefaultValue != null){
       if(!hasDetailSection){
+        fieldDetails.AppendLine()
         fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
@@ -244,6 +250,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
     }
     if(field.SystemInternal){
       if(!hasDetailSection){
+        fieldDetails.AppendLine()
         fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
@@ -253,6 +260,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
     String fixStr = "no";
     if(field.FixedAfterCreation){
       if(!hasDetailSection){
+        fieldDetails.AppendLine()
         fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
