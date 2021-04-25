@@ -33,32 +33,32 @@
 | [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field) | *string* (100) | YES | YES |
 | [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field) | *string* (20) | YES | YES |
 | [ExtendedMetaData](#StudyExecutionScopeExtendedMetaData-Field) | *string* | no | no |
-##### Unique Keys
+#### Unique Keys
 * StudyExecutionIdentifier **(primary)**
-##### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
+#### StudyExecutionScope.**StudyExecutionIdentifier** (Field)
 ```
 a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
 ```
 * this field represents the identity (PK) of the record
 * after the record has been created, the value of this field must not be changed any more!
-##### StudyExecutionScope.**ExecutingInstituteIdentifier** (Field)
+#### StudyExecutionScope.**ExecutingInstituteIdentifier** (Field)
 ```
 the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)
 ```
 * after the record has been created, the value of this field must not be changed any more!
-##### StudyExecutionScope.**StudyWorkflowName** (Field)
+#### StudyExecutionScope.**StudyWorkflowName** (Field)
 ```
 the official invariant name of the study as given by the sponsor
 ```
 * the maximum length of the content within this field is 100 characters.
 * after the record has been created, the value of this field must not be changed any more!
-##### StudyExecutionScope.**StudyWorkflowVersion** (Field)
+#### StudyExecutionScope.**StudyWorkflowVersion** (Field)
 ```
 version of the workflow
 ```
 * the maximum length of the content within this field is 20 characters.
 * after the record has been created, the value of this field must not be changed any more!
-##### StudyExecutionScope.**ExtendedMetaData** (Field)
+#### StudyExecutionScope.**ExtendedMetaData** (Field)
 ```
 optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema
 ```
@@ -100,45 +100,45 @@ Target: [Invoice](#Invoice)
 | [ExecutionEndDateUtc](#BillableVisitExecutionEndDateUtc-Field) | *datetime* | no | no |
 | [SponsorValidationDateUtc](#BillableVisitSponsorValidationDateUtc-Field) | *datetime* | no | no |
 | [ExecutorValidationDateUtc](#BillableVisitExecutorValidationDateUtc-Field) | *datetime* | no | no |
-##### Unique Keys
+#### Unique Keys
 * VisitGuid **(primary)**
-##### BillableVisit.**VisitGuid** (Field)
+#### BillableVisit.**VisitGuid** (Field)
 ```
 a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')
 ```
 * this field represents the identity (PK) of the record
-##### BillableVisit.**StudyExecutionIdentifier** (Field)
+#### BillableVisit.**StudyExecutionIdentifier** (Field)
 ```
 a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')
 ```
 * this field is used as foreign key to address the related 'StudyExecution'
-##### BillableVisit.**ParticipantIdentifier** (Field)
+#### BillableVisit.**ParticipantIdentifier** (Field)
 ```
 identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)
 ```
 * the maximum length of the content within this field is 50 characters.
-##### BillableVisit.**VisitProdecureName** (Field)
+#### BillableVisit.**VisitProdecureName** (Field)
 ```
 unique invariant name of the visit-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
 ```
-##### BillableVisit.**VisitExecutionTitle** (Field)
+#### BillableVisit.**VisitExecutionTitle** (Field)
 ```
 title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
 ```
-##### BillableVisit.**BillingDemandId** (Field)
+#### BillableVisit.**BillingDemandId** (Field)
 * this field is optional, so that '*null*' values are supported
 * this field is used as foreign key to address the related 'AssignedBillingDemand'
-##### BillableVisit.**InvoiceId** (Field)
+#### BillableVisit.**InvoiceId** (Field)
 * this field is optional, so that '*null*' values are supported
 * this field is used as foreign key to address the related 'AssignedInvoice'
-##### BillableVisit.**ExecutionEndDateUtc** (Field)
+#### BillableVisit.**ExecutionEndDateUtc** (Field)
 * this field is optional, so that '*null*' values are supported
-##### BillableVisit.**SponsorValidationDateUtc** (Field)
+#### BillableVisit.**SponsorValidationDateUtc** (Field)
 ```
 indicates, that the visit is ready to get assigned to a 'BillingDemand' (usually this state is managed by the sponsor) This can only be set after there is a valid 'ExecutionEndDateUtc'
 ```
 * this field is optional, so that '*null*' values are supported
-##### BillableVisit.**ExecutorValidationDateUtc** (Field)
+#### BillableVisit.**ExecutorValidationDateUtc** (Field)
 ```
 indicates, that the visit is ready to get assigned to a 'Invoice' (usually this state is managed by the executor) This can only be set after either the 'SponsorValidationDateUtc' is set (and there is a Demand) nor the states are only managed by the executor, so that the demand-part is completely skipped.
 ```
@@ -180,26 +180,26 @@ Addressed by: [InvoiceId](#BillableVisitInvoiceId-Field).
 | [VisitGuid](#BillableTaskVisitGuid-Field) (FK) | *guid* | YES | YES |
 | [TaskName](#BillableTaskTaskName-Field) | *string* | YES | YES |
 | [TaskExecutionTitle](#BillableTaskTaskExecutionTitle-Field) | *string* | YES | YES |
-##### Unique Keys
+#### Unique Keys
 * TaskGuid **(primary)**
-##### BillableTask.**TaskGuid** (Field)
+#### BillableTask.**TaskGuid** (Field)
 ```
 a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')
 ```
 * this field represents the identity (PK) of the record
 * after the record has been created, the value of this field must not be changed any more!
-##### BillableTask.**VisitGuid** (Field)
+#### BillableTask.**VisitGuid** (Field)
 ```
 a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')
 ```
 * this field is used as foreign key to address the related 'BillableVisit'
 * after the record has been created, the value of this field must not be changed any more!
-##### BillableTask.**TaskName** (Field)
+#### BillableTask.**TaskName** (Field)
 ```
 unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
 ```
 * after the record has been created, the value of this field must not be changed any more!
-##### BillableTask.**TaskExecutionTitle** (Field)
+#### BillableTask.**TaskExecutionTitle** (Field)
 ```
 title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
 ```
@@ -232,13 +232,13 @@ created by the sponsor
 | [TransmissionDateUtc](#BillingDemandTransmissionDateUtc-Field) | *datetime* | no | no |
 | CreationDateUtc | *datetime* | YES | no |
 | CreatedByPerson | *string* | YES | no |
-##### Unique Keys
+#### Unique Keys
 * Id **(primary)**
-##### BillingDemand.**Id** (Field)
+#### BillingDemand.**Id** (Field)
 * this field represents the identity (PK) of the record
-##### BillingDemand.**StudyExecutionIdentifier** (Field)
+#### BillingDemand.**StudyExecutionIdentifier** (Field)
 * this field is used as foreign key to address the related 'StudyExecution'
-##### BillingDemand.**TransmissionDateUtc** (Field)
+#### BillingDemand.**TransmissionDateUtc** (Field)
 * this field is optional, so that '*null*' values are supported
 
 
@@ -274,26 +274,26 @@ created by the executor-company
 | CreatedByPerson | *string* | YES | no |
 | [PaymentSubmittedDateUtc](#InvoicePaymentSubmittedDateUtc-Field) | *datetime* | no | no |
 | [PaymentReceivedDateUtc](#InvoicePaymentReceivedDateUtc-Field) | *datetime* | no | no |
-##### Unique Keys
+#### Unique Keys
 * Id **(primary)**
-##### Invoice.**Id** (Field)
+#### Invoice.**Id** (Field)
 * this field represents the identity (PK) of the record
 * after the record has been created, the value of this field must not be changed any more!
-##### Invoice.**OfficialNumber** (Field)
+#### Invoice.**OfficialNumber** (Field)
 ```
 the invoice number
 ```
 * after the record has been created, the value of this field must not be changed any more!
-##### Invoice.**StudyExecutionIdentifier** (Field)
+#### Invoice.**StudyExecutionIdentifier** (Field)
 * this field is used as foreign key to address the related 'StudyExecution'
 * after the record has been created, the value of this field must not be changed any more!
-##### Invoice.**OffcialInvoiceDate** (Field)
+#### Invoice.**OffcialInvoiceDate** (Field)
 * after the record has been created, the value of this field must not be changed any more!
-##### Invoice.**TransmissionDateUtc** (Field)
+#### Invoice.**TransmissionDateUtc** (Field)
 * this field is optional, so that '*null*' values are supported
-##### Invoice.**PaymentSubmittedDateUtc** (Field)
+#### Invoice.**PaymentSubmittedDateUtc** (Field)
 * this field is optional, so that '*null*' values are supported
-##### Invoice.**PaymentReceivedDateUtc** (Field)
+#### Invoice.**PaymentReceivedDateUtc** (Field)
 * this field is optional, so that '*null*' values are supported
 
 

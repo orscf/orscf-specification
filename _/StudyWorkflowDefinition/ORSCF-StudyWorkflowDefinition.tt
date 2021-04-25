@@ -142,7 +142,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
   StringBuilder fieldDetails = new System.Text.StringBuilder();
 
   if(entity.Indices.Any()){
-    fieldDetails.AppendLine("##### Unique Keys");
+    fieldDetails.AppendLine("#### Unique Keys");
   }
   foreach (IndexSchema idx in entity.Indices) {
     if(idx.Unique){
@@ -164,7 +164,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
 
     if(!String.IsNullOrWhiteSpace(field.Summary)){
       if(!hasDetailSection){
-        fieldDetails.AppendLine("##### " + fieldHeading);
+        fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
       fieldDetails.AppendLine("```");
@@ -187,7 +187,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
     else {
       reqStr = "no";
       if(!hasDetailSection){
-        fieldDetails.AppendLine("##### " + fieldHeading);
+        fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
       fieldDetails.AppendLine("* this field is optional, so that '*null*' values are supported");
@@ -201,7 +201,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
           fieldsuffix = " **(PK)**";
           //reqStr = "KEY";
           if(!hasDetailSection){
-            fieldDetails.AppendLine("##### " + fieldHeading);
+            fieldDetails.AppendLine("#### " + fieldHeading);
             hasDetailSection = true;
           }
           fieldDetails.AppendLine("* this field represents the identity (PK) of the record");
@@ -217,7 +217,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
     
     foreach (String a in attributes) {
       if(!hasDetailSection){
-        fieldDetails.AppendLine("##### " + fieldHeading);
+        fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
       fieldDetails.AppendLine("* this field is used as foreign key to address the related '" + a + "'");
@@ -225,7 +225,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
 
     if(typeName == "string" && field.MaxLength > 0){
       if(!hasDetailSection){
-        fieldDetails.AppendLine("##### " + fieldHeading);
+        fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
       typeName = "*" + typeName + "* (" + field.MaxLength.ToString() + ")";
@@ -237,14 +237,14 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
 
     if(field.DefaultValue != null){
       if(!hasDetailSection){
-        fieldDetails.AppendLine("##### " + fieldHeading);
+        fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
       fieldDetails.AppendLine("* the default value should be '*" + field.DefaultValue.Replace("\n","\\n") + "*'.");
     }
     if(field.SystemInternal){
       if(!hasDetailSection){
-        fieldDetails.AppendLine("##### " + fieldHeading);
+        fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
       fieldDetails.AppendLine("* this field has a 'system internal' role, which means, that it should not be displayed for end-users!");
@@ -253,7 +253,7 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
     String fixStr = "no";
     if(field.FixedAfterCreation){
       if(!hasDetailSection){
-        fieldDetails.AppendLine("##### " + fieldHeading);
+        fieldDetails.AppendLine("#### " + fieldHeading);
         hasDetailSection = true;
       }
       //fieldDetails.AppendLine("* this field is 'fixed after creation', which means, that after the record has been created, its value of this field must not be changed any more!");
