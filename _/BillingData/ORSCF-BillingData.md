@@ -5,7 +5,7 @@
 |author:   |[ORSCF](https://www.orscf.org) ("Open Research Study Communication Formats") / T.Korn|
 |license:  |[Apache-2](https://choosealicense.com/licenses/apache-2.0/)|
 |version:  |1.3.0|
-|timestamp:|2021-04-17 09:29|
+|timestamp:|2021-04-24 16:43|
 
 ### Contents
 
@@ -16,6 +16,8 @@
   * ........\  [Invoice](#Invoice)
 
 # Model:
+
+![chart](./chart.png)
 
 
 
@@ -65,27 +67,18 @@ optional structure (in JSON-format) containing additional metadata regarding thi
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [BillableVisits](#BillableVisits-childs-of-this-StudyExecutionScope) | Childs | [BillableVisit](#BillableVisit) | * (multiple) |
 | [BillingDemands](#BillingDemands-childs-of-this-StudyExecutionScope) | Childs | [BillingDemand](#BillingDemand) | * (multiple) |
 | [Invoices](#Invoices-childs-of-this-StudyExecutionScope) | Childs | [Invoice](#Invoice) | * (multiple) |
 
 ##### **BillableVisits** (childs of this StudyExecutionScope)
 Target: [BillableVisit](#BillableVisit)
-```
-self describing ...
-```
 ##### **BillingDemands** (childs of this StudyExecutionScope)
 Target: [BillingDemand](#BillingDemand)
-```
-self describing ...
-```
 ##### **Invoices** (childs of this StudyExecutionScope)
 Target: [Invoice](#Invoice)
-```
-self describing ...
-```
 
 
 
@@ -133,21 +126,12 @@ unique invariant name of the visit-procedure as defined in the 'StudyWorkflowDef
 title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)
 ```
 ##### BillableVisit.**BillingDemandId** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 * this field is used as foreign key to address the related 'AssignedBillingDemand'
 ##### BillableVisit.**InvoiceId** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 * this field is used as foreign key to address the related 'AssignedInvoice'
 ##### BillableVisit.**ExecutionEndDateUtc** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 ##### BillableVisit.**SponsorValidationDateUtc** (Field)
 ```
@@ -163,8 +147,8 @@ indicates, that the visit is ready to get assigned to a 'Invoice' (usually this 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [BillableTasks](#BillableTasks-childs-of-this-BillableVisit) | Childs | [BillableTask](#BillableTask) | * (multiple) |
 | [StudyExecution](#StudyExecution-parent-of-this-BillableVisit) | Parent | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 | [AssignedBillingDemand](#AssignedBillingDemand-lookup-from-this-BillableVisit) | Lookup | [BillingDemand](#BillingDemand) | 1 (required) |
@@ -172,27 +156,15 @@ indicates, that the visit is ready to get assigned to a 'Invoice' (usually this 
 
 ##### **BillableTasks** (childs of this BillableVisit)
 Target: [BillableTask](#BillableTask)
-```
-self describing ...
-```
 ##### **StudyExecution** (parent of this BillableVisit)
 Target Type: [StudyExecutionScope](#StudyExecutionScope)
 Addressed by: [StudyExecutionIdentifier](#BillableVisitStudyExecutionIdentifier-Field).
-```
-self describing ...
-```
 ##### **AssignedBillingDemand** (lookup from this BillableVisit)
 Target Type: [BillingDemand](#BillingDemand)
 Addressed by: [BillingDemandId](#BillableVisitBillingDemandId-Field).
-```
-self describing ...
-```
 ##### **AssignedInvoice** (lookup from this BillableVisit)
 Target Type: [Invoice](#Invoice)
 Addressed by: [InvoiceId](#BillableVisitInvoiceId-Field).
-```
-self describing ...
-```
 
 
 
@@ -236,16 +208,13 @@ title of the task execution as defined in the 'StudyWorkflowDefinition' (origina
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [BillableVisit](#BillableVisit-parent-of-this-BillableTask) | Parent | [BillableVisit](#BillableVisit) | 0/1 (optional) |
 
 ##### **BillableVisit** (parent of this BillableTask)
 Target Type: [BillableVisit](#BillableVisit)
 Addressed by: [VisitGuid](#BillableTaskVisitGuid-Field).
-```
-self describing ...
-```
 
 
 
@@ -258,60 +227,33 @@ created by the sponsor
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
 | [Id](#BillingDemandId-Field) **(PK)** | *guid* | YES | no |
-| [OfficialNumber](#BillingDemandOfficialNumber-Field) | *string* | YES | no |
+| OfficialNumber | *string* | YES | no |
 | [StudyExecutionIdentifier](#BillingDemandStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
 | [TransmissionDateUtc](#BillingDemandTransmissionDateUtc-Field) | *datetime* | no | no |
-| [CreationDateUtc](#BillingDemandCreationDateUtc-Field) | *datetime* | YES | no |
-| [CreatedByPerson](#BillingDemandCreatedByPerson-Field) | *string* | YES | no |
+| CreationDateUtc | *datetime* | YES | no |
+| CreatedByPerson | *string* | YES | no |
 ##### Unique Keys
 * Id **(primary)**
 ##### BillingDemand.**Id** (Field)
-```
-self describing ...
-```
 * this field represents the identity (PK) of the record
-##### BillingDemand.**OfficialNumber** (Field)
-```
-self describing ...
-```
 ##### BillingDemand.**StudyExecutionIdentifier** (Field)
-```
-self describing ...
-```
 * this field is used as foreign key to address the related 'StudyExecution'
 ##### BillingDemand.**TransmissionDateUtc** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
-##### BillingDemand.**CreationDateUtc** (Field)
-```
-self describing ...
-```
-##### BillingDemand.**CreatedByPerson** (Field)
-```
-self describing ...
-```
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [AssignedVisits](#AssignedVisits-refering-to-this-BillingDemand) | Referers | [BillableVisit](#BillableVisit) | * (multiple) |
 | [StudyExecution](#StudyExecution-parent-of-this-BillingDemand) | Parent | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 
 ##### **AssignedVisits** (refering to this BillingDemand)
 Target: [BillableVisit](#BillableVisit)
-```
-self describing ...
-```
 ##### **StudyExecution** (parent of this BillingDemand)
 Target Type: [StudyExecutionScope](#StudyExecutionScope)
 Addressed by: [StudyExecutionIdentifier](#BillingDemandStudyExecutionIdentifier-Field).
-```
-self describing ...
-```
 
 
 
@@ -328,16 +270,13 @@ created by the executor-company
 | [StudyExecutionIdentifier](#InvoiceStudyExecutionIdentifier-Field) (FK) | *guid* | YES | YES |
 | [OffcialInvoiceDate](#InvoiceOffcialInvoiceDate-Field) | *datetime* | YES | YES |
 | [TransmissionDateUtc](#InvoiceTransmissionDateUtc-Field) | *datetime* | no | no |
-| [CreationDateUtc](#InvoiceCreationDateUtc-Field) | *datetime* | YES | no |
-| [CreatedByPerson](#InvoiceCreatedByPerson-Field) | *string* | YES | no |
+| CreationDateUtc | *datetime* | YES | no |
+| CreatedByPerson | *string* | YES | no |
 | [PaymentSubmittedDateUtc](#InvoicePaymentSubmittedDateUtc-Field) | *datetime* | no | no |
 | [PaymentReceivedDateUtc](#InvoicePaymentReceivedDateUtc-Field) | *datetime* | no | no |
 ##### Unique Keys
 * Id **(primary)**
 ##### Invoice.**Id** (Field)
-```
-self describing ...
-```
 * this field represents the identity (PK) of the record
 * after the record has been created, the value of this field must not be changed any more!
 ##### Invoice.**OfficialNumber** (Field)
@@ -346,58 +285,29 @@ the invoice number
 ```
 * after the record has been created, the value of this field must not be changed any more!
 ##### Invoice.**StudyExecutionIdentifier** (Field)
-```
-self describing ...
-```
 * this field is used as foreign key to address the related 'StudyExecution'
 * after the record has been created, the value of this field must not be changed any more!
 ##### Invoice.**OffcialInvoiceDate** (Field)
-```
-self describing ...
-```
 * after the record has been created, the value of this field must not be changed any more!
 ##### Invoice.**TransmissionDateUtc** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
-##### Invoice.**CreationDateUtc** (Field)
-```
-self describing ...
-```
-##### Invoice.**CreatedByPerson** (Field)
-```
-self describing ...
-```
 ##### Invoice.**PaymentSubmittedDateUtc** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 ##### Invoice.**PaymentReceivedDateUtc** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [AssignedVisits](#AssignedVisits-refering-to-this-Invoice) | Referers | [BillableVisit](#BillableVisit) | * (multiple) |
 | [StudyExecution](#StudyExecution-parent-of-this-Invoice) | Parent | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 
 ##### **AssignedVisits** (refering to this Invoice)
 Target: [BillableVisit](#BillableVisit)
-```
-self describing ...
-```
 ##### **StudyExecution** (parent of this Invoice)
 Target Type: [StudyExecutionScope](#StudyExecutionScope)
 Addressed by: [StudyExecutionIdentifier](#InvoiceStudyExecutionIdentifier-Field).
-```
-self describing ...
-```
 
 

@@ -1,4 +1,4 @@
-<#@ template language="CS" debug="false" hostspecific="true"#>
+<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ assembly name="Newtonsoft.Json" #>
 <#@ assembly name="System.Core"#>
 <#@ import namespace="System" #>
@@ -8,9 +8,19 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="Newtonsoft.Json" #>
 <#@ output extension=".md"#><#
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
-//     copyright: Tobias Korn / version: 10.04.2021                                          //
+//                                                                                           //
+//     Copyright: Tobias Korn / version: 24.04.2021                                          //
+//                                                                                           //
+//     this template is open source (under Apache-2 license) and originated here:            //
+//     https://github.com/KornSW/EntityFrameworkCore.ModelFirst                              //
+//                                                                                           //
+//     this notice MUST NOT be removed or modified!!!!                                       //
+//                                                                                           //
 ///////////////////////////////////////////////////////////////////////////////////////////////
+
+       //CONFIGURATION:
 
        const string inputFile = "ORSCF-StudyWorkflowDefinition.Schema.json";
 
@@ -27,6 +37,7 @@
        const bool generateReverseNavPropsToReferers   = true;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
+// NO EDITS BELOW THIS LINE!!!
 
 string rawSchema = File.ReadAllText(Host.ResolvePath(inputFile), System.Text.Encoding.Default);
 SchemaRoot schema = JsonConvert.DeserializeObject<SchemaRoot>(rawSchema);
@@ -57,7 +68,7 @@ foreach (var kvp in entitiesByPath.OrderBy((kvp)=>kvp.Key)) {
   string sep = ".";
   if(depth > 0 ){
     if(kvp.Key.EndsWith("#")){
-      sep = "\\ **(spec.)**";
+      sep = "^ **(spec.)**";
     }
     else{
       sep = "\\";
@@ -72,6 +83,8 @@ foreach (var kvp in entitiesByPath.OrderBy((kvp)=>kvp.Key)) {
 #>
 
 # Model:
+
+![chart](./chart.png)
 
 <#
 
@@ -144,18 +157,20 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
 
   foreach (FieldSchema field in entity.Fields) {
     List<String> attributes = attributesPerField[field.Name];
+    bool hasDetailSection = false;
 
     String fieldHeading = entityClassNamePattern.Replace("{E}", entity.Name) + ".**" + field.Name + "** (Field)";
     String fieldHeadingMdLink = ExcapeHeadingToMdLink(fieldHeading);
-    fieldDetails.AppendLine("##### " + fieldHeading);
-    fieldDetails.AppendLine("```");
-    if(String.IsNullOrWhiteSpace(field.Summary)){
-      fieldDetails.AppendLine("self describing ...");
-    }
-    else{
+
+    if(!String.IsNullOrWhiteSpace(field.Summary)){
+      if(!hasDetailSection){
+        fieldDetails.AppendLine("##### " + fieldHeading);
+        hasDetailSection = true;
+      }
+      fieldDetails.AppendLine("```");
       fieldDetails.AppendLine(field.Summary);
+      fieldDetails.AppendLine("```");
     }
-    fieldDetails.AppendLine("```");
 
     string fieldsuffix = "";
     string summary = field.Summary;
@@ -171,16 +186,24 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
     }
     else {
       reqStr = "no";
+      if(!hasDetailSection){
+        fieldDetails.AppendLine("##### " + fieldHeading);
+        hasDetailSection = true;
+      }
       fieldDetails.AppendLine("* this field is optional, so that '*null*' values are supported");
     }
 
-    bool isKeyField = false;
+    //bool isKeyField = false;
     foreach (IndexSchema idx in entity.Indices) {
       if(idx.MemberFieldNames.Contains(field.Name)){
         if(idx.Name == entity.PrimaryKeyIndexName){
-          isKeyField = true;
+          //isKeyField = true;
           fieldsuffix = " **(PK)**";
           //reqStr = "KEY";
+          if(!hasDetailSection){
+            fieldDetails.AppendLine("##### " + fieldHeading);
+            hasDetailSection = true;
+          }
           fieldDetails.AppendLine("* this field represents the identity (PK) of the record");
           if(field.DbGeneratedIdentity){
             fieldDetails.AppendLine("* this identity is a internal record id, so that it must not be exposed to other systems or displayed to end-users!");
@@ -193,10 +216,18 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
     }
     
     foreach (String a in attributes) {
+      if(!hasDetailSection){
+        fieldDetails.AppendLine("##### " + fieldHeading);
+        hasDetailSection = true;
+      }
       fieldDetails.AppendLine("* this field is used as foreign key to address the related '" + a + "'");
     }
 
     if(typeName == "string" && field.MaxLength > 0){
+      if(!hasDetailSection){
+        fieldDetails.AppendLine("##### " + fieldHeading);
+        hasDetailSection = true;
+      }
       typeName = "*" + typeName + "* (" + field.MaxLength.ToString() + ")";
       fieldDetails.AppendLine("* the maximum length of the content within this field is " + field.MaxLength.ToString() + " characters.");
     }
@@ -204,25 +235,43 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
       typeName = "*" + typeName + "*";
     }
 
-    string initializerSuffix = "";
     if(field.DefaultValue != null){
+      if(!hasDetailSection){
+        fieldDetails.AppendLine("##### " + fieldHeading);
+        hasDetailSection = true;
+      }
       fieldDetails.AppendLine("* the default value should be '*" + field.DefaultValue.Replace("\n","\\n") + "*'.");
     }
     if(field.SystemInternal){
+      if(!hasDetailSection){
+        fieldDetails.AppendLine("##### " + fieldHeading);
+        hasDetailSection = true;
+      }
       fieldDetails.AppendLine("* this field has a 'system internal' role, which means, that it should not be displayed for end-users!");
     }
   
     String fixStr = "no";
     if(field.FixedAfterCreation){
+      if(!hasDetailSection){
+        fieldDetails.AppendLine("##### " + fieldHeading);
+        hasDetailSection = true;
+      }
       //fieldDetails.AppendLine("* this field is 'fixed after creation', which means, that after the record has been created, its value of this field must not be changed any more!");
       fieldDetails.AppendLine("* after the record has been created, the value of this field must not be changed any more!");
       //reqStr = reqStr + ", FIX";
       fixStr = "YES";
     }
 
+    if(hasDetailSection){
 #>
 | [<#=field.Name #>](#<#=fieldHeadingMdLink #>)<#=fieldsuffix #> | <#=typeName #> | <#=reqStr #> | <#=fixStr #> |
 <#
+    }
+    else{
+#>
+| <#=field.Name #><#=fieldsuffix #> | <#=typeName #> | <#=reqStr #> | <#=fixStr #> |
+<# 
+    }
 
   } // field-loop
 
@@ -231,8 +280,8 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 <#
 
   /////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,16 +362,12 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
 <#
                 anyNavProp = true;
               }
-              navDetails.AppendLine("```");
 
-              if(String.IsNullOrWhiteSpace(rel.PrimaryNavigationSummary)){
-                navDetails.AppendLine("self describing ...");
-              }
-              else{
+              if(!String.IsNullOrWhiteSpace(rel.PrimaryNavigationSummary)){
+                navDetails.AppendLine("```");
                 navDetails.AppendLine(rel.PrimaryNavigationSummary);
+                navDetails.AppendLine("```");
               }
-
-              navDetails.AppendLine("```");
 
             }
           }
@@ -386,14 +431,12 @@ This type is a specialization of [<#=entityClassNamePattern.Replace("{E}", entit
               }
               anyNavProp = true;
 
-              navDetails.AppendLine("```");
-              if(String.IsNullOrWhiteSpace(rel.ForeignNavigationSummary)){
-                navDetails.AppendLine("self describing ...");
-              }
-              else{
+              if(!String.IsNullOrWhiteSpace(rel.ForeignNavigationSummary)){
+                navDetails.AppendLine("```");
                 navDetails.AppendLine(rel.ForeignNavigationSummary);
+                navDetails.AppendLine("```");
               }
-              navDetails.AppendLine("```");
+
              // navDetails.AppendLine("* the foreign key is represented by the fields: **" + String.Join("** + **", idx.MemberFieldNames) + "**.");
 
             }
@@ -435,7 +478,7 @@ String BuildDependencyPath(SchemaRoot schema, EntitySchema entity){
   EntitySchema firstExistingPrincipal = null;
   if(!String.IsNullOrWhiteSpace(entity.InheritedEntityName)){
     firstExistingPrincipal = schema.Entities.Where((e)=>e.Name == entity.InheritedEntityName).SingleOrDefault();
-    return BuildDependencyPath(schema, firstExistingPrincipal) + "/" + entity.Name + "#";
+    return BuildDependencyPath(schema, firstExistingPrincipal) + "/#" + entity.Name + "#";
   }
   else{
     foreach (RelationSchema rel in schema.Relations) {
@@ -507,10 +550,10 @@ public static string RenderMdTable(params List<string>[] columns)
 
 class SchemaRoot{
 
-  public string DescriptionFormat;
+  public string DescriptionFormat = "";
 
-  public string TimestampUtc;
-  public string SemanticVersion;
+  public string TimestampUtc = "";
+  public string SemanticVersion = "";
 
   public EntitySchema[] Entities = {};
 

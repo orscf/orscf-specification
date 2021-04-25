@@ -5,8 +5,17 @@
 <#@ import namespace="Newtonsoft.Json" #><#@ output extension=".json"#><#
 
 '///////////////////////////////////////////////////////////////////////////////////////////////
-'//     copyright: Tobias Korn / version: 10.04.2021                                          //
+'//                                                                                           //
+'//     Copyright: Tobias Korn / version: 24.04.2021                                          //
+'//                                                                                           //
+'//     this template is open source (under Apache-2 license) and originated here:            //
+'//     https://github.com/KornSW/EntityFrameworkCore.ModelFirst                              //
+'//                                                                                           //
+'//     this notice MUST NOT be removed or modified!!!!                                       //
+'//                                                                                           //
 '///////////////////////////////////////////////////////////////////////////////////////////////
+
+       '//CONFIGURATION:
 
        Const inputFile As String = "ORSCF-BillingData.edmx"
        Const schemaSemanticVersion = "1.3.0"
@@ -26,13 +35,15 @@
 '      "IX1"..."IX9" = field is part of a additional non-unique index 1...9
 '
 '///////////////////////////////////////////////////////////////////////////////////////////////
+'// NO EDITS BELOW THIS LINE!!!
+
 Dim code As New CodeGenerationTools(Me)
 Dim loader As New MetadataLoader(Me)
 Dim region As New CodeRegion(Me, 1)
 Dim ef As New MetadataTools(Me)
 Dim ItemCollection As EdmItemCollection = loader.CreateEdmItemCollection(inputFile)
 Dim namespaceName As String = code.VsNamespaceSuggestion()
-Dim nullableString As String
+'Dim nullableString As String
 Dim entitySetNames As New Dictionary(Of String, String)
 Dim schema As New SchemaRoot()
 Dim associations As IEnumerable(Of AssociationType) = ItemCollection.OfType(Of AssociationType)()
@@ -48,24 +59,24 @@ For Each a As AssociationType In associations
     If(a.ReferentialConstraints.Count > 0)        
         For Each p As EdmProperty In a.ReferentialConstraints.Item(0).ToProperties
             names.Add(p.name)
-            fkIdProperties.Add(code.Escape(p.DeclaringType) & "." & p.name) 
+            fkIdProperties.Add(Escape(code, p.DeclaringType) & "." & p.name) 
         Next
     End If
-   fkNameRegister.Add(code.Escape(a.FullName), names.ToArray())
+   fkNameRegister.Add(Escape(code, a.FullName), names.ToArray())
 Next
 
 Dim fileManager As EntityFrameworkTemplateFileManager = EntityFrameworkTemplateFileManager.Create(Me)
 
 Dim container As EntityContainer = ItemCollection.OfType(Of EntityContainer)().FirstOrDefault()
 For Each entitySet As EntitySet In container.BaseEntitySets.OfType(Of EntitySet)()
-   entitySetNames.Add(code.Escape(entitySet.ElementType),code.Escape(entitySet))
+   entitySetNames.Add(Escape(code, entitySet.ElementType),Escape(code, entitySet))
 Next
 
 'PRE EVALUATION OF ALL ASSOCIATIONS, TO DECIDE, IF FK-FIELDS ARE MAPPABLE TO REAL PROPERTIES 
 Dim fkPropertySupportable As New Dictionary(Of EdmProperty, Boolean)
 For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().OrderBy(Function(e) e.Name)
     Dim entity as EntityType = loopEntity
-    Dim localEntityShortCut As String = BuildShortCut(code.Escape(entity))
+    Dim localEntityShortCut As String = BuildShortCut(Escape(code, entity))
     Dim navigationProperties as IEnumerable(Of NavigationProperty) = entity.NavigationProperties.Where(Function(np) np.DeclaringType Is entity)
 
     If (navigationProperties.Any()) Then
@@ -101,14 +112,14 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
   Dim entity as EntityType = loopEntity
 
   Dim oEntity As EntitySchema
-  oEntity = schema.Entities.Where(Function(e) e.Name = code.Escape(entity)).SingleOrDefault()
+  oEntity = schema.Entities.Where(Function(e) e.Name = Escape(code, entity)).SingleOrDefault()
   If(oEntity Is Nothing)Then
     oEntity = New EntitySchema()
-    oEntity.Name = code.Escape(entity)  
+    oEntity.Name = Escape(code, entity)  
     schema.Entities.Add(oEntity)
   End If
 
-  Dim localEntityShortCut As String = BuildShortCut(code.Escape(entity))
+  Dim localEntityShortCut As String = BuildShortCut(Escape(code, entity))
   Dim primitiveProperties as IEnumerable(Of EdmProperty) = entity.Properties.Where(Function(p) TypeOf p.TypeUsage.EdmType Is PrimitiveType AndAlso p.DeclaringType Is entity)
 
   If(Not entity.Name.StartsWith("EXTERNAL_"))Then
@@ -117,7 +128,7 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
   Dim keySets As New Dictionary(Of String, List(Of EdmProperty))
     If primitiveProperties.Any() Then
         For Each edmProperty As EdmProperty In primitiveProperties
-          Dim propString As String = code.Escape(entity)  & "." & code.Escape(edmProperty)
+          Dim propString As String = Escape(code, entity)  & "." & Escape(code, edmProperty)
           If(Not FkIdProperties.Contains(propString))Then
       If (edmProperty.Documentation IsNot Nothing AndAlso Not String.IsNullOrEmpty(edmProperty.Documentation.LongDescription))
         For Each keySetName As String In edmProperty.Documentation.LongDescription.Split(";"c)
@@ -138,7 +149,7 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
 
 
     If(entity.BaseType IsNot Nothing)Then
-      oEntity.InheritedEntityName = code.Escape(entity.BaseType)
+      oEntity.InheritedEntityName = Escape(code, entity.BaseType)
     End If
     If (entity.Documentation IsNot Nothing AndAlso Not String.IsNullOrEmpty(entity.Documentation.Summary))
       oEntity.Summary = entity.Documentation.Summary
@@ -150,12 +161,12 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
     Do While(baseEntity.BaseType IsNot Nothing)
       baseEntity = baseEntity.BaseType
     Loop
-    If(entitySetNames.ContainsKey(code.Escape(entity)))Then
-      setName = entitySetNames(code.Escape(entity))
-    ElseIf(entitySetNames.ContainsKey(code.Escape(baseEntity)))Then
-      setName = entitySetNames(code.Escape(baseEntity)) & "Of" & code.Escape(entity)
+    If(entitySetNames.ContainsKey(Escape(code, entity)))Then
+      setName = entitySetNames(Escape(code, entity))
+    ElseIf(entitySetNames.ContainsKey(Escape(code, baseEntity)))Then
+      setName = entitySetNames(Escape(code, baseEntity)) & "Of" & Escape(code, entity)
     Else
-      setName = code.Escape(entity) & "Items"
+      setName = Escape(code, entity) & "Items"
     End If
 
     If(Not setName = String.Empty)Then
@@ -170,7 +181,7 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
       Dim keyProps As New List(Of String)
       For Each edmProperty As EdmProperty In primitiveProperties      
         If(ef.IsKey(edmProperty))
-          keyProps.Add(code.Escape(edmProperty.Name))
+          keyProps.Add(Escape(code, edmProperty.Name))
         End If
       Next
 
@@ -192,7 +203,7 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
        oEntity.Fields.Add(oField)
        oField.Name = edmProperty.Name
 
-        Dim propString As String = code.Escape(entity)  & "." & code.Escape(edmProperty)
+        Dim propString As String = Escape(code, entity)  & "." & Escape(code, edmProperty)
 
         Dim skipPropertyGeneration As Boolean = False
         If(fkPropertySupportable.ContainsKey(edmProperty))Then
@@ -205,8 +216,8 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
           'we need to wait after this point because we need to know if the FK field is mappable to an 
           'property or not...
 
-          Dim typeName As String = code.Escape(edmProperty.TypeUsage)
-          If(code.Escape(edmProperty.Name).ToLower()="rowversion" andalso typeName = "Byte()")Then
+          Dim typeName As String = Escape(code, edmProperty.TypeUsage)
+          If(Escape(code, edmProperty.Name).ToLower()="rowversion" andalso typeName = "Byte()")Then
             typeName = "rowversion"
           End If
 
@@ -307,15 +318,15 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
           Dim remoteEnd = localNavigationProperty.ToEndMember
           Dim remoteEntity As EntityType = remoteEnd.GetEntityType()
           Dim association = DirectCast(localNavigationProperty.RelationshipType, AssociationType)
-          Dim associationName = code.Escape(association.FullName).Split(".")(code.Escape(association.FullName).Split(".").Length - 1).Replace("EXTERNAL_","")
+          Dim associationName = Escape(code, association.FullName).Split(".")(Escape(code, association.FullName).Split(".").Length - 1).Replace("EXTERNAL_","")
           Dim cascadeDelete As Boolean = False
           Dim localIsPrimarySide As Boolean = ((localEnd.RelationshipMultiplicity = RelationshipMultiplicity.One) Or (remoteEnd.RelationshipMultiplicity = RelationshipMultiplicity.Many))
 
           Dim oRemEntity As EntitySchema
-          oRemEntity = schema.Entities.Where(Function(e) e.Name = code.Escape(remoteEntity)).SingleOrDefault()
+          oRemEntity = schema.Entities.Where(Function(e) e.Name = Escape(code, remoteEntity)).SingleOrDefault()
           If(oRemEntity Is Nothing)Then
             oRemEntity = New EntitySchema()
-            oRemEntity.Name = code.Escape(remoteEntity)  
+            oRemEntity.Name = Escape(code, remoteEntity)  
             schema.Entities.Add(oRemEntity)
           End If
 
@@ -328,12 +339,12 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
           Dim foreignKeyDefinition As String() = {}
           Dim remoteNavPropString As String = String.Empty
           Dim remoteNavProperty As NavigationProperty = remoteEntity.NavigationProperties.Where(Function(n) ReferenceEquals(n.RelationshipType, localNavigationProperty.RelationshipType) And Not ReferenceEquals(n , localNavigationProperty)).SingleOrDefault()
-          Dim localRelationInfoString As String
-          Dim remoteRelationInfoString As String
-          Dim remoteEntityShortCut As String = BuildShortCut(code.Escape(remoteEntity))
+          'Dim localRelationInfoString As String
+          'Dim remoteRelationInfoString As String
+          Dim remoteEntityShortCut As String = BuildShortCut(Escape(code, remoteEntity))
 
           If(remoteNavProperty IsNot Nothing)Then
-              remoteNavPropString = "Function(" & remoteEntityShortCut & ") " & remoteEntityShortCut & "." & code.Escape(remoteNavProperty)
+              remoteNavPropString = "Function(" & remoteEntityShortCut & ") " & remoteEntityShortCut & "." & Escape(code, remoteNavProperty)
           End If
 
           If(association.ReferentialConstraints.Count > 0)Then
@@ -386,13 +397,13 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
           'find out, if we are the side, on which the reference must be defined
           'If(Not localIsPrimarySide OrElse remoteNavProperty Is Nothing)Then
             If(localIsPrimarySide)Then
-              oRel.PrimaryEntityName = code.Escape(entity)
-              oRel.ForeignEntityName = code.Escape(remoteEntity)
+              oRel.PrimaryEntityName = Escape(code, entity)
+              oRel.ForeignEntityName = Escape(code, remoteEntity)
               oRel.PrimaryEntityIsOptional = (localEnd.RelationshipMultiplicity = RelationshipMultiplicity.ZeroOrOne)
               oRel.ForeignEntityIsMultiple = (remoteEnd.RelationshipMultiplicity = RelationshipMultiplicity.Many)
             Else
-              oRel.PrimaryEntityName = code.Escape(remoteEntity)
-              oRel.ForeignEntityName = code.Escape(entity)
+              oRel.PrimaryEntityName = Escape(code, remoteEntity)
+              oRel.ForeignEntityName = Escape(code, entity)
               oRel.PrimaryEntityIsOptional = (remoteEnd.RelationshipMultiplicity = RelationshipMultiplicity.ZeroOrOne)
               oRel.ForeignEntityIsMultiple = (localEnd.RelationshipMultiplicity = RelationshipMultiplicity.Many)
             End If
@@ -403,10 +414,10 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
             summary = localNavigationProperty.Documentation.Summary
           End If
           If(localIsPrimarySide)Then
-            oRel.PrimaryNavigationName = code.Escape(localNavigationProperty)
+            oRel.PrimaryNavigationName = Escape(code, localNavigationProperty)
             oRel.PrimaryNavigationSummary = summary  
           Else
-            oRel.ForeignNavigationName = code.Escape(localNavigationProperty)
+            oRel.ForeignNavigationName = Escape(code, localNavigationProperty)
             oRel.ForeignNavigationSummary = summary
           End If
 
@@ -416,10 +427,10 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
               remSummary = remoteNavProperty.Documentation.Summary
             End If
             If(localIsPrimarySide)Then
-              oRel.ForeignNavigationName = code.Escape(remoteNavProperty)
+              oRel.ForeignNavigationName = Escape(code, remoteNavProperty)
               oRel.ForeignNavigationSummary = remSummary
             Else
-              oRel.PrimaryNavigationName = code.Escape(remoteNavProperty)
+              oRel.PrimaryNavigationName = Escape(code, remoteNavProperty)
               oRel.PrimaryNavigationSummary = remSummary       
             End If
           End If
@@ -478,7 +489,7 @@ For Each loopEntity As EntityType In ItemCollection.GetItems(Of EntityType)().Or
         Else
           uniqeDefinition += ", "
         End If
-        uniqeDefinition = uniqeDefinition + localEntityShortCut + "." + code.Escape(keyProperty)
+        uniqeDefinition = uniqeDefinition + localEntityShortCut + "." + Escape(code, keyProperty)
       Next
       If (usesUnsupportetProperties)Then
         uniqeDefinition = "'THE COMPILATION ERROR(S) IN THE LINE BELOW, IS BECAUSE SOME ASSOCIATION TYPES NOT SUPPORTING FOREIGEN KEY PROPERTIES! AND SO THIS PROPERTIES WILL NOT BE GENERATED IN CODE!" & vbCrLf & uniqeDefinition
@@ -536,33 +547,33 @@ Private Sub WriteProperty(code As CodeGenerationTools, edmProperty As EdmPropert
 End Sub
 
 Private Sub WriteComplexProperty(code As CodeGenerationTools, complexProperty As EdmProperty)
-    WriteProperty(code, complexProperty, " = New " & code.Escape(complexProperty.TypeUsage))
+    WriteProperty(code, complexProperty, " = New " & Escape(code, complexProperty.TypeUsage))
 End Sub
 
 Private Sub WriteProperty(code As CodeGenerationTools, edmProperty As EdmProperty, defaultValue As String)
     WriteProperty(Accessibility.ForProperty(edmProperty), _
-                  code.Escape(edmProperty.TypeUsage), _
-                  code.Escape(edmProperty), _
+                  Escape(code, edmProperty.TypeUsage), _
+                  Escape(code, edmProperty), _
                   code.SpaceAfter(Accessibility.ForGetter(edmProperty)), _
                   code.SpaceAfter(Accessibility.ForSetter(edmProperty)), _
                   defaultValue)
 End Sub
 
 Private Sub WriteNavigationProperty(code As CodeGenerationTools, navigationProperty As NavigationProperty)
-    Dim endType = code.Escape(navigationProperty.ToEndMember.GetEntityType())
+    Dim endType = Escape(code, navigationProperty.ToEndMember.GetEntityType())
     Dim defaultValue = ""
-    Dim propertyType = code.Escape(endType)
+    Dim propertyType = Escape(code, endType)
     
     If(navigationProperty.ToEndMember.RelationshipMultiplicity = RelationshipMultiplicity.Many)
         defaultValue = " = New ObservableSet(Of " & propertyType & ")"
         propertyType = "IQueryableSet(Of " & propertyType & ")"
     End If
 
-    CheckName(code.Escape(navigationProperty))
+    CheckName(Escape(code, navigationProperty))
 
     WriteProperty(PropertyAccessibilityAndVirtual(navigationProperty), _
                   propertyType, _
-                  code.Escape(navigationProperty), _
+                  Escape(code, navigationProperty), _
                   code.SpaceAfter(Accessibility.ForGetter(navigationProperty)), _
                   code.SpaceAfter(Accessibility.ForSetter(navigationProperty)), _
                   defaultValue)
@@ -589,6 +600,11 @@ Private Sub WriteProperty(accessibility As String, type As String, name As Strin
 <#+
     End If
 End Sub
+
+Private Function Escape(code As CodeGenerationTools, input As Object) As String
+  Dim escaped As String = code.Escape(input)
+  return escaped.Replace("[","").Replace("]","")
+End Function
 
 Private Function PropertyAccessibilityAndVirtual(ByVal member As EdmMember) As String
     Dim propertyAccess As String = Accessibility.ForProperty(member)

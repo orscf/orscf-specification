@@ -1,6 +1,6 @@
 {
   "DescriptionFormat": "v1.0",
-  "TimestampUtc": "2021-04-10T13:10:54.0797372Z",
+  "TimestampUtc": "2021-04-24T14:43:55.6718048Z",
   "SemanticVersion": "1.3.0",
   "Entities": [
     {
@@ -33,7 +33,7 @@
           ]
         },
         {
-          "Name": "FK_DataRecordings_Visits_Visit",
+          "Name": "FK_DataRecordings__Visit",
           "Unique": false,
           "MemberFieldNames": [
             "VisitGuid"
@@ -184,7 +184,7 @@
       "PrimaryKeyIndexName": "PK_Visits",
       "Indices": [
         {
-          "Name": "FK_Visits_StudyExecutionScopes_StudyExecution",
+          "Name": "FK__StudyExecutionScopes_StudyExecution",
           "Unique": false,
           "MemberFieldNames": [
             "StudyExecutionIdentifier"
@@ -374,7 +374,7 @@
           ]
         },
         {
-          "Name": "FK_DrugApplyments_Visits_Visit",
+          "Name": "FK_DrugApplyments__Visit",
           "Unique": false,
           "MemberFieldNames": [
             "VisitGuid"
@@ -550,7 +550,7 @@
           ]
         },
         {
-          "Name": "FK_StudyEvents_StudyExecutionScopes_StudyExecution",
+          "Name": "FK_StudyEvents__StudyExecution",
           "Unique": false,
           "MemberFieldNames": [
             "StudyExecutionIdentifier"
@@ -767,7 +767,7 @@
           ]
         },
         {
-          "Name": "FK_Treatments_Visits_Visit",
+          "Name": "FK_Treatments__Visit",
           "Unique": false,
           "MemberFieldNames": [
             "VisitGuid"
@@ -893,7 +893,7 @@
       "Name": "VisitDataRecording",
       "PrimaryEntityName": "Visit",
       "ForeignEntityName": "DataRecording",
-      "ForeignKeyIndexName": "FK_DataRecordings_Visits_Visit",
+      "ForeignKeyIndexName": "FK_DataRecordings__Visit",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -907,7 +907,7 @@
       "Name": "VisitDrugApplyment",
       "PrimaryEntityName": "Visit",
       "ForeignEntityName": "DrugApplyment",
-      "ForeignKeyIndexName": "FK_DrugApplyments_Visits_Visit",
+      "ForeignKeyIndexName": "FK_DrugApplyments__Visit",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -921,7 +921,7 @@
       "Name": "StudyExecutionScopeStudyEvent",
       "PrimaryEntityName": "StudyExecutionScope",
       "ForeignEntityName": "StudyEvent",
-      "ForeignKeyIndexName": "FK_StudyEvents_StudyExecutionScopes_StudyExecution",
+      "ForeignKeyIndexName": "FK_StudyEvents__StudyExecution",
       "IsLookupRelation": true,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -935,7 +935,7 @@
       "Name": "StudyExecutionScopeVisit",
       "PrimaryEntityName": "StudyExecutionScope",
       "ForeignEntityName": "Visit",
-      "ForeignKeyIndexName": "FK_Visits_StudyExecutionScopes_StudyExecution",
+      "ForeignKeyIndexName": "FK__StudyExecutionScopes_StudyExecution",
       "IsLookupRelation": true,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -949,7 +949,7 @@
       "Name": "VisitTreatment",
       "PrimaryEntityName": "Visit",
       "ForeignEntityName": "Treatment",
-      "ForeignKeyIndexName": "FK_Treatments_Visits_Visit",
+      "ForeignKeyIndexName": "FK_Treatments__Visit",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,

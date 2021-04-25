@@ -5,7 +5,7 @@
 |author:   |[ORSCF](https://www.orscf.org) ("Open Research Study Communication Formats") / T.Korn|
 |license:  |[Apache-2](https://choosealicense.com/licenses/apache-2.0/)|
 |version:  |1.3.0|
-|timestamp:|2021-04-17 09:27|
+|timestamp:|2021-04-24 16:43|
 
 ### Contents
 
@@ -17,6 +17,8 @@
   * ........\  [Treatment](#Treatment)
 
 # Model:
+
+![chart](./chart.png)
 
 
 
@@ -32,13 +34,11 @@
 | [StudyExecutionIdentifier](#StudyEventStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
 | [StudyEventName](#StudyEventStudyEventName-Field) | *string* | YES | no |
 | [ExtendedMetaData](#StudyEventExtendedMetaData-Field) | *string* | no | no |
-| [OccourrenceDateTimeUtc](#StudyEventOccourrenceDateTimeUtc-Field) | *datetime* | YES | no |
-| [CauseInfo](#StudyEventCauseInfo-Field) | *string* | YES | no |
+| OccourrenceDateTimeUtc | *datetime* | YES | no |
+| CauseInfo | *string* | YES | no |
 | [AdditionalNotes](#StudyEventAdditionalNotes-Field) | *string* | no | no |
-
 ##### Unique Keys
 * EventGuid **(primary)**
-
 ##### StudyEvent.**EventGuid** (Field)
 ```
 a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')
@@ -62,14 +62,6 @@ unique invariant name of the event as defined in the 'StudyWorkflowDefinition' (
 optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema
 ```
 * this field is optional, so that '*null*' values are supported
-##### StudyEvent.**OccourrenceDateTimeUtc** (Field)
-```
-self describing ...
-```
-##### StudyEvent.**CauseInfo** (Field)
-```
-self describing ...
-```
 ##### StudyEvent.**AdditionalNotes** (Field)
 ```
 additional notes (supplied by the execution person)
@@ -79,16 +71,13 @@ additional notes (supplied by the execution person)
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [StudyExecution](#StudyExecution-lookup-from-this-StudyEvent) | Lookup | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 
 ##### **StudyExecution** (lookup from this StudyEvent)
 Target Type: [StudyExecutionScope](#StudyExecutionScope)
 Addressed by: [StudyExecutionIdentifier](#StudyEventStudyExecutionIdentifier-Field).
-```
-self describing ...
-```
 
 
 
@@ -139,21 +128,15 @@ optional structure (in JSON-format) containing additional metadata regarding thi
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [Events](#Events-refering-to-this-StudyExecutionScope) | Referers | [StudyEvent](#StudyEvent) | * (multiple) |
 | [Visits](#Visits-refering-to-this-StudyExecutionScope) | Referers | [Visit](#Visit) | * (multiple) |
 
 ##### **Events** (refering to this StudyExecutionScope)
 Target: [StudyEvent](#StudyEvent)
-```
-self describing ...
-```
 ##### **Visits** (refering to this StudyExecutionScope)
 Target: [Visit](#Visit)
-```
-self describing ...
-```
 
 
 
@@ -223,16 +206,13 @@ optional structure (in JSON-format) containing additional metadata regarding thi
 ```
 * this field is optional, so that '*null*' values are supported
 ##### Visit.**ExecutingPerson** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [DataRecordings](#DataRecordings-childs-of-this-Visit) | Childs | [DataRecording](#DataRecording) | * (multiple) |
 | [DrugApplyments](#DrugApplyments-childs-of-this-Visit) | Childs | [DrugApplyment](#DrugApplyment) | * (multiple) |
 | [StudyExecution](#StudyExecution-lookup-from-this-Visit) | Lookup | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
@@ -251,9 +231,6 @@ all the drug applyments which have been executed for this visit
 ##### **StudyExecution** (lookup from this Visit)
 Target Type: [StudyExecutionScope](#StudyExecutionScope)
 Addressed by: [StudyExecutionIdentifier](#VisitStudyExecutionIdentifier-Field).
-```
-self describing ...
-```
 ##### **Treatments** (childs of this Visit)
 Target: [Treatment](#Treatment)
 ```
@@ -335,24 +312,18 @@ additional notes regarding this dedcated execution (supplied by the execution pe
 optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema
 ```
 ##### DataRecording.**ExecutingPerson** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [Visit](#Visit-parent-of-this-DataRecording) | Parent | [Visit](#Visit) | 0/1 (optional) |
 
 ##### **Visit** (parent of this DataRecording)
 Target Type: [Visit](#Visit)
 Addressed by: [VisitGuid](#DataRecordingVisitGuid-Field).
-```
-self describing ...
-```
 
 
 
@@ -434,24 +405,18 @@ additional notes regarding this dedcated execution (supplied by the execution pe
 optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema
 ```
 ##### DrugApplyment.**ExecutingPerson** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [Visit](#Visit-parent-of-this-DrugApplyment) | Parent | [Visit](#Visit) | 0/1 (optional) |
 
 ##### **Visit** (parent of this DrugApplyment)
 Target Type: [Visit](#Visit)
 Addressed by: [VisitGuid](#DrugApplymentVisitGuid-Field).
-```
-self describing ...
-```
 
 
 
@@ -518,23 +483,17 @@ additional notes regarding this dedcated execution (supplied by the execution pe
 optional structure of additional metadata regarding this record in JSON-format, which can be used by study execution systems to extend the schema
 ```
 ##### Treatment.**ExecutingPerson** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [Visit](#Visit-parent-of-this-Treatment) | Parent | [Visit](#Visit) | 0/1 (optional) |
 
 ##### **Visit** (parent of this Treatment)
 Target Type: [Visit](#Visit)
 Addressed by: [VisitGuid](#TreatmentVisitGuid-Field).
-```
-self describing ...
-```
 
 

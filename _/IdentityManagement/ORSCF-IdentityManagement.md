@@ -5,7 +5,7 @@
 |author:   |[ORSCF](https://www.orscf.org) ("Open Research Study Communication Formats") / T.Korn|
 |license:  |[Apache-2](https://choosealicense.com/licenses/apache-2.0/)|
 |version:  |1.3.0|
-|timestamp:|2021-04-17 09:28|
+|timestamp:|2021-04-24 16:43|
 
 ### Contents
 
@@ -17,6 +17,8 @@
   * .  [SubjectIdentity](#SubjectIdentity)
 
 # Model:
+
+![chart](./chart.png)
 
 
 
@@ -54,21 +56,15 @@ version of the workflow
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [ExecutionScopes](#ExecutionScopes-childs-of-this-StudyScope) | Childs | [StudyExecutionScope](#StudyExecutionScope) | * (multiple) |
 | [Participations](#Participations-childs-of-this-StudyScope) | Childs | [SubjectParticipation](#SubjectParticipation) | * (multiple) |
 
 ##### **ExecutionScopes** (childs of this StudyScope)
 Target: [StudyExecutionScope](#StudyExecutionScope)
-```
-self describing ...
-```
 ##### **Participations** (childs of this StudyScope)
 Target: [SubjectParticipation](#SubjectParticipation)
-```
-self describing ...
-```
 
 
 
@@ -96,37 +92,25 @@ a global unique id of a concrete study execution (dedicated to a concrete instit
 the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)
 ```
 ##### StudyExecutionScope.**StudyWorkflowName** (Field)
-```
-self describing ...
-```
 * this field is used as foreign key to address the related 'StudyScope'
 * the maximum length of the content within this field is 100 characters.
 ##### StudyExecutionScope.**StudyWorkflowVersion** (Field)
-```
-self describing ...
-```
 * this field is used as foreign key to address the related 'StudyScope'
 * the maximum length of the content within this field is 20 characters.
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [StudyScope](#StudyScope-parent-of-this-StudyExecutionScope) | Parent | [StudyScope](#StudyScope) | 0/1 (optional) |
 | [CreatedParticipations](#CreatedParticipations-refering-to-this-StudyExecutionScope) | Referers | [SubjectParticipation](#SubjectParticipation) | * (multiple) |
 
 ##### **StudyScope** (parent of this StudyExecutionScope)
 Target Type: [StudyScope](#StudyScope)
 Addressed by: [StudyWorkflowName](#StudyExecutionScopeStudyWorkflowName-Field), [StudyWorkflowVersion](#StudyExecutionScopeStudyWorkflowVersion-Field).
-```
-self describing ...
-```
 ##### **CreatedParticipations** (refering to this StudyExecutionScope)
 Target: [SubjectParticipation](#SubjectParticipation)
-```
-self describing ...
-```
 
 
 
@@ -141,7 +125,7 @@ self describing ...
 | [ParticipantIdentifier](#SubjectParticipationParticipantIdentifier-Field) **(PK)** | *string* (50) | YES | no |
 | [StudyWorkflowName](#SubjectParticipationStudyWorkflowName-Field) (FK) | *string* (100) | YES | no |
 | [StudyWorkflowVersion](#SubjectParticipationStudyWorkflowVersion-Field) (FK) | *string* (20) | YES | no |
-| [CreationDateUtc](#SubjectParticipationCreationDateUtc-Field) | *datetime* | YES | no |
+| CreationDateUtc | *datetime* | YES | no |
 | [CreatedForStudyExecutionIdentifier](#SubjectParticipationCreatedForStudyExecutionIdentifier-Field) (FK) | *guid* | YES | no |
 | [SubjectIdentityRecordId](#SubjectParticipationSubjectIdentityRecordId-Field) (FK) | *guid* | no | no |
 ##### Unique Keys
@@ -153,38 +137,22 @@ identity of the patient which can be a randomization or screening number (the ex
 * this field represents the identity (PK) of the record
 * the maximum length of the content within this field is 50 characters.
 ##### SubjectParticipation.**StudyWorkflowName** (Field)
-```
-self describing ...
-```
 * this field is used as foreign key to address the related 'StudyScope'
 * the maximum length of the content within this field is 100 characters.
 ##### SubjectParticipation.**StudyWorkflowVersion** (Field)
-```
-self describing ...
-```
 * this field is used as foreign key to address the related 'StudyScope'
 * the maximum length of the content within this field is 20 characters.
-##### SubjectParticipation.**CreationDateUtc** (Field)
-```
-self describing ...
-```
 ##### SubjectParticipation.**CreatedForStudyExecutionIdentifier** (Field)
-```
-self describing ...
-```
 * this field is used as foreign key to address the related 'StudyExecutionScope'
 ##### SubjectParticipation.**SubjectIdentityRecordId** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 * this field is used as foreign key to address the related 'Identity'
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [AdditionalIdentifiers](#AdditionalIdentifiers-childs-of-this-SubjectParticipation) | Childs | [AdditionalSubjectParticipationIdentifier](#AdditionalSubjectParticipationIdentifier) | * (multiple) |
 | [StudyExecutionScope](#StudyExecutionScope-lookup-from-this-SubjectParticipation) | Lookup | [StudyExecutionScope](#StudyExecutionScope) | 0/1 (optional) |
 | [StudyScope](#StudyScope-parent-of-this-SubjectParticipation) | Parent | [StudyScope](#StudyScope) | 0/1 (optional) |
@@ -192,27 +160,15 @@ self describing ...
 
 ##### **AdditionalIdentifiers** (childs of this SubjectParticipation)
 Target: [AdditionalSubjectParticipationIdentifier](#AdditionalSubjectParticipationIdentifier)
-```
-self describing ...
-```
 ##### **StudyExecutionScope** (lookup from this SubjectParticipation)
 Target Type: [StudyExecutionScope](#StudyExecutionScope)
 Addressed by: [CreatedForStudyExecutionIdentifier](#SubjectParticipationCreatedForStudyExecutionIdentifier-Field).
-```
-self describing ...
-```
 ##### **StudyScope** (parent of this SubjectParticipation)
 Target Type: [StudyScope](#StudyScope)
 Addressed by: [StudyWorkflowName](#SubjectParticipationStudyWorkflowName-Field), [StudyWorkflowVersion](#SubjectParticipationStudyWorkflowVersion-Field).
-```
-self describing ...
-```
 ##### **Identity** (lookup from this SubjectParticipation)
 Target Type: [SubjectIdentity](#SubjectIdentity)
 Addressed by: [SubjectIdentityRecordId](#SubjectParticipationSubjectIdentityRecordId-Field).
-```
-self describing ...
-```
 
 
 
@@ -226,42 +182,29 @@ self describing ...
 | ---- | ---- | -------- | --- |
 | [ParticipantIdentifier](#AdditionalSubjectParticipationIdentifierParticipantIdentifier-Field) **(PK)** (FK) | *string* (50) | YES | YES |
 | [IdentifierName](#AdditionalSubjectParticipationIdentifierIdentifierName-Field) **(PK)** | *string* (30) | YES | YES |
-| [IdentifierValue](#AdditionalSubjectParticipationIdentifierIdentifierValue-Field) | *string* | YES | no |
+| IdentifierValue | *string* | YES | no |
 ##### Unique Keys
 * ParticipantIdentifier + IdentifierName **(primary)**
 ##### AdditionalSubjectParticipationIdentifier.**ParticipantIdentifier** (Field)
-```
-self describing ...
-```
 * this field represents the identity (PK) of the record
 * this field is used as foreign key to address the related 'Participation'
 * the maximum length of the content within this field is 50 characters.
 * after the record has been created, the value of this field must not be changed any more!
 ##### AdditionalSubjectParticipationIdentifier.**IdentifierName** (Field)
-```
-self describing ...
-```
 * this field represents the identity (PK) of the record
 * the maximum length of the content within this field is 30 characters.
 * after the record has been created, the value of this field must not be changed any more!
-##### AdditionalSubjectParticipationIdentifier.**IdentifierValue** (Field)
-```
-self describing ...
-```
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [Participation](#Participation-parent-of-this-AdditionalSubjectParticipationIdentifier) | Parent | [SubjectParticipation](#SubjectParticipation) | 0/1 (optional) |
 
 ##### **Participation** (parent of this AdditionalSubjectParticipationIdentifier)
 Target Type: [SubjectParticipation](#SubjectParticipation)
 Addressed by: [ParticipantIdentifier](#AdditionalSubjectParticipationIdentifierParticipantIdentifier-Field).
-```
-self describing ...
-```
 
 
 
@@ -274,63 +217,30 @@ self describing ...
 | Name | Type | Required | Fix |
 | ---- | ---- | -------- | --- |
 | [InternalRecordId](#SubjectAddressInternalRecordId-Field) **(PK)** | *guid* | YES | no |
-| [Street](#SubjectAddressStreet-Field) | *string* | YES | no |
-| [HouseNumber](#SubjectAddressHouseNumber-Field) | *string* | YES | no |
-| [PostCode](#SubjectAddressPostCode-Field) | *string* | YES | no |
-| [City](#SubjectAddressCity-Field) | *string* | YES | no |
-| [State](#SubjectAddressState-Field) | *string* | YES | no |
-| [Country](#SubjectAddressCountry-Field) | *string* | YES | no |
+| Street | *string* | YES | no |
+| HouseNumber | *string* | YES | no |
+| PostCode | *string* | YES | no |
+| City | *string* | YES | no |
+| State | *string* | YES | no |
+| Country | *string* | YES | no |
 | [PhoneNumber](#SubjectAddressPhoneNumber-Field) | *string* | no | no |
 ##### Unique Keys
 * InternalRecordId **(primary)**
 * Street + HouseNumber + PostCode + City + State + Country
 ##### SubjectAddress.**InternalRecordId** (Field)
-```
-self describing ...
-```
 * this field represents the identity (PK) of the record
-##### SubjectAddress.**Street** (Field)
-```
-self describing ...
-```
-##### SubjectAddress.**HouseNumber** (Field)
-```
-self describing ...
-```
-##### SubjectAddress.**PostCode** (Field)
-```
-self describing ...
-```
-##### SubjectAddress.**City** (Field)
-```
-self describing ...
-```
-##### SubjectAddress.**State** (Field)
-```
-self describing ...
-```
-##### SubjectAddress.**Country** (Field)
-```
-self describing ...
-```
 ##### SubjectAddress.**PhoneNumber** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [SubjectIdentities](#SubjectIdentities-refering-to-this-SubjectAddress) | Referers | [SubjectIdentity](#SubjectIdentity) | * (multiple) |
 
 ##### **SubjectIdentities** (refering to this SubjectAddress)
 Target: [SubjectIdentity](#SubjectIdentity)
-```
-self describing ...
-```
 
 
 
@@ -357,19 +267,10 @@ self describing ...
 ##### Unique Keys
 * RecordId **(primary)**
 ##### SubjectIdentity.**RecordId** (Field)
-```
-self describing ...
-```
 * this field represents the identity (PK) of the record
 ##### SubjectIdentity.**FirstName** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 ##### SubjectIdentity.**LastName** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 ##### SubjectIdentity.**Gender** (Field)
 ```
@@ -377,14 +278,8 @@ self describing ...
 ```
 * this field is optional, so that '*null*' values are supported
 ##### SubjectIdentity.**DateOfBirth** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 ##### SubjectIdentity.**DateOfDeath** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 ##### SubjectIdentity.**FullNamePattern** (Field)
 ```
@@ -392,50 +287,29 @@ can be used to specify the full salutation including all academic grades by a st
 ```
 * this field is optional, so that '*null*' values are supported
 ##### SubjectIdentity.**Language** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 ##### SubjectIdentity.**Notes** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 ##### SubjectIdentity.**Email** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 ##### SubjectIdentity.**MobileNumber** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 ##### SubjectIdentity.**ResidentAddressId** (Field)
-```
-self describing ...
-```
 * this field is optional, so that '*null*' values are supported
 * this field is used as foreign key to address the related 'ResidentAddress'
 
 
 ### Relations
 
-| Name | Role | Target-Type | Target-Multiplicity |
-| ---- | ---- | ----------- | ------------------- |
+| Navigation-Name | Role | Target-Type | Target-Multiplicity |
+| --------------- | ----------- | ------------------- |
 | [ResidentAddress](#ResidentAddress-lookup-from-this-SubjectIdentity) | Lookup | [SubjectAddress](#SubjectAddress) | 1 (required) |
 | [Participations](#Participations-refering-to-this-SubjectIdentity) | Referers | [SubjectParticipation](#SubjectParticipation) | * (multiple) |
 
 ##### **ResidentAddress** (lookup from this SubjectIdentity)
 Target Type: [SubjectAddress](#SubjectAddress)
 Addressed by: [ResidentAddressId](#SubjectIdentityResidentAddressId-Field).
-```
-self describing ...
-```
 ##### **Participations** (refering to this SubjectIdentity)
 Target: [SubjectParticipation](#SubjectParticipation)
-```
-self describing ...
-```
 
 
