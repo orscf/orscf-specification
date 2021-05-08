@@ -8,27 +8,1507 @@
       "url": "https://orscf.org",
       "email": "info@orscf.org"
     },
-    "version": "v1.0.0"
+    "version": "1.3.0"
   },
   "paths": {
-    "/Permissions": {
-      "get": {
+    "/billableTasks/getByTaskGuid": {
+      "post": {
         "tags": [
-          "Permissions"
+          "BillableTasks"
         ],
-        "summary": "returns the set of permissions which are assigned to the api-key of the request",
-        "description": "GetPermissions",
-        "operationId": "GetPermissions",
+        "summary": "Loads a specific BillableTask addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetBillableTaskByTaskGuid",
+        "operationId": "GetBillableTaskByTaskGuid",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableTaskByTaskGuidRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableTaskByTaskGuidRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableTaskByTaskGuidRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                  "$ref": "#/components/schemas/GetBillableTaskByTaskGuidResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableTasks/getAll": {
+      "post": {
+        "tags": [
+          "BillableTasks"
+        ],
+        "summary": "Loads BillableTasks.",
+        "description": "GetBillableTasks",
+        "operationId": "GetBillableTasks",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableTasksRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableTasksRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableTasksRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBillableTasksResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableTasks/search": {
+      "post": {
+        "tags": [
+          "BillableTasks"
+        ],
+        "summary": "Loads BillableTasks where values matching to the given filterExpression",
+        "description": "SearchBillableTasks",
+        "operationId": "SearchBillableTasks",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchBillableTasksRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchBillableTasksRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchBillableTasksRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchBillableTasksResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableTasks/addNew": {
+      "post": {
+        "tags": [
+          "BillableTasks"
+        ],
+        "summary": "Adds a new BillableTask and returns success.",
+        "description": "AddNewBillableTask",
+        "operationId": "AddNewBillableTask",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewBillableTaskRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewBillableTaskRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewBillableTaskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewBillableTaskResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableTasks/update": {
+      "post": {
+        "tags": [
+          "BillableTasks"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given BillableTask addressed by the primary identifier fields within the given BillableTask. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateBillableTask",
+        "operationId": "UpdateBillableTask",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableTaskRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableTaskRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableTaskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBillableTaskResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableTasks/updateByTaskGuid": {
+      "post": {
+        "tags": [
+          "BillableTasks"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given BillableTask addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateBillableTaskByTaskGuid",
+        "operationId": "UpdateBillableTaskByTaskGuid",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableTaskByTaskGuidRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableTaskByTaskGuidRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableTaskByTaskGuidRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBillableTaskByTaskGuidResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableTasks/deleteByTaskGuid": {
+      "post": {
+        "tags": [
+          "BillableTasks"
+        ],
+        "summary": "Deletes a specific BillableTask addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteBillableTaskByTaskGuid",
+        "operationId": "DeleteBillableTaskByTaskGuid",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBillableTaskByTaskGuidRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBillableTaskByTaskGuidRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBillableTaskByTaskGuidRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteBillableTaskByTaskGuidResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableVisits/getByVisitGuid": {
+      "post": {
+        "tags": [
+          "BillableVisits"
+        ],
+        "summary": "Loads a specific BillableVisit addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetBillableVisitByVisitGuid",
+        "operationId": "GetBillableVisitByVisitGuid",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableVisitByVisitGuidRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableVisitByVisitGuidRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableVisitByVisitGuidRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBillableVisitByVisitGuidResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableVisits/getAll": {
+      "post": {
+        "tags": [
+          "BillableVisits"
+        ],
+        "summary": "Loads BillableVisits.",
+        "description": "GetBillableVisits",
+        "operationId": "GetBillableVisits",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableVisitsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableVisitsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillableVisitsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBillableVisitsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableVisits/search": {
+      "post": {
+        "tags": [
+          "BillableVisits"
+        ],
+        "summary": "Loads BillableVisits where values matching to the given filterExpression",
+        "description": "SearchBillableVisits",
+        "operationId": "SearchBillableVisits",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchBillableVisitsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchBillableVisitsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchBillableVisitsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchBillableVisitsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableVisits/addNew": {
+      "post": {
+        "tags": [
+          "BillableVisits"
+        ],
+        "summary": "Adds a new BillableVisit and returns success.",
+        "description": "AddNewBillableVisit",
+        "operationId": "AddNewBillableVisit",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewBillableVisitRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewBillableVisitRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewBillableVisitRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewBillableVisitResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableVisits/update": {
+      "post": {
+        "tags": [
+          "BillableVisits"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given BillableVisit addressed by the primary identifier fields within the given BillableVisit. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateBillableVisit",
+        "operationId": "UpdateBillableVisit",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableVisitRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableVisitRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableVisitRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBillableVisitResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableVisits/updateByVisitGuid": {
+      "post": {
+        "tags": [
+          "BillableVisits"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given BillableVisit addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateBillableVisitByVisitGuid",
+        "operationId": "UpdateBillableVisitByVisitGuid",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableVisitByVisitGuidRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableVisitByVisitGuidRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillableVisitByVisitGuidRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBillableVisitByVisitGuidResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billableVisits/deleteByVisitGuid": {
+      "post": {
+        "tags": [
+          "BillableVisits"
+        ],
+        "summary": "Deletes a specific BillableVisit addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteBillableVisitByVisitGuid",
+        "operationId": "DeleteBillableVisitByVisitGuid",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBillableVisitByVisitGuidRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBillableVisitByVisitGuidRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBillableVisitByVisitGuidRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteBillableVisitByVisitGuidResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billingDemands/getById": {
+      "post": {
+        "tags": [
+          "BillingDemands"
+        ],
+        "summary": "Loads a specific BillingDemand addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetBillingDemandById",
+        "operationId": "GetBillingDemandById",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillingDemandByIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillingDemandByIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillingDemandByIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBillingDemandByIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billingDemands/getAll": {
+      "post": {
+        "tags": [
+          "BillingDemands"
+        ],
+        "summary": "Loads BillingDemands.",
+        "description": "GetBillingDemands",
+        "operationId": "GetBillingDemands",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillingDemandsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillingDemandsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetBillingDemandsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBillingDemandsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billingDemands/search": {
+      "post": {
+        "tags": [
+          "BillingDemands"
+        ],
+        "summary": "Loads BillingDemands where values matching to the given filterExpression",
+        "description": "SearchBillingDemands",
+        "operationId": "SearchBillingDemands",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchBillingDemandsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchBillingDemandsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchBillingDemandsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchBillingDemandsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billingDemands/addNew": {
+      "post": {
+        "tags": [
+          "BillingDemands"
+        ],
+        "summary": "Adds a new BillingDemand and returns success.",
+        "description": "AddNewBillingDemand",
+        "operationId": "AddNewBillingDemand",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewBillingDemandRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewBillingDemandRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewBillingDemandRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewBillingDemandResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billingDemands/update": {
+      "post": {
+        "tags": [
+          "BillingDemands"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given BillingDemand addressed by the primary identifier fields within the given BillingDemand. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateBillingDemand",
+        "operationId": "UpdateBillingDemand",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillingDemandRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillingDemandRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillingDemandRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBillingDemandResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billingDemands/updateById": {
+      "post": {
+        "tags": [
+          "BillingDemands"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given BillingDemand addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateBillingDemandById",
+        "operationId": "UpdateBillingDemandById",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillingDemandByIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillingDemandByIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBillingDemandByIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBillingDemandByIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billingDemands/deleteById": {
+      "post": {
+        "tags": [
+          "BillingDemands"
+        ],
+        "summary": "Deletes a specific BillingDemand addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteBillingDemandById",
+        "operationId": "DeleteBillingDemandById",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBillingDemandByIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBillingDemandByIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBillingDemandByIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteBillingDemandByIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/getById": {
+      "post": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Loads a specific Invoice addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetInvoiceById",
+        "operationId": "GetInvoiceById",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetInvoiceByIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetInvoiceByIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetInvoiceByIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetInvoiceByIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/getAll": {
+      "post": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Loads Invoices.",
+        "description": "GetInvoices",
+        "operationId": "GetInvoices",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetInvoicesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetInvoicesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetInvoicesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetInvoicesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/search": {
+      "post": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Loads Invoices where values matching to the given filterExpression",
+        "description": "SearchInvoices",
+        "operationId": "SearchInvoices",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchInvoicesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchInvoicesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchInvoicesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchInvoicesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/addNew": {
+      "post": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Adds a new Invoice and returns success.",
+        "description": "AddNewInvoice",
+        "operationId": "AddNewInvoice",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewInvoiceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewInvoiceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewInvoiceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewInvoiceResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/update": {
+      "post": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given Invoice addressed by the primary identifier fields within the given Invoice. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateInvoice",
+        "operationId": "UpdateInvoice",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvoiceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvoiceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvoiceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateInvoiceResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/updateById": {
+      "post": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given Invoice addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateInvoiceById",
+        "operationId": "UpdateInvoiceById",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvoiceByIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvoiceByIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvoiceByIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateInvoiceByIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/deleteById": {
+      "post": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Deletes a specific Invoice addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteInvoiceById",
+        "operationId": "DeleteInvoiceById",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteInvoiceByIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteInvoiceByIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteInvoiceByIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteInvoiceByIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/getByStudyExecutionIdentifier": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Loads a specific StudyExecutionScope addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetStudyExecutionScopeByStudyExecutionIdentifier",
+        "operationId": "GetStudyExecutionScopeByStudyExecutionIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStudyExecutionScopeByStudyExecutionIdentifierResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/getAll": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Loads StudyExecutionScopes.",
+        "description": "GetStudyExecutionScopes",
+        "operationId": "GetStudyExecutionScopes",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStudyExecutionScopesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/search": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Loads StudyExecutionScopes where values matching to the given filterExpression",
+        "description": "SearchStudyExecutionScopes",
+        "operationId": "SearchStudyExecutionScopes",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchStudyExecutionScopesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchStudyExecutionScopesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchStudyExecutionScopesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchStudyExecutionScopesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/addNew": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Adds a new StudyExecutionScope and returns success.",
+        "description": "AddNewStudyExecutionScope",
+        "operationId": "AddNewStudyExecutionScope",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewStudyExecutionScopeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewStudyExecutionScopeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewStudyExecutionScopeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewStudyExecutionScopeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/update": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given StudyExecutionScope addressed by the primary identifier fields within the given StudyExecutionScope. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateStudyExecutionScope",
+        "operationId": "UpdateStudyExecutionScope",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateStudyExecutionScopeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/updateByStudyExecutionIdentifier": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given StudyExecutionScope addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateStudyExecutionScopeByStudyExecutionIdentifier",
+        "operationId": "UpdateStudyExecutionScopeByStudyExecutionIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateStudyExecutionScopeByStudyExecutionIdentifierResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/deleteByStudyExecutionIdentifier": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Deletes a specific StudyExecutionScope addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteStudyExecutionScopeByStudyExecutionIdentifier",
+        "operationId": "DeleteStudyExecutionScopeByStudyExecutionIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteStudyExecutionScopeByStudyExecutionIdentifierResponse"
                 }
               }
             }
@@ -37,5 +1517,1122 @@
       }
     }
   },
-  "components": { }
+  "components": {
+    "schemas": {
+      "GetBillableTaskByTaskGuidRequest": {
+        "type": "object",
+        "properties": {
+          "taskGuid": {
+            "type": "string",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BillableTask": {
+        "required": [
+          "taskExecutionTitle",
+          "taskGuid",
+          "taskName",
+          "visitGuid"
+        ],
+        "type": "object",
+        "properties": {
+          "taskGuid": {
+            "type": "string",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "visitGuid": {
+            "type": "string",
+            "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "taskName": {
+            "type": "string",
+            "description": "unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
+          },
+          "taskExecutionTitle": {
+            "type": "string",
+            "description": "title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBillableTaskByTaskGuidResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/BillableTask"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBillableTasksRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of BillableTasks which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBillableTasksResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillableTask"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchBillableTasksRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of BillableTasks which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchBillableTasksResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillableTask"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewBillableTaskRequest": {
+        "type": "object",
+        "properties": {
+          "billableTask": {
+            "$ref": "#/components/schemas/BillableTask"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewBillableTaskResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillableTaskRequest": {
+        "type": "object",
+        "properties": {
+          "billableTask": {
+            "$ref": "#/components/schemas/BillableTask"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillableTaskResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillableTaskByTaskGuidRequest": {
+        "type": "object",
+        "properties": {
+          "taskGuid": {
+            "type": "string",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "billableTask": {
+            "$ref": "#/components/schemas/BillableTask"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillableTaskByTaskGuidResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteBillableTaskByTaskGuidRequest": {
+        "type": "object",
+        "properties": {
+          "taskGuid": {
+            "type": "string",
+            "description": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteBillableTaskByTaskGuidResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBillableVisitByVisitGuidRequest": {
+        "type": "object",
+        "properties": {
+          "visitGuid": {
+            "type": "string",
+            "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BillableVisit": {
+        "required": [
+          "participantIdentifier",
+          "studyExecutionIdentifier",
+          "visitExecutionTitle",
+          "visitGuid",
+          "visitProdecureName"
+        ],
+        "type": "object",
+        "properties": {
+          "visitGuid": {
+            "type": "string",
+            "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "participantIdentifier": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study) *this field has a max length of 50"
+          },
+          "visitProdecureName": {
+            "type": "string",
+            "description": "unique invariant name of the visit-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
+          },
+          "visitExecutionTitle": {
+            "type": "string",
+            "description": "title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)"
+          },
+          "billingDemandId": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "uuid",
+            "nullable": true
+          },
+          "invoiceId": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "uuid",
+            "nullable": true
+          },
+          "executionEndDateUtc": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "date-time",
+            "nullable": true
+          },
+          "sponsorValidationDateUtc": {
+            "type": "string",
+            "description": "indicates, that the visit is ready to get assigned to a 'BillingDemand' (usually this state is managed by the sponsor) This can only be set after there is a valid 'ExecutionEndDateUtc' *this field is optional",
+            "format": "date-time",
+            "nullable": true
+          },
+          "executorValidationDateUtc": {
+            "type": "string",
+            "description": "indicates, that the visit is ready to get assigned to a 'Invoice' (usually this state is managed by the executor) This can only be set after either the 'SponsorValidationDateUtc' is set (and there is a Demand) nor the states are only managed by the executor, so that the demand-part is completely skipped. *this field is optional",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBillableVisitByVisitGuidResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/BillableVisit"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBillableVisitsRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of BillableVisits which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBillableVisitsResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillableVisit"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchBillableVisitsRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of BillableVisits which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchBillableVisitsResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillableVisit"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewBillableVisitRequest": {
+        "type": "object",
+        "properties": {
+          "billableVisit": {
+            "$ref": "#/components/schemas/BillableVisit"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewBillableVisitResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillableVisitRequest": {
+        "type": "object",
+        "properties": {
+          "billableVisit": {
+            "$ref": "#/components/schemas/BillableVisit"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillableVisitResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillableVisitByVisitGuidRequest": {
+        "type": "object",
+        "properties": {
+          "visitGuid": {
+            "type": "string",
+            "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "billableVisit": {
+            "$ref": "#/components/schemas/BillableVisit"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillableVisitByVisitGuidResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteBillableVisitByVisitGuidRequest": {
+        "type": "object",
+        "properties": {
+          "visitGuid": {
+            "type": "string",
+            "description": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteBillableVisitByVisitGuidResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBillingDemandByIdRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Represents the primary identity of a BillingDemand",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BillingDemand": {
+        "required": [
+          "createdByPerson",
+          "creationDateUtc",
+          "id",
+          "officialNumber",
+          "studyExecutionIdentifier"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "officialNumber": {
+            "type": "string"
+          },
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "transmissionDateUtc": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "date-time",
+            "nullable": true
+          },
+          "creationDateUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdByPerson": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "description": "created by the sponsor"
+      },
+      "GetBillingDemandByIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/BillingDemand"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBillingDemandsRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of BillingDemands which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBillingDemandsResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillingDemand"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchBillingDemandsRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of BillingDemands which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchBillingDemandsResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillingDemand"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewBillingDemandRequest": {
+        "type": "object",
+        "properties": {
+          "billingDemand": {
+            "$ref": "#/components/schemas/BillingDemand"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewBillingDemandResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillingDemandRequest": {
+        "type": "object",
+        "properties": {
+          "billingDemand": {
+            "$ref": "#/components/schemas/BillingDemand"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillingDemandResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillingDemandByIdRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Represents the primary identity of a BillingDemand",
+            "format": "uuid"
+          },
+          "billingDemand": {
+            "$ref": "#/components/schemas/BillingDemand"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBillingDemandByIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteBillingDemandByIdRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Represents the primary identity of a BillingDemand",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteBillingDemandByIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetInvoiceByIdRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Represents the primary identity of a Invoice",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Invoice": {
+        "required": [
+          "createdByPerson",
+          "creationDateUtc",
+          "id",
+          "offcialInvoiceDate",
+          "officialNumber",
+          "studyExecutionIdentifier"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "officialNumber": {
+            "type": "string",
+            "description": "the invoice number"
+          },
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offcialInvoiceDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "transmissionDateUtc": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "date-time",
+            "nullable": true
+          },
+          "creationDateUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdByPerson": {
+            "type": "string"
+          },
+          "paymentSubmittedDateUtc": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "date-time",
+            "nullable": true
+          },
+          "paymentReceivedDateUtc": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "created by the executor-company"
+      },
+      "GetInvoiceByIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/Invoice"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetInvoicesRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of Invoices which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetInvoicesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Invoice"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchInvoicesRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of Invoices which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchInvoicesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Invoice"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewInvoiceRequest": {
+        "type": "object",
+        "properties": {
+          "invoice": {
+            "$ref": "#/components/schemas/Invoice"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewInvoiceResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateInvoiceRequest": {
+        "type": "object",
+        "properties": {
+          "invoice": {
+            "$ref": "#/components/schemas/Invoice"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateInvoiceResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateInvoiceByIdRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Represents the primary identity of a Invoice",
+            "format": "uuid"
+          },
+          "invoice": {
+            "$ref": "#/components/schemas/Invoice"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateInvoiceByIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteInvoiceByIdRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Represents the primary identity of a Invoice",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteInvoiceByIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyExecutionScopeByStudyExecutionIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudyExecutionScope": {
+        "required": [
+          "executingInstituteIdentifier",
+          "studyExecutionIdentifier",
+          "studyWorkflowName",
+          "studyWorkflowVersion"
+        ],
+        "type": "object",
+        "properties": {
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "executingInstituteIdentifier": {
+            "type": "string",
+            "description": "the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)"
+          },
+          "studyWorkflowName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "the official invariant name of the study as given by the sponsor *this field has a max length of 100"
+          },
+          "studyWorkflowVersion": {
+            "maxLength": 20,
+            "type": "string",
+            "description": "version of the workflow *this field has a max length of 20"
+          },
+          "extendedMetaData": {
+            "type": "string",
+            "description": "optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema *this field is optional (use null as value)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyExecutionScopeByStudyExecutionIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/StudyExecutionScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyExecutionScopesRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of StudyExecutionScopes which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyExecutionScopesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyExecutionScope"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchStudyExecutionScopesRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of StudyExecutionScopes which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchStudyExecutionScopesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyExecutionScope"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewStudyExecutionScopeRequest": {
+        "type": "object",
+        "properties": {
+          "studyExecutionScope": {
+            "$ref": "#/components/schemas/StudyExecutionScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewStudyExecutionScopeResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyExecutionScopeRequest": {
+        "type": "object",
+        "properties": {
+          "studyExecutionScope": {
+            "$ref": "#/components/schemas/StudyExecutionScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyExecutionScopeResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyExecutionScopeByStudyExecutionIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "studyExecutionScope": {
+            "$ref": "#/components/schemas/StudyExecutionScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyExecutionScopeByStudyExecutionIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteStudyExecutionScopeByStudyExecutionIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteStudyExecutionScopeByStudyExecutionIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme.",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "BillingDemands",
+      "description": "created by the sponsor"
+    },
+    {
+      "name": "Invoices",
+      "description": "created by the executor-company"
+    }
+  ]
 }

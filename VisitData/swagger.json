@@ -102,7 +102,7 @@
         "tags": [
           "DataRecordings"
         ],
-        "summary": "Loads DataRecordings where values matching to ALL fields of the given 'filterValues' object.",
+        "summary": "Loads DataRecordings where values matching to the given filterExpression",
         "description": "SearchDataRecordings",
         "operationId": "SearchDataRecordings",
         "requestBody": {
@@ -403,7 +403,7 @@
         "tags": [
           "DrugApplyments"
         ],
-        "summary": "Loads DrugApplyments where values matching to ALL fields of the given 'filterValues' object.",
+        "summary": "Loads DrugApplyments where values matching to the given filterExpression",
         "description": "SearchDrugApplyments",
         "operationId": "SearchDrugApplyments",
         "requestBody": {
@@ -704,7 +704,7 @@
         "tags": [
           "StudyEvents"
         ],
-        "summary": "Loads StudyEvents where values matching to ALL fields of the given 'filterValues' object.",
+        "summary": "Loads StudyEvents where values matching to the given filterExpression",
         "description": "SearchStudyEvents",
         "operationId": "SearchStudyEvents",
         "requestBody": {
@@ -1005,7 +1005,7 @@
         "tags": [
           "StudyExecutionScopes"
         ],
-        "summary": "Loads StudyExecutionScopes where values matching to ALL fields of the given 'filterValues' object.",
+        "summary": "Loads StudyExecutionScopes where values matching to the given filterExpression",
         "description": "SearchStudyExecutionScopes",
         "operationId": "SearchStudyExecutionScopes",
         "requestBody": {
@@ -1306,7 +1306,7 @@
         "tags": [
           "Treatments"
         ],
-        "summary": "Loads Treatments where values matching to ALL fields of the given 'filterValues' object.",
+        "summary": "Loads Treatments where values matching to the given filterExpression",
         "description": "SearchTreatments",
         "operationId": "SearchTreatments",
         "requestBody": {
@@ -1607,7 +1607,7 @@
         "tags": [
           "Visits"
         ],
-        "summary": "Loads Visits where values matching to ALL fields of the given 'filterValues' object.",
+        "summary": "Loads Visits where values matching to the given filterExpression",
         "description": "SearchVisits",
         "operationId": "SearchVisits",
         "requestBody": {
@@ -3223,6 +3223,19 @@
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme.",
+        "name": "Authorization",
+        "in": "header"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

@@ -8,27 +8,1808 @@
       "url": "https://orscf.org",
       "email": "info@orscf.org"
     },
-    "version": "v1.0.0"
+    "version": "1.3.0"
   },
   "paths": {
-    "/Permissions": {
-      "get": {
+    "/additionalSubjectParticipationIdentifiers/getByAdditionalSubjectParticipationIdentifierIdentity": {
+      "post": {
         "tags": [
-          "Permissions"
+          "AdditionalSubjectParticipationIdentifiers"
         ],
-        "summary": "returns the set of permissions which are assigned to the api-key of the request",
-        "description": "GetPermissions",
-        "operationId": "GetPermissions",
+        "summary": "Loads a specific AdditionalSubjectParticipationIdentifier addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentity",
+        "operationId": "GetAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentity",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                  "$ref": "#/components/schemas/GetAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/additionalSubjectParticipationIdentifiers/getAll": {
+      "post": {
+        "tags": [
+          "AdditionalSubjectParticipationIdentifiers"
+        ],
+        "summary": "Loads AdditionalSubjectParticipationIdentifiers.",
+        "description": "GetAdditionalSubjectParticipationIdentifiers",
+        "operationId": "GetAdditionalSubjectParticipationIdentifiers",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAdditionalSubjectParticipationIdentifiersRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAdditionalSubjectParticipationIdentifiersRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAdditionalSubjectParticipationIdentifiersRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAdditionalSubjectParticipationIdentifiersResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/additionalSubjectParticipationIdentifiers/search": {
+      "post": {
+        "tags": [
+          "AdditionalSubjectParticipationIdentifiers"
+        ],
+        "summary": "Loads AdditionalSubjectParticipationIdentifiers where values matching to the given filterExpression",
+        "description": "SearchAdditionalSubjectParticipationIdentifiers",
+        "operationId": "SearchAdditionalSubjectParticipationIdentifiers",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchAdditionalSubjectParticipationIdentifiersRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchAdditionalSubjectParticipationIdentifiersRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchAdditionalSubjectParticipationIdentifiersRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchAdditionalSubjectParticipationIdentifiersResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/additionalSubjectParticipationIdentifiers/addNew": {
+      "post": {
+        "tags": [
+          "AdditionalSubjectParticipationIdentifiers"
+        ],
+        "summary": "Adds a new AdditionalSubjectParticipationIdentifier and returns success.",
+        "description": "AddNewAdditionalSubjectParticipationIdentifier",
+        "operationId": "AddNewAdditionalSubjectParticipationIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewAdditionalSubjectParticipationIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewAdditionalSubjectParticipationIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewAdditionalSubjectParticipationIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewAdditionalSubjectParticipationIdentifierResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/additionalSubjectParticipationIdentifiers/update": {
+      "post": {
+        "tags": [
+          "AdditionalSubjectParticipationIdentifiers"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given AdditionalSubjectParticipationIdentifier addressed by the primary identifier fields within the given AdditionalSubjectParticipationIdentifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateAdditionalSubjectParticipationIdentifier",
+        "operationId": "UpdateAdditionalSubjectParticipationIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdditionalSubjectParticipationIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdditionalSubjectParticipationIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdditionalSubjectParticipationIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAdditionalSubjectParticipationIdentifierResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/additionalSubjectParticipationIdentifiers/updateByAdditionalSubjectParticipationIdentifierIdentity": {
+      "post": {
+        "tags": [
+          "AdditionalSubjectParticipationIdentifiers"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given AdditionalSubjectParticipationIdentifier addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentity",
+        "operationId": "UpdateAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentity",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/additionalSubjectParticipationIdentifiers/deleteByAdditionalSubjectParticipationIdentifierIdentity": {
+      "post": {
+        "tags": [
+          "AdditionalSubjectParticipationIdentifiers"
+        ],
+        "summary": "Deletes a specific AdditionalSubjectParticipationIdentifier addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentity",
+        "operationId": "DeleteAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentity",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/getByStudyExecutionIdentifier": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Loads a specific StudyExecutionScope addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetStudyExecutionScopeByStudyExecutionIdentifier",
+        "operationId": "GetStudyExecutionScopeByStudyExecutionIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStudyExecutionScopeByStudyExecutionIdentifierResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/getAll": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Loads StudyExecutionScopes.",
+        "description": "GetStudyExecutionScopes",
+        "operationId": "GetStudyExecutionScopes",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyExecutionScopesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStudyExecutionScopesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/search": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Loads StudyExecutionScopes where values matching to the given filterExpression",
+        "description": "SearchStudyExecutionScopes",
+        "operationId": "SearchStudyExecutionScopes",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchStudyExecutionScopesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchStudyExecutionScopesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchStudyExecutionScopesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchStudyExecutionScopesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/addNew": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Adds a new StudyExecutionScope and returns success.",
+        "description": "AddNewStudyExecutionScope",
+        "operationId": "AddNewStudyExecutionScope",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewStudyExecutionScopeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewStudyExecutionScopeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewStudyExecutionScopeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewStudyExecutionScopeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/update": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given StudyExecutionScope addressed by the primary identifier fields within the given StudyExecutionScope. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateStudyExecutionScope",
+        "operationId": "UpdateStudyExecutionScope",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateStudyExecutionScopeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/updateByStudyExecutionIdentifier": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given StudyExecutionScope addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateStudyExecutionScopeByStudyExecutionIdentifier",
+        "operationId": "UpdateStudyExecutionScopeByStudyExecutionIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateStudyExecutionScopeByStudyExecutionIdentifierResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyExecutionScopes/deleteByStudyExecutionIdentifier": {
+      "post": {
+        "tags": [
+          "StudyExecutionScopes"
+        ],
+        "summary": "Deletes a specific StudyExecutionScope addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteStudyExecutionScopeByStudyExecutionIdentifier",
+        "operationId": "DeleteStudyExecutionScopeByStudyExecutionIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteStudyExecutionScopeByStudyExecutionIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteStudyExecutionScopeByStudyExecutionIdentifierResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyScopes/getByStudyScopeIdentity": {
+      "post": {
+        "tags": [
+          "StudyScopes"
+        ],
+        "summary": "Loads a specific StudyScope addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetStudyScopeByStudyScopeIdentity",
+        "operationId": "GetStudyScopeByStudyScopeIdentity",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyScopeByStudyScopeIdentityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyScopeByStudyScopeIdentityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyScopeByStudyScopeIdentityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStudyScopeByStudyScopeIdentityResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyScopes/getAll": {
+      "post": {
+        "tags": [
+          "StudyScopes"
+        ],
+        "summary": "Loads StudyScopes.",
+        "description": "GetStudyScopes",
+        "operationId": "GetStudyScopes",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyScopesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyScopesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetStudyScopesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStudyScopesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyScopes/search": {
+      "post": {
+        "tags": [
+          "StudyScopes"
+        ],
+        "summary": "Loads StudyScopes where values matching to the given filterExpression",
+        "description": "SearchStudyScopes",
+        "operationId": "SearchStudyScopes",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchStudyScopesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchStudyScopesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchStudyScopesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchStudyScopesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyScopes/addNew": {
+      "post": {
+        "tags": [
+          "StudyScopes"
+        ],
+        "summary": "Adds a new StudyScope and returns success.",
+        "description": "AddNewStudyScope",
+        "operationId": "AddNewStudyScope",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewStudyScopeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewStudyScopeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewStudyScopeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewStudyScopeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyScopes/update": {
+      "post": {
+        "tags": [
+          "StudyScopes"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given StudyScope addressed by the primary identifier fields within the given StudyScope. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateStudyScope",
+        "operationId": "UpdateStudyScope",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyScopeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyScopeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyScopeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateStudyScopeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyScopes/updateByStudyScopeIdentity": {
+      "post": {
+        "tags": [
+          "StudyScopes"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given StudyScope addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateStudyScopeByStudyScopeIdentity",
+        "operationId": "UpdateStudyScopeByStudyScopeIdentity",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyScopeByStudyScopeIdentityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyScopeByStudyScopeIdentityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudyScopeByStudyScopeIdentityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateStudyScopeByStudyScopeIdentityResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/studyScopes/deleteByStudyScopeIdentity": {
+      "post": {
+        "tags": [
+          "StudyScopes"
+        ],
+        "summary": "Deletes a specific StudyScope addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteStudyScopeByStudyScopeIdentity",
+        "operationId": "DeleteStudyScopeByStudyScopeIdentity",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteStudyScopeByStudyScopeIdentityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteStudyScopeByStudyScopeIdentityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteStudyScopeByStudyScopeIdentityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteStudyScopeByStudyScopeIdentityResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectAddresses/getByInternalRecordId": {
+      "post": {
+        "tags": [
+          "SubjectAddresses"
+        ],
+        "summary": "Loads a specific SubjectAddress addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetSubjectAddressByInternalRecordId",
+        "operationId": "GetSubjectAddressByInternalRecordId",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectAddressByInternalRecordIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectAddressByInternalRecordIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectAddressByInternalRecordIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSubjectAddressByInternalRecordIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectAddresses/getAll": {
+      "post": {
+        "tags": [
+          "SubjectAddresses"
+        ],
+        "summary": "Loads SubjectAddresses.",
+        "description": "GetSubjectAddresses",
+        "operationId": "GetSubjectAddresses",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectAddressesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectAddressesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectAddressesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSubjectAddressesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectAddresses/search": {
+      "post": {
+        "tags": [
+          "SubjectAddresses"
+        ],
+        "summary": "Loads SubjectAddresses where values matching to the given filterExpression",
+        "description": "SearchSubjectAddresses",
+        "operationId": "SearchSubjectAddresses",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchSubjectAddressesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchSubjectAddressesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchSubjectAddressesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchSubjectAddressesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectAddresses/addNew": {
+      "post": {
+        "tags": [
+          "SubjectAddresses"
+        ],
+        "summary": "Adds a new SubjectAddress and returns success.",
+        "description": "AddNewSubjectAddress",
+        "operationId": "AddNewSubjectAddress",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewSubjectAddressRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewSubjectAddressRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewSubjectAddressRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewSubjectAddressResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectAddresses/update": {
+      "post": {
+        "tags": [
+          "SubjectAddresses"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given SubjectAddress addressed by the primary identifier fields within the given SubjectAddress. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateSubjectAddress",
+        "operationId": "UpdateSubjectAddress",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectAddressRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectAddressRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectAddressRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSubjectAddressResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectAddresses/updateByInternalRecordId": {
+      "post": {
+        "tags": [
+          "SubjectAddresses"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given SubjectAddress addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateSubjectAddressByInternalRecordId",
+        "operationId": "UpdateSubjectAddressByInternalRecordId",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectAddressByInternalRecordIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectAddressByInternalRecordIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectAddressByInternalRecordIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSubjectAddressByInternalRecordIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectAddresses/deleteByInternalRecordId": {
+      "post": {
+        "tags": [
+          "SubjectAddresses"
+        ],
+        "summary": "Deletes a specific SubjectAddress addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteSubjectAddressByInternalRecordId",
+        "operationId": "DeleteSubjectAddressByInternalRecordId",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSubjectAddressByInternalRecordIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSubjectAddressByInternalRecordIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSubjectAddressByInternalRecordIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSubjectAddressByInternalRecordIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectIdentities/getByRecordId": {
+      "post": {
+        "tags": [
+          "SubjectIdentities"
+        ],
+        "summary": "Loads a specific SubjectIdentity addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetSubjectIdentityByRecordId",
+        "operationId": "GetSubjectIdentityByRecordId",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectIdentityByRecordIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectIdentityByRecordIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectIdentityByRecordIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSubjectIdentityByRecordIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectIdentities/getAll": {
+      "post": {
+        "tags": [
+          "SubjectIdentities"
+        ],
+        "summary": "Loads SubjectIdentities.",
+        "description": "GetSubjectIdentities",
+        "operationId": "GetSubjectIdentities",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectIdentitiesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectIdentitiesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectIdentitiesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSubjectIdentitiesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectIdentities/search": {
+      "post": {
+        "tags": [
+          "SubjectIdentities"
+        ],
+        "summary": "Loads SubjectIdentities where values matching to the given filterExpression",
+        "description": "SearchSubjectIdentities",
+        "operationId": "SearchSubjectIdentities",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchSubjectIdentitiesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchSubjectIdentitiesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchSubjectIdentitiesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchSubjectIdentitiesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectIdentities/addNew": {
+      "post": {
+        "tags": [
+          "SubjectIdentities"
+        ],
+        "summary": "Adds a new SubjectIdentity and returns success.",
+        "description": "AddNewSubjectIdentity",
+        "operationId": "AddNewSubjectIdentity",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewSubjectIdentityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewSubjectIdentityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewSubjectIdentityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewSubjectIdentityResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectIdentities/update": {
+      "post": {
+        "tags": [
+          "SubjectIdentities"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given SubjectIdentity addressed by the primary identifier fields within the given SubjectIdentity. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateSubjectIdentity",
+        "operationId": "UpdateSubjectIdentity",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectIdentityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectIdentityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectIdentityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSubjectIdentityResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectIdentities/updateByRecordId": {
+      "post": {
+        "tags": [
+          "SubjectIdentities"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given SubjectIdentity addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateSubjectIdentityByRecordId",
+        "operationId": "UpdateSubjectIdentityByRecordId",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectIdentityByRecordIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectIdentityByRecordIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectIdentityByRecordIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSubjectIdentityByRecordIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectIdentities/deleteByRecordId": {
+      "post": {
+        "tags": [
+          "SubjectIdentities"
+        ],
+        "summary": "Deletes a specific SubjectIdentity addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteSubjectIdentityByRecordId",
+        "operationId": "DeleteSubjectIdentityByRecordId",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSubjectIdentityByRecordIdRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSubjectIdentityByRecordIdRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSubjectIdentityByRecordIdRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSubjectIdentityByRecordIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectParticipations/getByParticipantIdentifier": {
+      "post": {
+        "tags": [
+          "SubjectParticipations"
+        ],
+        "summary": "Loads a specific SubjectParticipation addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.",
+        "description": "GetSubjectParticipationByParticipantIdentifier",
+        "operationId": "GetSubjectParticipationByParticipantIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectParticipationByParticipantIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectParticipationByParticipantIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectParticipationByParticipantIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSubjectParticipationByParticipantIdentifierResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectParticipations/getAll": {
+      "post": {
+        "tags": [
+          "SubjectParticipations"
+        ],
+        "summary": "Loads SubjectParticipations.",
+        "description": "GetSubjectParticipations",
+        "operationId": "GetSubjectParticipations",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectParticipationsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectParticipationsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSubjectParticipationsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSubjectParticipationsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectParticipations/search": {
+      "post": {
+        "tags": [
+          "SubjectParticipations"
+        ],
+        "summary": "Loads SubjectParticipations where values matching to the given filterExpression",
+        "description": "SearchSubjectParticipations",
+        "operationId": "SearchSubjectParticipations",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchSubjectParticipationsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchSubjectParticipationsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchSubjectParticipationsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchSubjectParticipationsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectParticipations/addNew": {
+      "post": {
+        "tags": [
+          "SubjectParticipations"
+        ],
+        "summary": "Adds a new SubjectParticipation and returns success.",
+        "description": "AddNewSubjectParticipation",
+        "operationId": "AddNewSubjectParticipation",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewSubjectParticipationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewSubjectParticipationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewSubjectParticipationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNewSubjectParticipationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectParticipations/update": {
+      "post": {
+        "tags": [
+          "SubjectParticipations"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given SubjectParticipation addressed by the primary identifier fields within the given SubjectParticipation. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateSubjectParticipation",
+        "operationId": "UpdateSubjectParticipation",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectParticipationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectParticipationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectParticipationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSubjectParticipationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectParticipations/updateByParticipantIdentifier": {
+      "post": {
+        "tags": [
+          "SubjectParticipations"
+        ],
+        "summary": "Updates all values (which are not \"FixedAfterCreation\") of the given SubjectParticipation addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "UpdateSubjectParticipationByParticipantIdentifier",
+        "operationId": "UpdateSubjectParticipationByParticipantIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectParticipationByParticipantIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectParticipationByParticipantIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectParticipationByParticipantIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSubjectParticipationByParticipantIdentifierResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subjectParticipations/deleteByParticipantIdentifier": {
+      "post": {
+        "tags": [
+          "SubjectParticipations"
+        ],
+        "summary": "Deletes a specific SubjectParticipation addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.",
+        "description": "DeleteSubjectParticipationByParticipantIdentifier",
+        "operationId": "DeleteSubjectParticipationByParticipantIdentifier",
+        "requestBody": {
+          "description": "request capsle containing the method arguments",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSubjectParticipationByParticipantIdentifierRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSubjectParticipationByParticipantIdentifierRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSubjectParticipationByParticipantIdentifierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSubjectParticipationByParticipantIdentifierResponse"
                 }
               }
             }
@@ -37,5 +1818,1293 @@
       }
     }
   },
-  "components": { }
+  "components": {
+    "schemas": {
+      "AdditionalSubjectParticipationIdentifierIdentity": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Composite Key, which represents the primary identity of a AdditionalSubjectParticipationIdentifier"
+      },
+      "GetAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest": {
+        "type": "object",
+        "properties": {
+          "additionalSubjectParticipationIdentifierIdentity": {
+            "$ref": "#/components/schemas/AdditionalSubjectParticipationIdentifierIdentity"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AdditionalSubjectParticipationIdentifier": {
+        "required": [
+          "identifierName",
+          "identifierValue",
+          "participantIdentifier"
+        ],
+        "type": "object",
+        "properties": {
+          "participantIdentifier": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "*this field has a max length of 50"
+          },
+          "identifierName": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "*this field has a max length of 30"
+          },
+          "identifierValue": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/AdditionalSubjectParticipationIdentifier"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAdditionalSubjectParticipationIdentifiersRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of AdditionalSubjectParticipationIdentifiers which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAdditionalSubjectParticipationIdentifiersResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalSubjectParticipationIdentifier"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchAdditionalSubjectParticipationIdentifiersRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of AdditionalSubjectParticipationIdentifiers which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchAdditionalSubjectParticipationIdentifiersResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalSubjectParticipationIdentifier"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewAdditionalSubjectParticipationIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "additionalSubjectParticipationIdentifier": {
+            "$ref": "#/components/schemas/AdditionalSubjectParticipationIdentifier"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewAdditionalSubjectParticipationIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateAdditionalSubjectParticipationIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "additionalSubjectParticipationIdentifier": {
+            "$ref": "#/components/schemas/AdditionalSubjectParticipationIdentifier"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateAdditionalSubjectParticipationIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest": {
+        "type": "object",
+        "properties": {
+          "additionalSubjectParticipationIdentifierIdentity": {
+            "$ref": "#/components/schemas/AdditionalSubjectParticipationIdentifierIdentity"
+          },
+          "additionalSubjectParticipationIdentifier": {
+            "$ref": "#/components/schemas/AdditionalSubjectParticipationIdentifier"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityRequest": {
+        "type": "object",
+        "properties": {
+          "additionalSubjectParticipationIdentifierIdentity": {
+            "$ref": "#/components/schemas/AdditionalSubjectParticipationIdentifierIdentity"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteAdditionalSubjectParticipationIdentifierByAdditionalSubjectParticipationIdentifierIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyExecutionScopeByStudyExecutionIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudyExecutionScope": {
+        "required": [
+          "executingInstituteIdentifier",
+          "studyExecutionIdentifier",
+          "studyWorkflowName",
+          "studyWorkflowVersion"
+        ],
+        "type": "object",
+        "properties": {
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "executingInstituteIdentifier": {
+            "type": "string",
+            "description": "the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)"
+          },
+          "studyWorkflowName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "*this field has a max length of 100"
+          },
+          "studyWorkflowVersion": {
+            "maxLength": 20,
+            "type": "string",
+            "description": "*this field has a max length of 20"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyExecutionScopeByStudyExecutionIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/StudyExecutionScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyExecutionScopesRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of StudyExecutionScopes which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyExecutionScopesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyExecutionScope"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchStudyExecutionScopesRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of StudyExecutionScopes which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchStudyExecutionScopesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyExecutionScope"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewStudyExecutionScopeRequest": {
+        "type": "object",
+        "properties": {
+          "studyExecutionScope": {
+            "$ref": "#/components/schemas/StudyExecutionScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewStudyExecutionScopeResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyExecutionScopeRequest": {
+        "type": "object",
+        "properties": {
+          "studyExecutionScope": {
+            "$ref": "#/components/schemas/StudyExecutionScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyExecutionScopeResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyExecutionScopeByStudyExecutionIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          },
+          "studyExecutionScope": {
+            "$ref": "#/components/schemas/StudyExecutionScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyExecutionScopeByStudyExecutionIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteStudyExecutionScopeByStudyExecutionIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "studyExecutionIdentifier": {
+            "type": "string",
+            "description": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteStudyExecutionScopeByStudyExecutionIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudyScopeIdentity": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Composite Key, which represents the primary identity of a StudyScope"
+      },
+      "GetStudyScopeByStudyScopeIdentityRequest": {
+        "type": "object",
+        "properties": {
+          "studyScopeIdentity": {
+            "$ref": "#/components/schemas/StudyScopeIdentity"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudyScope": {
+        "required": [
+          "participantIdentifierSemantic",
+          "studyWorkflowName",
+          "studyWorkflowVersion"
+        ],
+        "type": "object",
+        "properties": {
+          "studyWorkflowName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "the official invariant name of the study as given by the sponsor *this field has a max length of 100"
+          },
+          "studyWorkflowVersion": {
+            "maxLength": 20,
+            "type": "string",
+            "description": "version of the workflow *this field has a max length of 20"
+          },
+          "participantIdentifierSemantic": {
+            "type": "string",
+            "description": "for example \"Screening-Number\" or \"Randomization-Number\""
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyScopeByStudyScopeIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/StudyScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyScopesRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of StudyScopes which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStudyScopesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyScope"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchStudyScopesRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of StudyScopes which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchStudyScopesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyScope"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewStudyScopeRequest": {
+        "type": "object",
+        "properties": {
+          "studyScope": {
+            "$ref": "#/components/schemas/StudyScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewStudyScopeResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyScopeRequest": {
+        "type": "object",
+        "properties": {
+          "studyScope": {
+            "$ref": "#/components/schemas/StudyScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyScopeResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyScopeByStudyScopeIdentityRequest": {
+        "type": "object",
+        "properties": {
+          "studyScopeIdentity": {
+            "$ref": "#/components/schemas/StudyScopeIdentity"
+          },
+          "studyScope": {
+            "$ref": "#/components/schemas/StudyScope"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStudyScopeByStudyScopeIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteStudyScopeByStudyScopeIdentityRequest": {
+        "type": "object",
+        "properties": {
+          "studyScopeIdentity": {
+            "$ref": "#/components/schemas/StudyScopeIdentity"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteStudyScopeByStudyScopeIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectAddressByInternalRecordIdRequest": {
+        "type": "object",
+        "properties": {
+          "internalRecordId": {
+            "type": "string",
+            "description": "Represents the primary identity of a SubjectAddress",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubjectAddress": {
+        "required": [
+          "city",
+          "country",
+          "houseNumber",
+          "internalRecordId",
+          "postCode",
+          "state",
+          "street"
+        ],
+        "type": "object",
+        "properties": {
+          "internalRecordId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "street": {
+            "type": "string"
+          },
+          "houseNumber": {
+            "type": "string"
+          },
+          "postCode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectAddressByInternalRecordIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/SubjectAddress"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectAddressesRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of SubjectAddresses which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectAddressesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectAddress"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchSubjectAddressesRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of SubjectAddresses which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchSubjectAddressesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectAddress"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewSubjectAddressRequest": {
+        "type": "object",
+        "properties": {
+          "subjectAddress": {
+            "$ref": "#/components/schemas/SubjectAddress"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewSubjectAddressResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectAddressRequest": {
+        "type": "object",
+        "properties": {
+          "subjectAddress": {
+            "$ref": "#/components/schemas/SubjectAddress"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectAddressResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectAddressByInternalRecordIdRequest": {
+        "type": "object",
+        "properties": {
+          "internalRecordId": {
+            "type": "string",
+            "description": "Represents the primary identity of a SubjectAddress",
+            "format": "uuid"
+          },
+          "subjectAddress": {
+            "$ref": "#/components/schemas/SubjectAddress"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectAddressByInternalRecordIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteSubjectAddressByInternalRecordIdRequest": {
+        "type": "object",
+        "properties": {
+          "internalRecordId": {
+            "type": "string",
+            "description": "Represents the primary identity of a SubjectAddress",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteSubjectAddressByInternalRecordIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectIdentityByRecordIdRequest": {
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "string",
+            "description": "Represents the primary identity of a SubjectIdentity",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubjectIdentity": {
+        "required": [
+          "recordId"
+        ],
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
+            "nullable": true
+          },
+          "gender": {
+            "type": "integer",
+            "description": "0=Male / 1=Female / 2=Other *this field is optional",
+            "format": "int32",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateOfDeath": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fullNamePattern": {
+            "type": "string",
+            "description": "can be used to specify the full salutation including all academic grades by a string containing the placeholders: \"{G}\"=Gender {F}=\"FirstName\" {L}=\"LastName\". If not specified, a generic fallback can be used *this field is optional (use null as value)",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
+            "nullable": true
+          },
+          "mobileNumber": {
+            "type": "string",
+            "description": "*this field is optional (use null as value)",
+            "nullable": true
+          },
+          "residentAddressId": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectIdentityByRecordIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/SubjectIdentity"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectIdentitiesRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of SubjectIdentities which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectIdentitiesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectIdentity"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchSubjectIdentitiesRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of SubjectIdentities which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchSubjectIdentitiesResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectIdentity"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewSubjectIdentityRequest": {
+        "type": "object",
+        "properties": {
+          "subjectIdentity": {
+            "$ref": "#/components/schemas/SubjectIdentity"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewSubjectIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectIdentityRequest": {
+        "type": "object",
+        "properties": {
+          "subjectIdentity": {
+            "$ref": "#/components/schemas/SubjectIdentity"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectIdentityByRecordIdRequest": {
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "string",
+            "description": "Represents the primary identity of a SubjectIdentity",
+            "format": "uuid"
+          },
+          "subjectIdentity": {
+            "$ref": "#/components/schemas/SubjectIdentity"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectIdentityByRecordIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteSubjectIdentityByRecordIdRequest": {
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "string",
+            "description": "Represents the primary identity of a SubjectIdentity",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteSubjectIdentityByRecordIdResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectParticipationByParticipantIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "participantIdentifier": {
+            "type": "string",
+            "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubjectParticipation": {
+        "required": [
+          "createdForStudyExecutionIdentifier",
+          "creationDateUtc",
+          "participantIdentifier",
+          "studyWorkflowName",
+          "studyWorkflowVersion"
+        ],
+        "type": "object",
+        "properties": {
+          "participantIdentifier": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study) *this field has a max length of 50"
+          },
+          "studyWorkflowName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "*this field has a max length of 100"
+          },
+          "studyWorkflowVersion": {
+            "maxLength": 20,
+            "type": "string",
+            "description": "*this field has a max length of 20"
+          },
+          "creationDateUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdForStudyExecutionIdentifier": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectIdentityRecordId": {
+            "type": "string",
+            "description": "*this field is optional",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectParticipationByParticipantIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "$ref": "#/components/schemas/SubjectParticipation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectParticipationsRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of SubjectParticipations which should be returned",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSubjectParticipationsResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectParticipation"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchSubjectParticipationsRequest": {
+        "type": "object",
+        "properties": {
+          "filterExpression": {
+            "type": "string",
+            "description": "a filter expression like '((FieldName1 == \"ABC\" && FieldName2 > 12) || FieldName2 != \"\")'",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of the page, which should be returned",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Max count of SubjectParticipations which should be returned",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "description": "one or more property names which are used as sort order (before pagination)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchSubjectParticipationsResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectParticipation"
+            },
+            "description": "the method-result of the executed operation",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewSubjectParticipationRequest": {
+        "type": "object",
+        "properties": {
+          "subjectParticipation": {
+            "$ref": "#/components/schemas/SubjectParticipation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddNewSubjectParticipationResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectParticipationRequest": {
+        "type": "object",
+        "properties": {
+          "subjectParticipation": {
+            "$ref": "#/components/schemas/SubjectParticipation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectParticipationResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectParticipationByParticipantIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "participantIdentifier": {
+            "type": "string",
+            "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)",
+            "nullable": true
+          },
+          "subjectParticipation": {
+            "$ref": "#/components/schemas/SubjectParticipation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSubjectParticipationByParticipantIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteSubjectParticipationByParticipantIdentifierRequest": {
+        "type": "object",
+        "properties": {
+          "participantIdentifier": {
+            "type": "string",
+            "description": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteSubjectParticipationByParticipantIdentifierResponse": {
+        "type": "object",
+        "properties": {
+          "return": {
+            "type": "boolean",
+            "description": "the method-result of the executed operation"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme.",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }
