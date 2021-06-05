@@ -1,0 +1,604 @@
+{
+  "DescriptionFormat": "v1.0",
+  "TimestampUtc": "2021-04-24T14:43:45.1850442Z",
+  "SemanticVersion": "1.3.0",
+  "Entities": [
+    {
+      "Name": "BillableTask",
+      "NamePlural": "BillableTasks",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_BillableTasks",
+      "Indices": [
+        {
+          "Name": "PK_BillableTasks",
+          "Unique": true,
+          "MemberFieldNames": [
+            "TaskGuid"
+          ]
+        },
+        {
+          "Name": "FK_BillableTasks__BillableVisit",
+          "Unique": false,
+          "MemberFieldNames": [
+            "VisitGuid"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "TaskGuid",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "VisitGuid",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "TaskName",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "TaskExecutionTitle",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
+      "Name": "BillableVisit",
+      "NamePlural": "BillableVisits",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_BillableVisits",
+      "Indices": [
+        {
+          "Name": "PK_BillableVisits",
+          "Unique": true,
+          "MemberFieldNames": [
+            "VisitGuid"
+          ]
+        },
+        {
+          "Name": "FK_BillableVisits__StudyExecution",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyExecutionIdentifier"
+          ]
+        },
+        {
+          "Name": "FK_BillableVisits__AssignedBillingDemand",
+          "Unique": false,
+          "MemberFieldNames": [
+            "BillingDemandId"
+          ]
+        },
+        {
+          "Name": "FK_BillableVisits__AssignedInvoice",
+          "Unique": false,
+          "MemberFieldNames": [
+            "InvoiceId"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "VisitGuid",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyExecutionIdentifier",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ParticipantIdentifier",
+          "Type": "String",
+          "MaxLength": 50,
+          "Summary": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "VisitProdecureName",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "unique invariant name of the visit-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "VisitExecutionTitle",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "BillingDemandId",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "InvoiceId",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ExecutionEndDateUtc",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SponsorValidationDateUtc",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "indicates, that the visit is ready to get assigned to a 'BillingDemand' (usually this state is managed by the sponsor) This can only be set after there is a valid 'ExecutionEndDateUtc'",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ExecutorValidationDateUtc",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "indicates, that the visit is ready to get assigned to a 'Invoice' (usually this state is managed by the executor) This can only be set after either the 'SponsorValidationDateUtc' is set (and there is a Demand) nor the states are only managed by the executor, so that the demand-part is completely skipped.",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
+      "Name": "StudyExecutionScope",
+      "NamePlural": "StudyExecutionScopes",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_StudyExecutionScopes",
+      "Indices": [
+        {
+          "Name": "PK_StudyExecutionScopes",
+          "Unique": true,
+          "MemberFieldNames": [
+            "StudyExecutionIdentifier"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "StudyExecutionIdentifier",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ExecutingInstituteIdentifier",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowName",
+          "Type": "String",
+          "MaxLength": 100,
+          "Summary": "the official invariant name of the study as given by the sponsor",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowVersion",
+          "Type": "String",
+          "MaxLength": 20,
+          "Summary": "version of the workflow",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ExtendedMetaData",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
+      "Name": "BillingDemand",
+      "NamePlural": "BillingDemands",
+      "InheritedEntityName": null,
+      "Summary": "created by the sponsor",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_BillingDemands",
+      "Indices": [
+        {
+          "Name": "PK_BillingDemands",
+          "Unique": true,
+          "MemberFieldNames": [
+            "Id"
+          ]
+        },
+        {
+          "Name": "FK_BillingDemands__StudyExecution",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyExecutionIdentifier"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "Id",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "OfficialNumber",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyExecutionIdentifier",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "TransmissionDateUtc",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "CreationDateUtc",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "CreatedByPerson",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
+      "Name": "Invoice",
+      "NamePlural": "Invoices",
+      "InheritedEntityName": null,
+      "Summary": "created by the executor-company",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_Invoices",
+      "Indices": [
+        {
+          "Name": "PK_Invoices",
+          "Unique": true,
+          "MemberFieldNames": [
+            "Id"
+          ]
+        },
+        {
+          "Name": "FK_Invoices__StudyExecution",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyExecutionIdentifier"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "Id",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "OfficialNumber",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "the invoice number",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyExecutionIdentifier",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "OffcialInvoiceDate",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "TransmissionDateUtc",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "CreationDateUtc",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "CreatedByPerson",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "PaymentSubmittedDateUtc",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "PaymentReceivedDateUtc",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    }
+  ],
+  "Relations": [
+    {
+      "Name": "BillableVisitBillableTask",
+      "PrimaryEntityName": "BillableVisit",
+      "ForeignEntityName": "BillableTask",
+      "ForeignKeyIndexName": "FK_BillableTasks__BillableVisit",
+      "IsLookupRelation": false,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "BillableTasks",
+      "ForeignNavigationName": "BillableVisit",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": true
+    },
+    {
+      "Name": "StudyExecutionScopeBillableVisit",
+      "PrimaryEntityName": "StudyExecutionScope",
+      "ForeignEntityName": "BillableVisit",
+      "ForeignKeyIndexName": "FK_BillableVisits__StudyExecution",
+      "IsLookupRelation": false,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "BillableVisits",
+      "ForeignNavigationName": "StudyExecution",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": true
+    },
+    {
+      "Name": "BillingDemandBillableVisit",
+      "PrimaryEntityName": "BillingDemand",
+      "ForeignEntityName": "BillableVisit",
+      "ForeignKeyIndexName": "FK_BillableVisits__AssignedBillingDemand",
+      "IsLookupRelation": true,
+      "PrimaryEntityIsOptional": true,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "AssignedVisits",
+      "ForeignNavigationName": "AssignedBillingDemand",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": false
+    },
+    {
+      "Name": "InvoiceBillableVisit",
+      "PrimaryEntityName": "Invoice",
+      "ForeignEntityName": "BillableVisit",
+      "ForeignKeyIndexName": "FK_BillableVisits__AssignedInvoice",
+      "IsLookupRelation": true,
+      "PrimaryEntityIsOptional": true,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "AssignedVisits",
+      "ForeignNavigationName": "AssignedInvoice",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": false
+    },
+    {
+      "Name": "StudyExecutionScopeBillingDemand",
+      "PrimaryEntityName": "StudyExecutionScope",
+      "ForeignEntityName": "BillingDemand",
+      "ForeignKeyIndexName": "FK_BillingDemands__StudyExecution",
+      "IsLookupRelation": false,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "BillingDemands",
+      "ForeignNavigationName": "StudyExecution",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": true
+    },
+    {
+      "Name": "StudyExecutionScopeInvoice",
+      "PrimaryEntityName": "StudyExecutionScope",
+      "ForeignEntityName": "Invoice",
+      "ForeignKeyIndexName": "FK_Invoices__StudyExecution",
+      "IsLookupRelation": false,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "Invoices",
+      "ForeignNavigationName": "StudyExecution",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": true
+    }
+  ]
+}

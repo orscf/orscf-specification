@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>MedicalResearch.VisitData</RootNamespace>
+    <AssemblyName>ORSCF.VisitData.Model</AssemblyName>
+    <Version>1.3.0</Version>
+    <Authors>ORSCF.org</Authors>
+    <Company>ORSCF.org</Company>
+    <Copyright>ORSCF.org</Copyright>
+    <Product>Open Research Study Communication Format</Product>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin</OutputPath>
+    <DocumentationFile>bin\ORSCF.VisitData.Model.xml</DocumentationFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Deterministic>false</Deterministic>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin</OutputPath>
+    <DocumentationFile>bin\ORSCF.VisitData.Model.xml</DocumentationFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Deterministic>false</Deterministic>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityAnnotations" Version="2.0.1.387" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="v1\Models.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Models.Generated.cs</LastGenOutput>
+    </None>
+    <None Update="v1\RepoInterfaces.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RepoInterfaces.Generated.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="v1\Models.Generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Models.tt</DependentUpon>
+    </Compile>
+    <Compile Update="v1\RepoInterfaces.Generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RepoInterfaces.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

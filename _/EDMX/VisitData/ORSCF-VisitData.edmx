@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="DataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="DataModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DomainModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DataRecordings" EntityType="DomainModel.DataRecording" />
+          <EntitySet Name="DrugApplyments" EntityType="DomainModel.DrugApplyment" />
+          <EntitySet Name="Treatments" EntityType="DomainModel.Treatment" />
+          <EntitySet Name="Visits" EntityType="DomainModel.Visit" />
+          <AssociationSet Name="VisitDataRecording" Association="DomainModel.VisitDataRecording">
+            <End Role="Visit" EntitySet="Visits" />
+            <End Role="DataRecording" EntitySet="DataRecordings" />
+          </AssociationSet>
+          <AssociationSet Name="VisitDrugApplyment" Association="DomainModel.VisitDrugApplyment">
+            <End Role="Visit" EntitySet="Visits" />
+            <End Role="DrugApplyment" EntitySet="DrugApplyments" />
+          </AssociationSet>
+          <AssociationSet Name="VisitTreatment" Association="DomainModel.VisitTreatment">
+            <End Role="Visit" EntitySet="Visits" />
+            <End Role="Treatment" EntitySet="Treatments" />
+          </AssociationSet>
+          <EntitySet Name="StudyEvents" EntityType="DomainModel.StudyEvent" />
+          <EntitySet Name="StudyExecutionScopes" EntityType="DomainModel.StudyExecutionScope" />
+          <AssociationSet Name="StudyExecutionScopeVisit" Association="DomainModel.StudyExecutionScopeVisit">
+            <End Role="StudyExecutionScope" EntitySet="StudyExecutionScopes" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="StudyExecutionScopeStudyEvent" Association="DomainModel.StudyExecutionScopeStudyEvent">
+            <End Role="StudyExecutionScope" EntitySet="StudyExecutionScopes" />
+            <End Role="StudyEvent" EntitySet="StudyEvents" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="DataRecording">
+          <Key>
+            <PropertyRef Name="TaskGuid" />
+          </Key>
+          <Property Name="TaskGuid" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Visit" Relationship="DomainModel.VisitDataRecording" FromRole="DataRecording" ToRole="Visit" />
+          <Property Name="VisitGuid" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>the guid of the visit in which this task was executed</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DataRecordingName" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX2</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="TaskExecutionTitle" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ScheduledDateTimeUtc" Type="DateTime" Nullable="true" >
+            <Documentation>
+              <Summary>the estimated date when the visit is scheduled</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutionDateTimeUtc" Type="DateTime" Nullable="true" >
+            <Documentation>
+              <Summary>the real time, when the data was recorded</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutionState" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DataSchemaUrl" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>schema-url of the data which were stored inside of the 'RecordedData' field</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="RecordedData" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>RAW data, in the schema as defined at the 'DataSchemaUrl'</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="NotesRegardingOutcome" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>additional notes regarding this dedcated execution (supplied by the execution person)</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExtendedMetaData" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutingPerson" Type="String" Nullable="true" />
+        </EntityType>
+        <EntityType Name="DrugApplyment">
+          <Key>
+            <PropertyRef Name="TaskGuid" />
+          </Key>
+          <Property Name="TaskGuid" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Visit" Relationship="DomainModel.VisitDrugApplyment" FromRole="DrugApplyment" ToRole="Visit" />
+          <Property Name="VisitGuid" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>the guid of the visit in which this task was executed</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DrugApplymentName" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>unique invariant name of the study itself as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX2</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="TaskExecutionTitle" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ScheduledDateTimeUtc" Type="DateTime" Nullable="true" >
+            <Documentation>
+              <Summary>the estimated time when the drug applyment is scheduled</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutionDateTimeUtc" Type="DateTime" Nullable="true" >
+            <Documentation>
+              <Summary>the real date, when the visits was executed</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutionState" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DrugName" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>name of the drug</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DrugDoseMgPerUnitMg" Type="Decimal" Nullable="false" >
+            <Documentation>
+              <Summary>dose (mg) which is inside of one unit</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AppliedUnits" Type="Decimal" Nullable="false" >
+            <Documentation>
+              <Summary>amount of applied units</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="NotesRegardingOutcome" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>additional notes regarding this dedcated execution (supplied by the execution person)</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExtendedMetaData" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutingPerson" Type="String" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Treatment">
+          <Key>
+            <PropertyRef Name="TaskGuid" />
+          </Key>
+          <Property Name="TaskGuid" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Visit" Relationship="DomainModel.VisitTreatment" FromRole="Treatment" ToRole="Visit" />
+          <Property Name="VisitGuid" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>the guid of the visit in which this task was executed</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TreatmentName" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX2</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="TaskExecutionTitle" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ScheduledDateTimeUtc" Type="DateTime" Nullable="true" >
+            <Documentation>
+              <Summary>the estimated time when the treatment is scheduled</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutionDateTimeUtc" Type="DateTime" Nullable="true" >
+            <Documentation>
+              <Summary>the real time, when the treatment was executed</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutionState" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="NotesRegardingOutcome" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>additional notes regarding this dedcated execution (supplied by the execution person)</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExtendedMetaData" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>optional structure of additional metadata regarding this record in JSON-format, which can be used by study execution systems to extend the schema</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutingPerson" Type="String" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="VisitGuid" />
+          </Key>
+          <Property Name="VisitGuid" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ParticipantIdentifier" Type="String" Nullable="false" MaxLength="50" >
+            <Documentation>
+              <Summary>identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)</Summary>
+              <LongDescription>FIX, IX1, UQ1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="StudyExecutionIdentifier" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+              <LongDescription>IX1, IX2, IX3, UQ1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="VisitProdecureName" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>unique invariant name of the visit-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX2</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="VisitExecutionTitle" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>unique title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX3, UQ1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ScheduledDateUtc" Type="DateTime" Nullable="true" >
+            <Documentation>
+              <Summary>the estimated date when the visit is scheduled for execution</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutionDateUtc" Type="DateTime" Nullable="true" >
+            <Documentation>
+              <Summary>the real date, when the visits was executed</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutionState" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>0=Unscheduled / 1=Sheduled / 2=Executed / 3=AbortDuringExecution / 4=Skipped / 5=Removed</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="DataRecordings" Relationship="DomainModel.VisitDataRecording" FromRole="Visit" ToRole="DataRecording" >
+            <Documentation>
+              <Summary>all the data which has been captured for this visit</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <NavigationProperty Name="DrugApplyments" Relationship="DomainModel.VisitDrugApplyment" FromRole="Visit" ToRole="DrugApplyment" >
+            <Documentation>
+              <Summary>all the drug applyments which have been executed for this visit</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <NavigationProperty Name="Treatments" Relationship="DomainModel.VisitTreatment" FromRole="Visit" ToRole="Treatment" >
+            <Documentation>
+              <Summary>all the treatments which have been executed for this visit</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <Property Name="ExtendedMetaData" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutingPerson" Type="String" Nullable="true" />
+          <NavigationProperty Name="StudyExecution" Relationship="DomainModel.StudyExecutionScopeVisit" FromRole="Visit" ToRole="StudyExecutionScope" />
+        </EntityType>
+        <Association Name="VisitDataRecording">
+          <End Type="DomainModel.Visit" Role="Visit" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DomainModel.DataRecording" Role="DataRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="VisitGuid" />
+            </Principal>
+            <Dependent Role="DataRecording">
+              <PropertyRef Name="VisitGuid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VisitDrugApplyment">
+          <End Type="DomainModel.Visit" Role="Visit" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DomainModel.DrugApplyment" Role="DrugApplyment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="VisitGuid" />
+            </Principal>
+            <Dependent Role="DrugApplyment">
+              <PropertyRef Name="VisitGuid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VisitTreatment">
+          <End Type="DomainModel.Visit" Role="Visit" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DomainModel.Treatment" Role="Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visit">
+              <PropertyRef Name="VisitGuid" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="VisitGuid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StudyEvent">
+          <Key>
+            <PropertyRef Name="EventGuid" />
+          </Key>
+          <Property Name="EventGuid" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study-event occurrence which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ParticipantIdentifier" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="StudyExecutionIdentifier" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="StudyEventName" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>unique invariant name of the event as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>IX1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ExtendedMetaData" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="OccourrenceDateTimeUtc" Type="DateTime" Nullable="false" />
+          <Property Name="CauseInfo" Type="String" Nullable="false" />
+          <Property Name="AdditionalNotes" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>additional notes (supplied by the execution person)</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="StudyExecution" Relationship="DomainModel.StudyExecutionScopeStudyEvent" FromRole="StudyEvent" ToRole="StudyExecutionScope" />
+        </EntityType>
+        <EntityType Name="StudyExecutionScope">
+          <Key>
+            <PropertyRef Name="StudyExecutionIdentifier" />
+          </Key>
+          <Property Name="StudyExecutionIdentifier" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutingInstituteIdentifier" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)</Summary>
+              <LongDescription>FIX, IX2</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" >
+            <Documentation>
+              <Summary>the official invariant name of the study as given by the sponsor</Summary>
+              <LongDescription>FIX, IX1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" >
+            <Documentation>
+              <Summary>version of the workflow</Summary>
+              <LongDescription>FIX, IX1</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ExtendedMetaData" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Visits" Relationship="DomainModel.StudyExecutionScopeVisit" FromRole="StudyExecutionScope" ToRole="Visit" />
+          <NavigationProperty Name="Events" Relationship="DomainModel.StudyExecutionScopeStudyEvent" FromRole="StudyExecutionScope" ToRole="StudyEvent" />
+        </EntityType>
+        <Association Name="StudyExecutionScopeVisit">
+          <End Type="DomainModel.StudyExecutionScope" Role="StudyExecutionScope" Multiplicity="1" />
+          <End Type="DomainModel.Visit" Role="Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyExecutionScope">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudyExecutionScopeStudyEvent">
+          <End Type="DomainModel.StudyExecutionScope" Role="StudyExecutionScope" Multiplicity="1" />
+          <End Type="DomainModel.StudyEvent" Role="StudyEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyExecutionScope">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Principal>
+            <Dependent Role="StudyEvent">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="DataModel" />
+        <Alias Key="Target" Value="DataModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="Model" StorageEntityContainer="DataModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1e673f0774584ac2be5350aef5de4487" Name="Schema" ZoomLevel="90">
+        <EntityTypeShape EntityType="DomainModel.DataRecording" Width="2.75" PointX="8.375" PointY="6" FillColor="Navy" />
+        <EntityTypeShape EntityType="DomainModel.DrugApplyment" Width="2.75" PointX="11.375" PointY="6" FillColor="Navy" />
+        <EntityTypeShape EntityType="DomainModel.Treatment" Width="2.75" PointX="5.375" PointY="6" FillColor="Navy" />
+        <EntityTypeShape EntityType="DomainModel.Visit" Width="2.75" PointX="8.375" PointY="1.5" FillColor="Navy" />
+        <AssociationConnector Association="DomainModel.VisitDataRecording" />
+        <AssociationConnector Association="DomainModel.VisitDrugApplyment" />
+        <AssociationConnector Association="DomainModel.VisitTreatment" />
+        <EntityTypeShape EntityType="DomainModel.StudyEvent" Width="2.75" PointX="2.375" PointY="6" FillColor="Navy" />
+        <EntityTypeShape EntityType="DomainModel.StudyExecutionScope" Width="2.75" PointX="2.5" PointY="1.375" FillColor="Navy" />
+        <AssociationConnector Association="DomainModel.StudyExecutionScopeVisit" />
+        <AssociationConnector Association="DomainModel.StudyExecutionScopeStudyEvent" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

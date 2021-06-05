@@ -1,0 +1,669 @@
+{
+  "DescriptionFormat": "v1.0",
+  "TimestampUtc": "2021-04-24T14:43:40.2037306Z",
+  "SemanticVersion": "1.3.0",
+  "Entities": [
+    {
+      "Name": "AdditionalSubjectParticipationIdentifier",
+      "NamePlural": "AdditionalSubjectParticipationIdentifiers",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_AdditionalSubjectParticipationIdentifiers",
+      "Indices": [
+        {
+          "Name": "PK_AdditionalSubjectParticipationIdentifiers",
+          "Unique": true,
+          "MemberFieldNames": [
+            "ParticipantIdentifier",
+            "IdentifierName"
+          ]
+        },
+        {
+          "Name": "FK_AdditionalSubjectParticipationIdentifiers__Participation",
+          "Unique": false,
+          "MemberFieldNames": [
+            "ParticipantIdentifier"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "ParticipantIdentifier",
+          "Type": "String",
+          "MaxLength": 50,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "IdentifierName",
+          "Type": "String",
+          "MaxLength": 30,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "IdentifierValue",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
+      "Name": "SubjectParticipation",
+      "NamePlural": "SubjectParticipations",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_SubjectParticipations",
+      "Indices": [
+        {
+          "Name": "FK__StudyExecutionScopes_StudyExecutionScope",
+          "Unique": false,
+          "MemberFieldNames": [
+            "CreatedForStudyExecutionIdentifier"
+          ]
+        },
+        {
+          "Name": "FK__StudyScopes_StudyScope",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyWorkflowName",
+            "StudyWorkflowVersion"
+          ]
+        },
+        {
+          "Name": "FK__SubjectIdentities_Identity",
+          "Unique": false,
+          "MemberFieldNames": [
+            "SubjectIdentityRecordId"
+          ]
+        },
+        {
+          "Name": "PK_SubjectParticipations",
+          "Unique": true,
+          "MemberFieldNames": [
+            "ParticipantIdentifier"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "ParticipantIdentifier",
+          "Type": "String",
+          "MaxLength": 50,
+          "Summary": "identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowName",
+          "Type": "String",
+          "MaxLength": 100,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowVersion",
+          "Type": "String",
+          "MaxLength": 20,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "CreationDateUtc",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "CreatedForStudyExecutionIdentifier",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SubjectIdentityRecordId",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
+      "Name": "StudyExecutionScope",
+      "NamePlural": "StudyExecutionScopes",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_StudyExecutionScopes",
+      "Indices": [
+        {
+          "Name": "PK_StudyExecutionScopes",
+          "Unique": true,
+          "MemberFieldNames": [
+            "StudyExecutionIdentifier"
+          ]
+        },
+        {
+          "Name": "FK_StudyExecutionScopes__StudyScope",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyWorkflowName",
+            "StudyWorkflowVersion"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "StudyExecutionIdentifier",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ExecutingInstituteIdentifier",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowName",
+          "Type": "String",
+          "MaxLength": 100,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowVersion",
+          "Type": "String",
+          "MaxLength": 20,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
+      "Name": "StudyScope",
+      "NamePlural": "StudyScopes",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_StudyScopes",
+      "Indices": [
+        {
+          "Name": "PK_StudyScopes",
+          "Unique": true,
+          "MemberFieldNames": [
+            "StudyWorkflowName",
+            "StudyWorkflowVersion"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "StudyWorkflowName",
+          "Type": "String",
+          "MaxLength": 100,
+          "Summary": "the official invariant name of the study as given by the sponsor",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowVersion",
+          "Type": "String",
+          "MaxLength": 20,
+          "Summary": "version of the workflow",
+          "SystemInternal": false,
+          "FixedAfterCreation": true,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ParticipantIdentifierSemantic",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": " for example \"Screening-Number\" or \"Randomization-Number\"",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
+      "Name": "SubjectAddress",
+      "NamePlural": "SubjectAddresses",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_SubjectAddresses",
+      "Indices": [
+        {
+          "Name": "PK_SubjectAddresses",
+          "Unique": true,
+          "MemberFieldNames": [
+            "InternalRecordId"
+          ]
+        },
+        {
+          "Name": "UQ_SubjectAddresses_Street_HouseNumber_PostCode_City_State_Country",
+          "Unique": true,
+          "MemberFieldNames": [
+            "Street",
+            "HouseNumber",
+            "PostCode",
+            "City",
+            "State",
+            "Country"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "InternalRecordId",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Street",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "HouseNumber",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "PostCode",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "City",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "State",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Country",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "PhoneNumber",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
+      "Name": "SubjectIdentity",
+      "NamePlural": "SubjectIdentities",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_SubjectIdentities",
+      "Indices": [
+        {
+          "Name": "FK__SubjectAddresses_ResidentAddress",
+          "Unique": false,
+          "MemberFieldNames": [
+            "ResidentAddressId"
+          ]
+        },
+        {
+          "Name": "PK_SubjectIdentities",
+          "Unique": true,
+          "MemberFieldNames": [
+            "RecordId"
+          ]
+        },
+        {
+          "Name": "IX_SubjectIdentities_FirstName_LastName",
+          "Unique": false,
+          "MemberFieldNames": [
+            "FirstName",
+            "LastName"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "RecordId",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "FirstName",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "LastName",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Gender",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "0=Male / 1=Female / 2=Other",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "DateOfBirth",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "DateOfDeath",
+          "Type": "DateTime",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "FullNamePattern",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "can be used to specify the full salutation including all academic grades by a string containing the placeholders: \"{G}\"=Gender {F}=\"FirstName\" {L}=\"LastName\". If not specified, a generic fallback can be used",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Language",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Notes",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Email",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "MobileNumber",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ResidentAddressId",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    }
+  ],
+  "Relations": [
+    {
+      "Name": "SubjectParticipationAdditionalSubjectParticipationIdentifier",
+      "PrimaryEntityName": "SubjectParticipation",
+      "ForeignEntityName": "AdditionalSubjectParticipationIdentifier",
+      "ForeignKeyIndexName": "FK_AdditionalSubjectParticipationIdentifiers__Participation",
+      "IsLookupRelation": false,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "AdditionalIdentifiers",
+      "ForeignNavigationName": "Participation",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": true
+    },
+    {
+      "Name": "StudyScopeStudyExecutionScope",
+      "PrimaryEntityName": "StudyScope",
+      "ForeignEntityName": "StudyExecutionScope",
+      "ForeignKeyIndexName": "FK_StudyExecutionScopes__StudyScope",
+      "IsLookupRelation": false,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "ExecutionScopes",
+      "ForeignNavigationName": "StudyScope",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": true
+    },
+    {
+      "Name": "StudyExecutionScopeSubjectParticipation",
+      "PrimaryEntityName": "StudyExecutionScope",
+      "ForeignEntityName": "SubjectParticipation",
+      "ForeignKeyIndexName": "FK__StudyExecutionScopes_StudyExecutionScope",
+      "IsLookupRelation": true,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "CreatedParticipations",
+      "ForeignNavigationName": "StudyExecutionScope",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": false
+    },
+    {
+      "Name": "StudyScopeSubjectIdentity",
+      "PrimaryEntityName": "StudyScope",
+      "ForeignEntityName": "SubjectParticipation",
+      "ForeignKeyIndexName": "FK__StudyScopes_StudyScope",
+      "IsLookupRelation": false,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "Participations",
+      "ForeignNavigationName": "StudyScope",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": true
+    },
+    {
+      "Name": "SubjectAddressSubjectIdentity",
+      "PrimaryEntityName": "SubjectAddress",
+      "ForeignEntityName": "SubjectIdentity",
+      "ForeignKeyIndexName": "FK__SubjectAddresses_ResidentAddress",
+      "IsLookupRelation": true,
+      "PrimaryEntityIsOptional": true,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "SubjectIdentities",
+      "ForeignNavigationName": "ResidentAddress",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": false
+    },
+    {
+      "Name": "SubjectIdentitySubjectParticipation",
+      "PrimaryEntityName": "SubjectIdentity",
+      "ForeignEntityName": "SubjectParticipation",
+      "ForeignKeyIndexName": "FK__SubjectIdentities_Identity",
+      "IsLookupRelation": true,
+      "PrimaryEntityIsOptional": true,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "Participations",
+      "ForeignNavigationName": "Identity",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": false
+    }
+  ]
+}

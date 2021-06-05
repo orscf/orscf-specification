@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="DataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="DataModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DomainModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BillingDemands" EntityType="DomainModel.BillingDemand" />
+          <EntitySet Name="Invoices" EntityType="DomainModel.Invoice" />
+          <EntitySet Name="StudyExecutionScopes" EntityType="DomainModel.StudyExecutionScope" />
+          <EntitySet Name="BillableVisits" EntityType="DomainModel.BillableVisit" />
+          <AssociationSet Name="StudyExecutionScopeBillableVisit" Association="DomainModel.StudyExecutionScopeBillableVisit">
+            <End Role="StudyExecutionScope" EntitySet="StudyExecutionScopes" />
+            <End Role="BillableVisit" EntitySet="BillableVisits" />
+          </AssociationSet>
+          <EntitySet Name="BillableTasks" EntityType="DomainModel.BillableTask" />
+          <AssociationSet Name="BillableVisitBillableTask" Association="DomainModel.BillableVisitBillableTask">
+            <End Role="BillableVisit" EntitySet="BillableVisits" />
+            <End Role="BillableTask" EntitySet="BillableTasks" />
+          </AssociationSet>
+          <AssociationSet Name="StudyExecutionScopeBillingDemand" Association="DomainModel.StudyExecutionScopeBillingDemand">
+            <End Role="StudyExecutionScope" EntitySet="StudyExecutionScopes" />
+            <End Role="BillingDemand" EntitySet="BillingDemands" />
+          </AssociationSet>
+          <AssociationSet Name="StudyExecutionScopeInvoice" Association="DomainModel.StudyExecutionScopeInvoice">
+            <End Role="StudyExecutionScope" EntitySet="StudyExecutionScopes" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="BillingDemandBillableVisit" Association="DomainModel.BillingDemandBillableVisit">
+            <End Role="BillingDemand" EntitySet="BillingDemands" />
+            <End Role="BillableVisit" EntitySet="BillableVisits" />
+          </AssociationSet>
+          <AssociationSet Name="InvoiceBillableVisit" Association="DomainModel.InvoiceBillableVisit">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="BillableVisit" EntitySet="BillableVisits" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="BillingDemand">
+          <Documentation>
+            <Summary>created by the sponsor</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="OfficialNumber" Type="String" Nullable="false" />
+          <NavigationProperty Name="StudyExecution" Relationship="DomainModel.StudyExecutionScopeBillingDemand" FromRole="BillingDemand" ToRole="StudyExecutionScope" />
+          <Property Name="StudyExecutionIdentifier" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="AssignedVisits" Relationship="DomainModel.BillingDemandBillableVisit" FromRole="BillingDemand" ToRole="BillableVisit" />
+          <Property Name="TransmissionDateUtc" Type="DateTime" Nullable="true" />
+          <Property Name="CreationDateUtc" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedByPerson" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Documentation>
+            <Summary>created by the executor-company</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="OfficialNumber" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>the invoice number</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="StudyExecution" Relationship="DomainModel.StudyExecutionScopeInvoice" FromRole="Invoice" ToRole="StudyExecutionScope" />
+          <Property Name="StudyExecutionIdentifier" Type="Guid" Nullable="false" >
+            <Documentation>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="AssignedVisits" Relationship="DomainModel.InvoiceBillableVisit" FromRole="Invoice" ToRole="BillableVisit" />
+          <Property Name="OffcialInvoiceDate" Type="DateTime" Nullable="false" >
+            <Documentation>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="TransmissionDateUtc" Type="DateTime" Nullable="true" />
+          <Property Name="CreationDateUtc" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedByPerson" Type="String" Nullable="false" />
+          <Property Name="PaymentSubmittedDateUtc" Type="DateTime" Nullable="true" />
+          <Property Name="PaymentReceivedDateUtc" Type="DateTime" Nullable="true" />
+        </EntityType>
+        <EntityType Name="StudyExecutionScope">
+          <Key>
+            <PropertyRef Name="StudyExecutionIdentifier" />
+          </Key>
+          <Property Name="StudyExecutionIdentifier" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutingInstituteIdentifier" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>the institute which is executing the study (this should be an invariant technical representation of the company name or a guid)</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" >
+            <Documentation>
+              <Summary>the official invariant name of the study as given by the sponsor</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" >
+            <Documentation>
+              <Summary>version of the workflow</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ExtendedMetaData" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>optional structure (in JSON-format) containing additional metadata regarding this record, which can be used by 'StudyExecutionSystems' to extend the schema</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="BillableVisits" Relationship="DomainModel.StudyExecutionScopeBillableVisit" FromRole="StudyExecutionScope" ToRole="BillableVisit" />
+          <NavigationProperty Name="BillingDemands" Relationship="DomainModel.StudyExecutionScopeBillingDemand" FromRole="StudyExecutionScope" ToRole="BillingDemand" />
+          <NavigationProperty Name="Invoices" Relationship="DomainModel.StudyExecutionScopeInvoice" FromRole="StudyExecutionScope" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="BillableVisit">
+          <Key>
+            <PropertyRef Name="VisitGuid" />
+          </Key>
+          <Property Name="VisitGuid" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="StudyExecution" Relationship="DomainModel.StudyExecutionScopeBillableVisit" FromRole="BillableVisit" ToRole="StudyExecutionScope" />
+          <Property Name="StudyExecutionIdentifier" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study execution (dedicated to a concrete institute) which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ParticipantIdentifier" Type="String" Nullable="false" MaxLength="50" >
+            <Documentation>
+              <Summary>identity of the patient which can be a randomization or screening number (the exact semantic is defined per study)</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="VisitProdecureName" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>unique invariant name of the visit-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="VisitExecutionTitle" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>title of the visit execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="BillableTasks" Relationship="DomainModel.BillableVisitBillableTask" FromRole="BillableVisit" ToRole="BillableTask" />
+          <NavigationProperty Name="AssignedBillingDemand" Relationship="DomainModel.BillingDemandBillableVisit" FromRole="BillableVisit" ToRole="BillingDemand" />
+          <Property Name="BillingDemandId" Type="Guid" Nullable="true" />
+          <NavigationProperty Name="AssignedInvoice" Relationship="DomainModel.InvoiceBillableVisit" FromRole="BillableVisit" ToRole="Invoice" />
+          <Property Name="InvoiceId" Type="Guid" Nullable="true" />
+          <Property Name="ExecutionEndDateUtc" Type="DateTime" Nullable="true" />
+          <Property Name="SponsorValidationDateUtc" Type="DateTime" Nullable="true" >
+            <Documentation>
+              <Summary>indicates, that the visit is ready to get assigned to a 'BillingDemand' (usually this state is managed by the sponsor) This can only be set after there is a valid 'ExecutionEndDateUtc'</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ExecutorValidationDateUtc" Type="DateTime" Nullable="true" >
+            <Documentation>
+              <Summary>indicates, that the visit is ready to get assigned to a 'Invoice' (usually this state is managed by the executor) This can only be set after either the 'SponsorValidationDateUtc' is set (and there is a Demand) nor the states are only managed by the executor, so that the demand-part is completely skipped.</Summary>
+            </Documentation>
+          </Property>
+        </EntityType>
+        <Association Name="StudyExecutionScopeBillableVisit">
+          <End Type="DomainModel.StudyExecutionScope" Role="StudyExecutionScope" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DomainModel.BillableVisit" Role="BillableVisit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyExecutionScope">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Principal>
+            <Dependent Role="BillableVisit">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BillableTask">
+          <Key>
+            <PropertyRef Name="TaskGuid" />
+          </Key>
+          <Property Name="TaskGuid" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study-task execution which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="BillableVisit" Relationship="DomainModel.BillableVisitBillableTask" FromRole="BillableTask" ToRole="BillableVisit" />
+          <Property Name="VisitGuid" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>a global unique id of a concrete study-visit execution which is usually originated at the primary CRF or study management system ('SMS')</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="TaskName" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>unique invariant name of ths task-procedure as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="TaskExecutionTitle" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>title of the task execution as defined in the 'StudyWorkflowDefinition' (originated from the sponsor)</Summary>
+              <LongDescription>FIX</LongDescription>
+            </Documentation>
+          </Property>
+        </EntityType>
+        <Association Name="BillableVisitBillableTask">
+          <End Type="DomainModel.BillableVisit" Role="BillableVisit" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DomainModel.BillableTask" Role="BillableTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillableVisit">
+              <PropertyRef Name="VisitGuid" />
+            </Principal>
+            <Dependent Role="BillableTask">
+              <PropertyRef Name="VisitGuid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudyExecutionScopeBillingDemand">
+          <End Type="DomainModel.StudyExecutionScope" Role="StudyExecutionScope" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DomainModel.BillingDemand" Role="BillingDemand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyExecutionScope">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Principal>
+            <Dependent Role="BillingDemand">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudyExecutionScopeInvoice">
+          <End Type="DomainModel.StudyExecutionScope" Role="StudyExecutionScope" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DomainModel.Invoice" Role="Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyExecutionScope">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="StudyExecutionIdentifier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BillingDemandBillableVisit">
+          <End Type="DomainModel.BillingDemand" Role="BillingDemand" Multiplicity="0..1" />
+          <End Type="DomainModel.BillableVisit" Role="BillableVisit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillingDemand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BillableVisit">
+              <PropertyRef Name="BillingDemandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InvoiceBillableVisit">
+          <End Type="DomainModel.Invoice" Role="Invoice" Multiplicity="0..1" />
+          <End Type="DomainModel.BillableVisit" Role="BillableVisit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BillableVisit">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="DataModel" />
+        <Alias Key="Target" Value="DataModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="Model" StorageEntityContainer="DataModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1e673f0774584ac2be5350aef5de4487" Name="Schema" ZoomLevel="80">
+        <EntityTypeShape EntityType="DomainModel.BillingDemand" Width="2.625" PointX="8.5" PointY="3.25" FillColor="Purple" />
+        <EntityTypeShape EntityType="DomainModel.Invoice" Width="2.625" PointX="12.625" PointY="2.875" FillColor="Purple" />
+        <EntityTypeShape EntityType="DomainModel.StudyExecutionScope" Width="3" PointX="4" PointY="1.375" FillColor="Purple" />
+        <EntityTypeShape EntityType="DomainModel.BillableVisit" Width="3" PointX="4" PointY="5" FillColor="Purple" />
+        <AssociationConnector Association="DomainModel.StudyExecutionScopeBillableVisit" />
+        <EntityTypeShape EntityType="DomainModel.BillableTask" Width="3" PointX="4" PointY="9.25" FillColor="Purple" />
+        <AssociationConnector Association="DomainModel.BillableVisitBillableTask" />
+        <AssociationConnector Association="DomainModel.StudyExecutionScopeBillingDemand" />
+        <AssociationConnector Association="DomainModel.StudyExecutionScopeInvoice" />
+        <AssociationConnector Association="DomainModel.BillingDemandBillableVisit" />
+        <AssociationConnector Association="DomainModel.InvoiceBillableVisit" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -3,7 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORSCF-Modeling", "ORSCF-Modeling.csproj", "{F66DE0E0-4F05-4B96-A182-605EA0BD7F3C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetLibs", "NetLibs", "{6E183B79-2AE6-407B-A237-45977EF65F35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modeling", "Modeling", "{6299CE3B-BCE7-41DC-9AAB-BC69832C45A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORSCF-Modeling", "EDMX\ORSCF-Modeling.csproj", "{F66DE0E0-4F05-4B96-A182-605EA0BD7F3C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BillingData.Model", "Libs\BillingData.Model\BillingData.Model.csproj", "{E6AE2EE4-10D1-471E-8C9B-B8F182F19FEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityManagement.Model", "Libs\IdentityManagement.Model\IdentityManagement.Model.csproj", "{E27C2EF0-E020-4608-9715-F19347454809}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyWorkflowDefinition.Model", "Libs\StudyWorkflowDefinition.Model\StudyWorkflowDefinition.Model.csproj", "{02B49EFE-95EE-44B4-B49F-2A1672018197}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisitData.Model", "Libs\VisitData.Model\VisitData.Model.csproj", "{90370E6E-BCFA-4853-9251-7104850A193F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B755BBA1-92FA-46E7-B3A7-C253E9BEBCA1}"
+	ProjectSection(SolutionItems) = preProject
+		ORSCF.BillingData.Model.nuspec = ORSCF.BillingData.Model.nuspec
+		ORSCF.IdentityManagement.Model.nuspec = ORSCF.IdentityManagement.Model.nuspec
+		ORSCF.StudyWorkflowDefinition.Model.nuspec = ORSCF.StudyWorkflowDefinition.Model.nuspec
+		ORSCF.VisitData.Model.nuspec = ORSCF.VisitData.Model.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +35,32 @@ Global
 		{F66DE0E0-4F05-4B96-A182-605EA0BD7F3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F66DE0E0-4F05-4B96-A182-605EA0BD7F3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F66DE0E0-4F05-4B96-A182-605EA0BD7F3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6AE2EE4-10D1-471E-8C9B-B8F182F19FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6AE2EE4-10D1-471E-8C9B-B8F182F19FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6AE2EE4-10D1-471E-8C9B-B8F182F19FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6AE2EE4-10D1-471E-8C9B-B8F182F19FEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E27C2EF0-E020-4608-9715-F19347454809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E27C2EF0-E020-4608-9715-F19347454809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E27C2EF0-E020-4608-9715-F19347454809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E27C2EF0-E020-4608-9715-F19347454809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B49EFE-95EE-44B4-B49F-2A1672018197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B49EFE-95EE-44B4-B49F-2A1672018197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B49EFE-95EE-44B4-B49F-2A1672018197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B49EFE-95EE-44B4-B49F-2A1672018197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90370E6E-BCFA-4853-9251-7104850A193F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90370E6E-BCFA-4853-9251-7104850A193F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90370E6E-BCFA-4853-9251-7104850A193F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90370E6E-BCFA-4853-9251-7104850A193F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F66DE0E0-4F05-4B96-A182-605EA0BD7F3C} = {6299CE3B-BCE7-41DC-9AAB-BC69832C45A8}
+		{E6AE2EE4-10D1-471E-8C9B-B8F182F19FEF} = {6E183B79-2AE6-407B-A237-45977EF65F35}
+		{E27C2EF0-E020-4608-9715-F19347454809} = {6E183B79-2AE6-407B-A237-45977EF65F35}
+		{02B49EFE-95EE-44B4-B49F-2A1672018197} = {6E183B79-2AE6-407B-A237-45977EF65F35}
+		{90370E6E-BCFA-4853-9251-7104850A193F} = {6E183B79-2AE6-407B-A237-45977EF65F35}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {174839FD-71CD-40F0-9F70-CAE01B1C345A}
