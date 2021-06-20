@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>ORSCF.StudyWorkflowDefinition.Model</id>
-    <version>1.3.0</version>
+    <version>1.4.0-localbuild</version>
     <title>ORSCF - StudyWorkflowDefinition Model</title>
     <authors>ORSCF.org</authors>
     <owners>ORSCF.org</owners>
@@ -23,8 +23,8 @@
     <!-- https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package#from-a-convention-based-working-directory -->
     <file src="PackageIcon.png" target="" />
     <!-- .NET 5.0 -->
-    <file src="Libs\StudyWorkflowDefinition.Model\bin\ORSCF.StudyWorkflowDefinition.Model.dll" target="lib/net5.0" />
-    <file src="Libs\StudyWorkflowDefinition.Model\bin\ORSCF.StudyWorkflowDefinition.Model.xml" target="lib/net5.0" />
-    <file src="Libs\StudyWorkflowDefinition.Model\bin\ORSCF.StudyWorkflowDefinition.Model.pdb" target="lib/net5.0" />
+    <file src="(Stage)\Bin\net5.0\ORSCF.StudyWorkflowDefinition.Model.dll" target="lib/net5.0" />
+    <file src="(Stage)\Bin\net5.0\ORSCF.StudyWorkflowDefinition.Model.xml" target="lib/net5.0" />
+    <file src="(Stage)\Bin\net5.0\ORSCF.StudyWorkflowDefinition.Model.pdb" target="lib/net5.0" />
   </files>
 </package>

@@ -17,11 +17,11 @@
           <EntitySet Name="StudyEvents" EntityType="DomainModel.StudyEvent" />
           <EntitySet Name="Arms" EntityType="DomainModel.Arm" />
           <EntitySet Name="ProcedureSchedules" EntityType="DomainModel.ProcedureSchedule" />
-          <EntitySet Name="VisitProdecureDefinitions" EntityType="DomainModel.VisitProdecureDefinition" />
+          <EntitySet Name="ProdecureDefinitions" EntityType="DomainModel.ProdecureDefinition" />
           <EntitySet Name="TaskSchedules" EntityType="DomainModel.TaskSchedule" />
-          <EntitySet Name="DataRecordingTasks" EntityType="DomainModel.DataRecordingTask" />
-          <EntitySet Name="DrugAppliymentTasks" EntityType="DomainModel.DrugApplymentTask" />
-          <EntitySet Name="TreatmentTasks" EntityType="DomainModel.TreatmentTask" />
+          <EntitySet Name="DataRecordingTaskDefinitions" EntityType="DomainModel.DataRecordingTaskDefinition" />
+          <EntitySet Name="DrugAppliymentTaskDefinitions" EntityType="DomainModel.DrugApplymentTaskDefinition" />
+          <EntitySet Name="TreatmentTaskDefinitions" EntityType="DomainModel.TreatmentTaskDefinition" />
           <EntitySet Name="InducedDataRecordingTasks" EntityType="DomainModel.InducedDataRecordingTask" />
           <EntitySet Name="InducedDrugApplymentTasks" EntityType="DomainModel.InducedDrugApplymentTask" />
           <EntitySet Name="InducedTreatmentTasks" EntityType="DomainModel.InducedTreatmentTask" />
@@ -38,28 +38,28 @@
             <End Role="InducedTreatmentTask" EntitySet="InducedTreatmentTasks" />
           </AssociationSet>
           <AssociationSet Name="DataRecordingTaskInducedDataRecordingTask" Association="DomainModel.DataRecordingTaskInducedDataRecordingTask">
-            <End Role="DataRecordingTask" EntitySet="DataRecordingTasks" />
+            <End Role="DataRecordingTask" EntitySet="DataRecordingTaskDefinitions" />
             <End Role="InducedDataRecordingTask" EntitySet="InducedDataRecordingTasks" />
           </AssociationSet>
           <AssociationSet Name="DrugApplymentTaskInducedDrugApplymentTask" Association="DomainModel.DrugApplymentTaskInducedDrugApplymentTask">
-            <End Role="DrugApplymentTask" EntitySet="DrugAppliymentTasks" />
+            <End Role="DrugApplymentTask" EntitySet="DrugAppliymentTaskDefinitions" />
             <End Role="InducedDrugApplymentTask" EntitySet="InducedDrugApplymentTasks" />
           </AssociationSet>
           <AssociationSet Name="TreatmentTaskInducedTreatmentTask" Association="DomainModel.TreatmentTaskInducedTreatmentTask">
-            <End Role="TreatmentTask" EntitySet="TreatmentTasks" />
+            <End Role="TreatmentTask" EntitySet="TreatmentTaskDefinitions" />
             <End Role="InducedTreatmentTask" EntitySet="InducedTreatmentTasks" />
           </AssociationSet>
           <AssociationSet Name="ResearchStudyDataRecordingTask" Association="DomainModel.ResearchStudyDataRecordingTask">
             <End Role="ResearchStudy" EntitySet="ResearchStudyDefinitions" />
-            <End Role="DataRecordingTask" EntitySet="DataRecordingTasks" />
+            <End Role="DataRecordingTask" EntitySet="DataRecordingTaskDefinitions" />
           </AssociationSet>
           <AssociationSet Name="ResearchStudyDrugApplymentTask" Association="DomainModel.ResearchStudyDrugApplymentTask">
             <End Role="ResearchStudy" EntitySet="ResearchStudyDefinitions" />
-            <End Role="DrugApplymentTask" EntitySet="DrugAppliymentTasks" />
+            <End Role="DrugApplymentTask" EntitySet="DrugAppliymentTaskDefinitions" />
           </AssociationSet>
           <AssociationSet Name="ResearchStudyTreatmentTask" Association="DomainModel.ResearchStudyTreatmentTask">
             <End Role="ResearchStudy" EntitySet="ResearchStudyDefinitions" />
-            <End Role="TreatmentTask" EntitySet="TreatmentTasks" />
+            <End Role="TreatmentTask" EntitySet="TreatmentTaskDefinitions" />
           </AssociationSet>
           <AssociationSet Name="ResearchStudyArm" Association="DomainModel.ResearchStudyArm">
             <End Role="ResearchStudy" EntitySet="ResearchStudyDefinitions" />
@@ -71,16 +71,16 @@
           </AssociationSet>
           <AssociationSet Name="ResearchStudyVisitProdecureDefinition" Association="DomainModel.ResearchStudyVisitProdecureDefinition">
             <End Role="ResearchStudy" EntitySet="ResearchStudyDefinitions" />
-            <End Role="VisitProdecureDefinition" EntitySet="VisitProdecureDefinitions" />
+            <End Role="VisitProdecureDefinition" EntitySet="ProdecureDefinitions" />
           </AssociationSet>
-          <EntitySet Name="InducedVisitProcedures" EntityType="DomainModel.InducedVisitProcedure" />
+          <EntitySet Name="InducedVisitProcedures" EntityType="DomainModel.InducedProcedure" />
           <AssociationSet Name="ProcedureScheduleInducedProcedure" Association="DomainModel.ProcedureScheduleInducedProcedure">
             <End Role="ProcedureSchedule" EntitySet="ProcedureSchedules" />
             <End Role="InducedProcedure" EntitySet="InducedVisitProcedures" />
           </AssociationSet>
           <AssociationSet Name="TaskScheduleVisitProdecureDefinition" Association="DomainModel.TaskScheduleVisitProdecureDefinition">
             <End Role="TaskSchedule" EntitySet="TaskSchedules" />
-            <End Role="VisitProdecureDefinition" EntitySet="VisitProdecureDefinitions" />
+            <End Role="VisitProdecureDefinition" EntitySet="ProdecureDefinitions" />
           </AssociationSet>
           <AssociationSet Name="ProcedureScheduleArm" Association="DomainModel.ProcedureScheduleArm">
             <End Role="ProcedureSchedule" EntitySet="ProcedureSchedules" />
@@ -123,8 +123,13 @@
             <End Role="InducedSubProcedureSchedule" EntitySet="InducedSubProcedureSchedules" />
           </AssociationSet>
           <AssociationSet Name="VisitProdecureDefinitionInducedVisitProcedure" Association="DomainModel.VisitProdecureDefinitionInducedVisitProcedure">
-            <End Role="VisitProdecureDefinition" EntitySet="VisitProdecureDefinitions" />
+            <End Role="VisitProdecureDefinition" EntitySet="ProdecureDefinitions" />
             <End Role="InducedVisitProcedure" EntitySet="InducedVisitProcedures" />
+          </AssociationSet>
+          <EntitySet Name="SubStudies" EntityType="DomainModel.SubStudy" />
+          <AssociationSet Name="ResearchStudyDefinitionSubStudy" Association="DomainModel.ResearchStudyDefinitionSubStudy">
+            <End Role="ResearchStudyDefinition" EntitySet="ResearchStudyDefinitions" />
+            <End Role="SubStudy" EntitySet="SubStudies" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ResearchStudyDefinition">
@@ -147,7 +152,7 @@
           <NavigationProperty Name="TreatmentTasks" Relationship="DomainModel.ResearchStudyTreatmentTask" FromRole="ResearchStudy" ToRole="TreatmentTask" />
           <NavigationProperty Name="Arms" Relationship="DomainModel.ResearchStudyArm" FromRole="ResearchStudy" ToRole="Arm" />
           <NavigationProperty Name="TaskSchedules" Relationship="DomainModel.ResearchStudyTaskSchedule" FromRole="ResearchStudy" ToRole="TaskSchedule" />
-          <NavigationProperty Name="VisitProdecureDefinitions" Relationship="DomainModel.ResearchStudyVisitProdecureDefinition" FromRole="ResearchStudy" ToRole="VisitProdecureDefinition" />
+          <NavigationProperty Name="ProdecureDefinitions" Relationship="DomainModel.ResearchStudyVisitProdecureDefinition" FromRole="ResearchStudy" ToRole="VisitProdecureDefinition" />
           <NavigationProperty Name="Events" Relationship="DomainModel.ResearchStudyStudyEvent" FromRole="ResearchStudy" ToRole="StudyEvent" />
           <NavigationProperty Name="ProcedureSchedules" Relationship="DomainModel.ResearchStudyProcedureSchedule" FromRole="ResearchStudy" ToRole="ProcedureSchedule" />
           <Property Name="OfficialLabel" Type="String" Nullable="false" />
@@ -174,6 +179,7 @@
           <Property Name="BillablePriceForGeneralPreparation" Type="Decimal" Nullable="true" />
           <Property Name="StudyDocumentationUrl" Type="String" Nullable="true" />
           <Property Name="CaseReportFormUrl" Type="String" Nullable="true" />
+          <NavigationProperty Name="SubStudies" Relationship="DomainModel.ResearchStudyDefinitionSubStudy" FromRole="ResearchStudyDefinition" ToRole="SubStudy" />
         </EntityType>
         <EntityType Name="StudyEvent">
           <Key>
@@ -194,7 +200,11 @@
             <PropertyRef Name="StudyWorkflowName" />
             <PropertyRef Name="StudyWorkflowVersion" />
           </Key>
-          <Property Name="StudyArmName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" />
+          <Property Name="StudyArmName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" >
+            <Documentation>
+              <Summary>Name of the Arm - INVARIANT! because it is used to generate Identifers for induced executions!</Summary>
+            </Documentation>
+          </Property>
           <NavigationProperty Name="ResearchStudy" Relationship="DomainModel.ResearchStudyArm" FromRole="Arm" ToRole="ResearchStudy" />
           <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" />
           <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" />
@@ -214,9 +224,10 @@
           <Property Name="BillablePriceOnCompletedParticipation" Type="Decimal" Nullable="true" />
           <Property Name="ArmSpecificDocumentationUrl" Type="String" Nullable="true" />
           <Property Name="InclusionCriteria" Type="String" Nullable="true" />
-          <Property Name="Substudy" Type="String" Nullable="true" >
+          <Property Name="AllowedSubstudies" Type="String" Nullable="true" >
             <Documentation>
-              <Summary>defines, that the arm is part of a SubStudy which is addressed by a UniqueName or a path expressen</Summary>
+              <Summary>comma sparated list of Sub-Study names which are allowed to be executed for this arm
+</Summary>
             </Documentation>
           </Property>
         </EntityType>
@@ -233,7 +244,11 @@
           <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" />
           <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" />
           <NavigationProperty Name="InducingSubProcedureSchedules" Relationship="DomainModel.ProcedureScheduleInducedSubProcedureSchedule1" FromRole="ProcedureSchedule" ToRole="InducedSubProcedureSchedule" />
-          <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="ScheduleWorkflowName" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>Name of the Workflow which is represented by this schedule - INVARIANT! because it is used to generate Identifers for induced executions!</Summary>
+            </Documentation>
+          </Property>
           <Property Name="MaxSkipsBeforeLost" Type="String" Nullable="false" />
           <Property Name="MaxSubsequentSkipsBeforeLost" Type="String" Nullable="false" />
           <Property Name="MaxLostsBeforeLtfuAbort" Type="String" Nullable="false" />
@@ -244,11 +259,15 @@
           <Property Name="InducingEvents" Type="String" Nullable="false" />
           <Property Name="AbortCausingEvents" Type="String" Nullable="false" />
         </EntityType>
-        <EntityType Name="VisitProdecureDefinition">
+        <EntityType Name="ProdecureDefinition">
           <Key>
-            <PropertyRef Name="VisitProdecureName" />
+            <PropertyRef Name="ProdecureDefinitionName" />
           </Key>
-          <Property Name="VisitProdecureName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" />
+          <Property Name="ProdecureDefinitionName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" >
+            <Documentation>
+              <Summary>Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions!</Summary>
+            </Documentation>
+          </Property>
           <NavigationProperty Name="ResearchStudy" Relationship="DomainModel.ResearchStudyVisitProdecureDefinition" FromRole="VisitProdecureDefinition" ToRole="ResearchStudy" />
           <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" />
           <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" />
@@ -278,11 +297,15 @@
           <NavigationProperty Name="ResearchStudy" Relationship="DomainModel.ResearchStudyTaskSchedule" FromRole="TaskSchedule" ToRole="ResearchStudy" />
           <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" />
           <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" />
-          <NavigationProperty Name="EntryVisitProdecureDefinitions" Relationship="DomainModel.TaskScheduleVisitProdecureDefinition" FromRole="TaskSchedule" ToRole="VisitProdecureDefinition" />
+          <NavigationProperty Name="EntryProdecureDefinitions" Relationship="DomainModel.TaskScheduleVisitProdecureDefinition" FromRole="TaskSchedule" ToRole="VisitProdecureDefinition" />
           <NavigationProperty Name="CycleDefinition" Relationship="DomainModel.TaskScheduleTaskCycleDefinition" FromRole="TaskSchedule" ToRole="TaskCycleDefinition" />
           <NavigationProperty Name="InducedSubTaskSchedules" Relationship="DomainModel.TaskScheduleInducedSubTaskSchedule" FromRole="TaskSchedule" ToRole="InducedSubTaskSchedule" />
           <NavigationProperty Name="InducingTaskSchedules" Relationship="DomainModel.TaskScheduleInducedSubTaskSchedule1" FromRole="TaskSchedule" ToRole="InducedSubTaskSchedule" />
-          <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="ScheduleWorkflowName" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>Name of the Workflow which is represented by this schedule - INVARIANT! because it is used to generate Identifers for induced executions!</Summary>
+            </Documentation>
+          </Property>
           <Property Name="MaxSkipsBeforeLost" Type="String" Nullable="false" />
           <Property Name="MaxSubsequentSkipsBeforeLost" Type="String" Nullable="false" />
           <Property Name="MaxLostsBeforeLtfuAbort" Type="String" Nullable="false" />
@@ -293,11 +316,15 @@
           <Property Name="InducingEvents" Type="String" Nullable="false" />
           <Property Name="AbortCausingEvents" Type="String" Nullable="false" />
         </EntityType>
-        <EntityType Name="DataRecordingTask">
+        <EntityType Name="DataRecordingTaskDefinition">
           <Key>
-            <PropertyRef Name="DataRecordingName" />
+            <PropertyRef Name="TaskDefinitionName" />
           </Key>
-          <Property Name="DataRecordingName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" />
+          <Property Name="TaskDefinitionName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" >
+            <Documentation>
+              <Summary>Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions!</Summary>
+            </Documentation>
+          </Property>
           <NavigationProperty Name="Inducements" Relationship="DomainModel.DataRecordingTaskInducedDataRecordingTask" FromRole="DataRecordingTask" ToRole="InducedDataRecordingTask" />
           <NavigationProperty Name="ResearchStudy" Relationship="DomainModel.ResearchStudyDataRecordingTask" FromRole="DataRecordingTask" ToRole="ResearchStudy" />
           <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" />
@@ -317,11 +344,15 @@
             </Documentation>
           </Property>
         </EntityType>
-        <EntityType Name="DrugApplymentTask">
+        <EntityType Name="DrugApplymentTaskDefinition">
           <Key>
-            <PropertyRef Name="DrugApplymentName" />
+            <PropertyRef Name="TaskDefinitionName" />
           </Key>
-          <Property Name="DrugApplymentName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" />
+          <Property Name="TaskDefinitionName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" >
+            <Documentation>
+              <Summary>Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions!</Summary>
+            </Documentation>
+          </Property>
           <NavigationProperty Name="Inducements" Relationship="DomainModel.DrugApplymentTaskInducedDrugApplymentTask" FromRole="DrugApplymentTask" ToRole="InducedDrugApplymentTask" />
           <NavigationProperty Name="ResearchStudy" Relationship="DomainModel.ResearchStudyDrugApplymentTask" FromRole="DrugApplymentTask" ToRole="ResearchStudy" />
           <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" />
@@ -335,11 +366,15 @@
           <Property Name="ApplymentRoute" Type="String" Nullable="false" />
           <Property Name="ImportantNotices" Type="String" Nullable="true" />
         </EntityType>
-        <EntityType Name="TreatmentTask">
+        <EntityType Name="TreatmentTaskDefinition">
           <Key>
-            <PropertyRef Name="TreatmentName" />
+            <PropertyRef Name="TaskDefinitionName" />
           </Key>
-          <Property Name="TreatmentName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" />
+          <Property Name="TaskDefinitionName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" >
+            <Documentation>
+              <Summary>Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions!</Summary>
+            </Documentation>
+          </Property>
           <NavigationProperty Name="Inducements" Relationship="DomainModel.TreatmentTaskInducedTreatmentTask" FromRole="TreatmentTask" ToRole="InducedTreatmentTask" />
           <NavigationProperty Name="ResearchStudy" Relationship="DomainModel.ResearchStudyTreatmentTask" FromRole="TreatmentTask" ToRole="ResearchStudy" />
           <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" />
@@ -358,13 +393,13 @@
           <NavigationProperty Name="TaskSchedule" Relationship="DomainModel.TaskScheduleInducedDataRecordingTask" FromRole="InducedDataRecordingTask" ToRole="TaskSchedule" />
           <Property Name="TaskScheduleId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="InducedTask" Relationship="DomainModel.DataRecordingTaskInducedDataRecordingTask" FromRole="InducedDataRecordingTask" ToRole="DataRecordingTask" />
-          <Property Name="InducedDataRecordingName" Type="String" Nullable="false" MaxLength="50" />
-          <Property Name="Offset" Type="Int32" Nullable="false" >
+          <Property Name="TaskDefinitionName" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="SchedulingOffset" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>estimated scheduling time relative to the scheduling date of the parent TaskSchedule</Summary>
             </Documentation>
           </Property>
-          <Property Name="OffsetUnit" Type="String" Nullable="false" >
+          <Property Name="SchedulingOffsetUnit" Type="String" Nullable="false" >
             <Documentation>
               <Summary>'h'=Hours / 'm'=Minutes / 's'=Seconds</Summary>
             </Documentation>
@@ -384,9 +419,9 @@
               <Summary>'h'=Hours / 'm'=Minutes / 's'=Seconds</Summary>
             </Documentation>
           </Property>
-          <Property Name="InducedTaskExecutionTitle" Type="String" Nullable="false" >
+          <Property Name="UniqueExecutionName" Type="String" Nullable="false" >
             <Documentation>
-              <Summary>the title for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution titles.</Summary>
+              <Summary>the name for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution names.</Summary>
             </Documentation>
           </Property>
           <Property Name="Skipable" Type="Boolean" Nullable="false" >
@@ -396,6 +431,26 @@
           </Property>
           <Property Name="EventOnSkip" Type="String" Nullable="false" />
           <Property Name="EventOnLost" Type="String" Nullable="false" />
+          <Property Name="Position" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
+            <Documentation>
+              <Summary>If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DedicatedToSubstudy" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <EntityType Name="InducedDrugApplymentTask">
           <Key>
@@ -405,23 +460,23 @@
           <NavigationProperty Name="TaskSchedule" Relationship="DomainModel.TaskScheduleInducedDrugApplymentTask" FromRole="InducedDrugApplymentTask" ToRole="TaskSchedule" />
           <Property Name="TaskScheduleId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="InducedTask" Relationship="DomainModel.DrugApplymentTaskInducedDrugApplymentTask" FromRole="InducedDrugApplymentTask" ToRole="DrugApplymentTask" />
-          <Property Name="InducedDrugApplymentName" Type="String" Nullable="false" MaxLength="50" />
-          <Property Name="Offset" Type="Int32" Nullable="false" >
+          <Property Name="TaskDefinitionName" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="SchedulingOffset" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>estimated scheduling time relative to the scheduling date of the parent TaskSchedule</Summary>
             </Documentation>
           </Property>
-          <Property Name="OffsetUnit" Type="String" Nullable="false" >
+          <Property Name="SchedulingOffsetUnit" Type="String" Nullable="false" >
             <Documentation>
               <Summary>'h'=Hours / 'm'=Minutes / 's'=Seconds</Summary>
             </Documentation>
           </Property>
-          <Property Name="SchedulingVariabilityBefore" Type="String" Nullable="false" >
+          <Property Name="SchedulingVariabilityBefore" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the EARLIEST possible time.</Summary>
             </Documentation>
           </Property>
-          <Property Name="SchedulingVariabilityAfter" Type="String" Nullable="false" >
+          <Property Name="SchedulingVariabilityAfter" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the LATEST possible time.</Summary>
             </Documentation>
@@ -431,9 +486,10 @@
               <Summary>'h'=Hours / 'm'=Minutes / 's'=Seconds</Summary>
             </Documentation>
           </Property>
-          <Property Name="InducedTaskExecutionTitle" Type="String" Nullable="false" >
+          <Property Name="UniqueExecutionName" Type="String" Nullable="false" >
             <Documentation>
-              <Summary>the title for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution titles.</Summary>
+              <Summary>the name for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution names.
+</Summary>
             </Documentation>
           </Property>
           <Property Name="Skipable" Type="Boolean" Nullable="false" >
@@ -443,6 +499,26 @@
           </Property>
           <Property Name="EventOnSkip" Type="String" Nullable="false" />
           <Property Name="EventOnLost" Type="String" Nullable="false" />
+          <Property Name="Position" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
+            <Documentation>
+              <Summary>If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DedicatedToSubstudy" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <EntityType Name="InducedTreatmentTask">
           <Key>
@@ -452,13 +528,13 @@
           <NavigationProperty Name="TaskSchedule" Relationship="DomainModel.TaskScheduleInducedTreatmentTask" FromRole="InducedTreatmentTask" ToRole="TaskSchedule" />
           <Property Name="TaskScheduleId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="InducedTask" Relationship="DomainModel.TreatmentTaskInducedTreatmentTask" FromRole="InducedTreatmentTask" ToRole="TreatmentTask" />
-          <Property Name="InducedTreatmentName" Type="String" Nullable="false" MaxLength="50" />
-          <Property Name="Offset" Type="Int32" Nullable="false" >
+          <Property Name="TaskDefinitionName" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="SchedulingOffset" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>estimated scheduling time relative to the scheduling date of the parent TaskSchedule</Summary>
             </Documentation>
           </Property>
-          <Property Name="OffsetUnit" Type="String" Nullable="false" >
+          <Property Name="SchedulingOffsetUnit" Type="String" Nullable="false" >
             <Documentation>
               <Summary>'h'=Hours / 'm'=Minutes / 's'=Seconds</Summary>
             </Documentation>
@@ -478,9 +554,9 @@
               <Summary>'h'=Hours / 'm'=Minutes / 's'=Seconds</Summary>
             </Documentation>
           </Property>
-          <Property Name="InducedTaskExecutionTitle" Type="String" Nullable="false" >
+          <Property Name="UniqueExecutionName" Type="String" Nullable="false" >
             <Documentation>
-              <Summary>the title for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution titles.</Summary>
+              <Summary>the name for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution names.</Summary>
             </Documentation>
           </Property>
           <Property Name="Skipable" Type="Boolean" Nullable="false" >
@@ -490,6 +566,26 @@
           </Property>
           <Property Name="EventOnSkip" Type="String" Nullable="false" />
           <Property Name="EventOnLost" Type="String" Nullable="false" />
+          <Property Name="Position" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
+            <Documentation>
+              <Summary>If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DedicatedToSubstudy" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <Association Name="TaskScheduleInducedDataRecordingTask">
           <End Type="DomainModel.TaskSchedule" Role="TaskSchedule" Multiplicity="1" >
@@ -534,38 +630,38 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="DataRecordingTaskInducedDataRecordingTask">
-          <End Type="DomainModel.DataRecordingTask" Role="DataRecordingTask" Multiplicity="1" />
+          <End Type="DomainModel.DataRecordingTaskDefinition" Role="DataRecordingTask" Multiplicity="1" />
           <End Type="DomainModel.InducedDataRecordingTask" Role="InducedDataRecordingTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DataRecordingTask">
-              <PropertyRef Name="DataRecordingName" />
+              <PropertyRef Name="TaskDefinitionName" />
             </Principal>
             <Dependent Role="InducedDataRecordingTask">
-              <PropertyRef Name="InducedDataRecordingName" />
+              <PropertyRef Name="TaskDefinitionName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="DrugApplymentTaskInducedDrugApplymentTask">
-          <End Type="DomainModel.DrugApplymentTask" Role="DrugApplymentTask" Multiplicity="1" />
+          <End Type="DomainModel.DrugApplymentTaskDefinition" Role="DrugApplymentTask" Multiplicity="1" />
           <End Type="DomainModel.InducedDrugApplymentTask" Role="InducedDrugApplymentTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DrugApplymentTask">
-              <PropertyRef Name="DrugApplymentName" />
+              <PropertyRef Name="TaskDefinitionName" />
             </Principal>
             <Dependent Role="InducedDrugApplymentTask">
-              <PropertyRef Name="InducedDrugApplymentName" />
+              <PropertyRef Name="TaskDefinitionName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="TreatmentTaskInducedTreatmentTask">
-          <End Type="DomainModel.TreatmentTask" Role="TreatmentTask" Multiplicity="1" />
+          <End Type="DomainModel.TreatmentTaskDefinition" Role="TreatmentTask" Multiplicity="1" />
           <End Type="DomainModel.InducedTreatmentTask" Role="InducedTreatmentTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TreatmentTask">
-              <PropertyRef Name="TreatmentName" />
+              <PropertyRef Name="TaskDefinitionName" />
             </Principal>
             <Dependent Role="InducedTreatmentTask">
-              <PropertyRef Name="InducedTreatmentName" />
+              <PropertyRef Name="TaskDefinitionName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -573,7 +669,7 @@
           <End Type="DomainModel.ResearchStudyDefinition" Role="ResearchStudy" Multiplicity="1" >
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DomainModel.DataRecordingTask" Role="DataRecordingTask" Multiplicity="*" />
+          <End Type="DomainModel.DataRecordingTaskDefinition" Role="DataRecordingTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ResearchStudy">
               <PropertyRef Name="StudyWorkflowName" />
@@ -589,7 +685,7 @@
           <End Type="DomainModel.ResearchStudyDefinition" Role="ResearchStudy" Multiplicity="1" >
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DomainModel.DrugApplymentTask" Role="DrugApplymentTask" Multiplicity="*" />
+          <End Type="DomainModel.DrugApplymentTaskDefinition" Role="DrugApplymentTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ResearchStudy">
               <PropertyRef Name="StudyWorkflowName" />
@@ -605,7 +701,7 @@
           <End Type="DomainModel.ResearchStudyDefinition" Role="ResearchStudy" Multiplicity="1" >
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DomainModel.TreatmentTask" Role="TreatmentTask" Multiplicity="*" />
+          <End Type="DomainModel.TreatmentTaskDefinition" Role="TreatmentTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ResearchStudy">
               <PropertyRef Name="StudyWorkflowName" />
@@ -653,7 +749,7 @@
           <End Type="DomainModel.ResearchStudyDefinition" Role="ResearchStudy" Multiplicity="1" >
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DomainModel.VisitProdecureDefinition" Role="VisitProdecureDefinition" Multiplicity="*" />
+          <End Type="DomainModel.ProdecureDefinition" Role="VisitProdecureDefinition" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ResearchStudy">
               <PropertyRef Name="StudyWorkflowName" />
@@ -665,29 +761,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="InducedVisitProcedure">
+        <EntityType Name="InducedProcedure">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="ProcedureSchedule" Relationship="DomainModel.ProcedureScheduleInducedProcedure" FromRole="InducedProcedure" ToRole="ProcedureSchedule" />
           <Property Name="ProcedureScheduleId" Type="Guid" Nullable="false" />
-          <Property Name="Offset" Type="Int32" Nullable="false" >
+          <Property Name="SchedulingOffset" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>estimated scheduling date relative to the scheduling date of the parent ProcedureSchedule</Summary>
             </Documentation>
           </Property>
-          <Property Name="OffsetUnit" Type="String" Nullable="false" >
+          <Property Name="SchedulingOffsetUnit" Type="String" Nullable="false" >
             <Documentation>
               <Summary>'M'=Months / 'W'=Weeks / 'D'=Days</Summary>
             </Documentation>
           </Property>
-          <Property Name="SchedulingVariabilityBefore" Type="String" Nullable="false" >
+          <Property Name="SchedulingVariabilityBefore" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the EARLIEST possible date.</Summary>
             </Documentation>
           </Property>
-          <Property Name="SchedulingVariabilityAfter" Type="String" Nullable="false" >
+          <Property Name="SchedulingVariabilityAfter" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the LATEST possible date.</Summary>
             </Documentation>
@@ -698,10 +794,10 @@
             </Documentation>
           </Property>
           <NavigationProperty Name="InducedVisitProdecure" Relationship="DomainModel.VisitProdecureDefinitionInducedVisitProcedure" FromRole="InducedVisitProcedure" ToRole="VisitProdecureDefinition" />
-          <Property Name="InducedVisitProdecureName" Type="String" Nullable="false" MaxLength="50" />
-          <Property Name="InducedVisitExecutionTitle" Type="String" Nullable="false" >
+          <Property Name="ProdecureDefinitionName" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="UniqueExecutionName" Type="String" Nullable="false" >
             <Documentation>
-              <Summary>the title for the induced execution, like 'V0', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: 'C{cs}-V0') to prevent from duplicate execution titles.</Summary>
+              <Summary>the name for the induced execution (=VISIT), like 'V0', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: 'C{cy}-V0') to prevent from duplicate execution names.</Summary>
             </Documentation>
           </Property>
           <Property Name="Skipable" Type="Boolean" Nullable="false" >
@@ -711,12 +807,32 @@
           </Property>
           <Property Name="EventOnSkip" Type="String" Nullable="false" />
           <Property Name="EventOnLost" Type="String" Nullable="false" />
+          <Property Name="Position" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
+            <Documentation>
+              <Summary>If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DedicatedToSubstudy" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>The name of a Sub-Study for which this procedure should be induced or empty when its part of the current Arms regular workflow </Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <Association Name="ProcedureScheduleInducedProcedure">
           <End Type="DomainModel.ProcedureSchedule" Role="ProcedureSchedule" Multiplicity="1" >
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DomainModel.InducedVisitProcedure" Role="InducedProcedure" Multiplicity="*" />
+          <End Type="DomainModel.InducedProcedure" Role="InducedProcedure" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProcedureSchedule">
               <PropertyRef Name="ProcedureScheduleId" />
@@ -728,7 +844,7 @@
         </Association>
         <Association Name="TaskScheduleVisitProdecureDefinition">
           <End Type="DomainModel.TaskSchedule" Role="TaskSchedule" Multiplicity="0..1" />
-          <End Type="DomainModel.VisitProdecureDefinition" Role="VisitProdecureDefinition" Multiplicity="*" />
+          <End Type="DomainModel.ProdecureDefinition" Role="VisitProdecureDefinition" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TaskSchedule">
               <PropertyRef Name="TaskScheduleId" />
@@ -756,12 +872,12 @@
           </Key>
           <Property Name="ProcedureScheduleId" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="ProcedureSchedule" Relationship="DomainModel.ProcedureScheduleProcedureCycleDefinition" FromRole="ProcedureCycleDefinition" ToRole="ProcedureSchedule" />
-          <Property Name="ReschedulingBase" Type="Int32" Nullable="false" >
+          <Property Name="ReschedulingOffsetFixpoint" Type="Int32" Nullable="false" >
             <Documentation>
-              <Summary>1=EstimatedParent (related to the inducing date of the parent ProcedureSchedule) / 2=LastEstimatedInducement (related to the ESTIMATED scheduling date of the last inducement within the parent ProcedureSchedule) / 3=LastExecutedInducement  (related to the REAL EXECUTION date of the last inducement within the parent ProcedureSchedule) </Summary>
+              <Summary>0=StartOfScheduleOrCycle: when the start of the last cycle was induced / -1=CompletionOfPredessessor: when the last cycle was completed (which means, that the last item within the schedule or a sub-schedule was completed) *this behaviour can be concretized via 'ReschedulingByEstimate'</Summary>
             </Documentation>
           </Property>
-          <Property Name="ReschedulingOffset" Type="String" Nullable="false" >
+          <Property Name="ReschedulingOffset" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>estimated scheduling date relative to the ReschedulingBase</Summary>
             </Documentation>
@@ -778,6 +894,11 @@
           </Property>
           <Property Name="SharedSkipCounters" Type="Boolean" Nullable="false" />
           <Property Name="SharedLostCounters" Type="Boolean" Nullable="false" />
+          <Property Name="ReschedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
+            <Documentation>
+              <Summary>If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <Association Name="ProcedureScheduleProcedureCycleDefinition">
           <End Type="DomainModel.ProcedureSchedule" Role="ProcedureSchedule" Multiplicity="1" >
@@ -799,12 +920,12 @@
           </Key>
           <Property Name="TaskScheduleId" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="TaskSchedule" Relationship="DomainModel.TaskScheduleTaskCycleDefinition" FromRole="TaskCycleDefinition" ToRole="TaskSchedule" />
-          <Property Name="ReschedulingBase" Type="String" Nullable="false" >
+          <Property Name="ReschedulingOffsetFixpoint" Type="Int32" Nullable="false" >
             <Documentation>
-              <Summary>1=EstimatedParent (related to the inducing time of the parent TaskSchedule) / 2=LastEstimatedInducement (related to the ESTIMATED scheduling time of the last inducement within the parent TaskSchedule) / 3=LastExecutedInducement  (related to the REAL EXECUTION time of the last inducement within the parent TaskSchedule)</Summary>
+              <Summary>0=StartOfScheduleOrCycle: when the start of the last cycle was induced / -1=CompletionOfPredessessor: when the last cycle was completed (which means, that the last item within the schedule or a sub-schedule was completed) *this behaviour can be concretized via 'ReschedulingByEstimate'</Summary>
             </Documentation>
           </Property>
-          <Property Name="ReschedulingOffset" Type="String" Nullable="false" >
+          <Property Name="ReschedulingOffset" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>estimated scheduling time relative to the ReschedulingBase</Summary>
             </Documentation>
@@ -821,6 +942,11 @@
           </Property>
           <Property Name="SharedSkipCounters" Type="Boolean" Nullable="false" />
           <Property Name="SharedLostCounters" Type="Boolean" Nullable="false" />
+          <Property Name="ReschedulingByEstimate" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <Association Name="TaskScheduleTaskCycleDefinition">
           <End Type="DomainModel.TaskSchedule" Role="TaskSchedule" Multiplicity="1" >
@@ -845,33 +971,38 @@
           <Property Name="ParentProcedureScheduleId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="InducedProcedureSchedule" Relationship="DomainModel.ProcedureScheduleInducedSubProcedureSchedule1" FromRole="InducedSubProcedureSchedule" ToRole="ProcedureSchedule" />
           <Property Name="InducedProcedureScheduleId" Type="Guid" Nullable="false" />
-          <Property Name="Offset" Type="Int32" Nullable="false" >
+          <Property Name="SchedulingOffset" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>estimated scheduling date relative to the scheduling date of the parent ProcedureSchedule</Summary>
             </Documentation>
           </Property>
-          <Property Name="OffsetUnit" Type="String" Nullable="false" >
-            <Documentation>
-              <Summary>'M'=Months / 'W'=Weeks / 'D'=Days</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="SchedulingVariabilityBefore" Type="String" Nullable="false" >
-            <Documentation>
-              <Summary>defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the EARLIEST possible date.</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="SchedulingVariabilityAfter" Type="String" Nullable="false" >
-            <Documentation>
-              <Summary>defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the LATEST possible date.</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="SchedulingVariabilityUnit" Type="String" Nullable="false" >
+          <Property Name="SchedulingOffsetUnit" Type="String" Nullable="false" >
             <Documentation>
               <Summary>'M'=Months / 'W'=Weeks / 'D'=Days</Summary>
             </Documentation>
           </Property>
           <Property Name="SharedSkipCounters" Type="Boolean" Nullable="false" />
           <Property Name="SharedLostCounters" Type="Boolean" Nullable="false" />
+          <Property Name="Position" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
+            <Documentation>
+              <Summary>If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DedicatedToSubstudy" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>The name of a Sub-Study for which this schedule should be induced or empty when its part of the current Arms regular workflow </Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <EntityType Name="InducedSubTaskSchedule">
           <Key>
@@ -882,34 +1013,38 @@
           <Property Name="ParentTaskScheduleId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="InducedTaskSchedule" Relationship="DomainModel.TaskScheduleInducedSubTaskSchedule1" FromRole="InducedSubTaskSchedule" ToRole="TaskSchedule" />
           <Property Name="InducedTaskScheduleId" Type="Guid" Nullable="false" />
-          <Property Name="Offset" Type="Int32" Nullable="false" >
+          <Property Name="SchedulingOffset" Type="Int32" Nullable="false" >
             <Documentation>
               <Summary>estimated scheduling time relative to the scheduling date of the parent ProcedureSchedule</Summary>
             </Documentation>
           </Property>
-          <Property Name="OffsetUnit" Type="String" Nullable="false" >
-            <Documentation>
-              <Summary>'h'=Hours / 'm'=Minutes / 's'=Seconds</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="SchedulingVariabilityBefore" Type="String" Nullable="false" >
-            <Documentation>
-              <Summary>defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the EARLIEST possible time.</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="SchedulingVariabilityAfter" Type="String" Nullable="false" >
-            <Documentation>
-              <Summary>defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the LATEST possible time.
-</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="SchedulingVariabilityUnit" Type="String" Nullable="false" >
+          <Property Name="SchedulingOffsetUnit" Type="String" Nullable="false" >
             <Documentation>
               <Summary>'h'=Hours / 'm'=Minutes / 's'=Seconds</Summary>
             </Documentation>
           </Property>
           <Property Name="SharedSkipCounters" Type="Boolean" Nullable="false" />
           <Property Name="SharedLostCounters" Type="Boolean" Nullable="false" />
+          <Property Name="Position" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
+            <Documentation>
+              <Summary>If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="DedicatedToSubstudy" Type="String" Nullable="true" >
+            <Documentation>
+              <Summary>The name of a Sub-Study for which this schedule should be induced or empty when its part of the current Arms regular workflow </Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <Association Name="TaskScheduleInducedSubTaskSchedule">
           <End Type="DomainModel.TaskSchedule" Role="TaskSchedule" Multiplicity="1" >
@@ -996,14 +1131,37 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="VisitProdecureDefinitionInducedVisitProcedure">
-          <End Type="DomainModel.VisitProdecureDefinition" Role="VisitProdecureDefinition" Multiplicity="1" />
-          <End Type="DomainModel.InducedVisitProcedure" Role="InducedVisitProcedure" Multiplicity="*" />
+          <End Type="DomainModel.ProdecureDefinition" Role="VisitProdecureDefinition" Multiplicity="1" />
+          <End Type="DomainModel.InducedProcedure" Role="InducedVisitProcedure" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VisitProdecureDefinition">
-              <PropertyRef Name="VisitProdecureName" />
+              <PropertyRef Name="ProdecureDefinitionName" />
             </Principal>
             <Dependent Role="InducedVisitProcedure">
-              <PropertyRef Name="InducedVisitProdecureName" />
+              <PropertyRef Name="ProdecureDefinitionName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SubStudy">
+          <Key>
+            <PropertyRef Name="SubStudyName" />
+          </Key>
+          <Property Name="SubStudyName" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="50" />
+          <NavigationProperty Name="ResearchStudyDefinition" Relationship="DomainModel.ResearchStudyDefinitionSubStudy" FromRole="SubStudy" ToRole="ResearchStudyDefinition" />
+          <Property Name="StudyWorkflowName" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <Association Name="ResearchStudyDefinitionSubStudy">
+          <End Type="DomainModel.ResearchStudyDefinition" Role="ResearchStudyDefinition" Multiplicity="1" />
+          <End Type="DomainModel.SubStudy" Role="SubStudy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResearchStudyDefinition">
+              <PropertyRef Name="StudyWorkflowName" />
+              <PropertyRef Name="StudyWorkflowVersion" />
+            </Principal>
+            <Dependent Role="SubStudy">
+              <PropertyRef Name="StudyWorkflowName" />
+              <PropertyRef Name="StudyWorkflowVersion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1038,14 +1196,14 @@
     <edmx:Diagrams>
       <Diagram DiagramId="1e673f0774584ac2be5350aef5de4487" Name="Schema" ZoomLevel="92">
         <EntityTypeShape EntityType="DomainModel.ResearchStudyDefinition" Width="2.625" PointX="10.625" PointY="1.75" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="DomainModel.StudyEvent" Width="2.625" PointX="4.875" PointY="3.75" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="DomainModel.Arm" Width="2.625" PointX="3.625" PointY="6.75" IsExpanded="true" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.StudyEvent" Width="2.625" PointX="0.5" PointY="0.625" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.Arm" Width="2.625" PointX="6" PointY="5.625" IsExpanded="true" FillColor="0, 64, 0" />
         <EntityTypeShape EntityType="DomainModel.ProcedureSchedule" Width="2.625" PointX="4.75" PointY="10.625" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="DomainModel.VisitProdecureDefinition" Width="2.625" PointX="15.25" PointY="7.25" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.ProdecureDefinition" Width="2.625" PointX="13.875" PointY="7.25" FillColor="0, 64, 0" />
         <EntityTypeShape EntityType="DomainModel.TaskSchedule" Width="2.625" PointX="15.25" PointY="10.625" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="DomainModel.DataRecordingTask" Width="2.375" PointX="21.125" PointY="3.375" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="DomainModel.DrugApplymentTask" Width="2.375" PointX="18.25" PointY="4.5" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="DomainModel.TreatmentTask" Width="2.375" PointX="24" PointY="2.25" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.DataRecordingTaskDefinition" Width="2.375" PointX="21.125" PointY="3.375" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.DrugApplymentTaskDefinition" Width="2.375" PointX="18.25" PointY="4.5" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.TreatmentTaskDefinition" Width="2.375" PointX="24" PointY="2.25" FillColor="0, 64, 0" />
         <EntityTypeShape EntityType="DomainModel.InducedDataRecordingTask" Width="2.25" PointX="21.375" PointY="12.25" FillColor="0, 64, 0" />
         <EntityTypeShape EntityType="DomainModel.InducedDrugApplymentTask" Width="2.375" PointX="18.5" PointY="13.375" FillColor="0, 64, 0" />
         <EntityTypeShape EntityType="DomainModel.InducedTreatmentTask" Width="2.125" PointX="24.125" PointY="11" FillColor="0, 64, 0" />
@@ -1061,28 +1219,28 @@
         <AssociationConnector Association="DomainModel.ResearchStudyArm" />
         <AssociationConnector Association="DomainModel.ResearchStudyTaskSchedule" />
         <AssociationConnector Association="DomainModel.ResearchStudyVisitProdecureDefinition" />
-        <EntityTypeShape EntityType="DomainModel.InducedVisitProcedure" Width="2.375" PointX="8" PointY="13" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.InducedProcedure" Width="2.375" PointX="8" PointY="13" FillColor="0, 64, 0" />
         <AssociationConnector Association="DomainModel.ProcedureScheduleInducedProcedure" />
         <AssociationConnector Association="DomainModel.TaskScheduleVisitProdecureDefinition" />
         <AssociationConnector Association="DomainModel.ProcedureScheduleArm" />
-        <EntityTypeShape EntityType="DomainModel.ProcedureCycleDefinition" Width="1.875" PointX="2.125" PointY="12.625" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.ProcedureCycleDefinition" Width="2.625" PointX="4.75" PointY="15.75" FillColor="0, 64, 0" />
         <AssociationConnector Association="DomainModel.ProcedureScheduleProcedureCycleDefinition" />
-        <EntityTypeShape EntityType="DomainModel.TaskCycleDefinition" Width="1.875" PointX="12.75" PointY="13" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.TaskCycleDefinition" Width="2.625" PointX="15.25" PointY="16.125" FillColor="0, 64, 0" />
         <AssociationConnector Association="DomainModel.TaskScheduleTaskCycleDefinition" />
-        <EntityTypeShape EntityType="DomainModel.InducedSubProcedureSchedule" Width="2.625" PointX="4.75" PointY="15.75" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="DomainModel.InducedSubTaskSchedule" Width="2.625" PointX="15.25" PointY="16.125" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.InducedSubProcedureSchedule" Width="2.625" PointX="1.5" PointY="13.125" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.InducedSubTaskSchedule" Width="2.625" PointX="12" PointY="13.375" FillColor="0, 64, 0" />
         <AssociationConnector Association="DomainModel.TaskScheduleInducedSubTaskSchedule" />
         <AssociationConnector Association="DomainModel.ProcedureScheduleInducedSubProcedureSchedule" />
         <AssociationConnector Association="DomainModel.ResearchStudyStudyEvent" />
         <AssociationConnector Association="DomainModel.ResearchStudyProcedureSchedule" ManuallyRouted="true" >
-          <ConnectorPoint PointX="10.625" PointY="5.6342493489346417" />
-          <ConnectorPoint PointX="8.0961534714204877" PointY="5.6342493489346417" />
-          <ConnectorPoint PointX="8.0961534714204877" PointY="11.434573861317842" />
-          <ConnectorPoint PointX="7.375" PointY="11.434573861317842" />
+          <ConnectorPoint PointX="10.625" PointY="7.1917122395833326" />
+          <ConnectorPoint PointX="7.375" PointY="12.137353434932614" />
         </AssociationConnector>
         <AssociationConnector Association="DomainModel.TaskScheduleInducedSubTaskSchedule1" />
         <AssociationConnector Association="DomainModel.ProcedureScheduleInducedSubProcedureSchedule1" />
         <AssociationConnector Association="DomainModel.VisitProdecureDefinitionInducedVisitProcedure" />
+        <EntityTypeShape EntityType="DomainModel.SubStudy" Width="2.625" PointX="6" PointY="2.375" FillColor="0, 64, 0" />
+        <AssociationConnector Association="DomainModel.ResearchStudyDefinitionSubStudy" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

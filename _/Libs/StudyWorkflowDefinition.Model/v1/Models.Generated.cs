@@ -7,7 +7,7 @@ namespace MedicalResearch.Workflow.Model {
 
 public class Arm {
 
-  /// <summary> *this field has a max length of 50 </summary>
+  /// <summary> Name of the Arm - INVARIANT! because it is used to generate Identifers for induced executions! *this field has a max length of 50 </summary>
   [MaxLength(50), Required]
   public String StudyArmName { get; set; }
 
@@ -40,8 +40,9 @@ public class Arm {
   /// <summary> *this field is optional (use null as value) </summary>
   public String InclusionCriteria { get; set; }
 
-  /// <summary> defines, that the arm is part of a SubStudy which is addressed by a UniqueName or a path expressen *this field is optional (use null as value) </summary>
-  public String Substudy { get; set; }
+  /// <summary> comma sparated list of Sub-Study names which are allowed to be executed for this arm
+  ///  *this field is optional (use null as value) </summary>
+  public String AllowedSubstudies { get; set; }
 
 }
 
@@ -97,22 +98,22 @@ public class ResearchStudyDefinition {
   public virtual List<Arm> Arms { get; set; } = new List<Arm>();
 
   [Dependent]
-  public virtual List<DataRecordingTask> DataRecordingTasks { get; set; } = new List<DataRecordingTask>();
+  public virtual List<DataRecordingTaskDefinition> DataRecordingTasks { get; set; } = new List<DataRecordingTaskDefinition>();
 
   [Dependent]
-  public virtual List<DrugApplymentTask> DrugApplymentTasks { get; set; } = new List<DrugApplymentTask>();
+  public virtual List<DrugApplymentTaskDefinition> DrugApplymentTasks { get; set; } = new List<DrugApplymentTaskDefinition>();
 
   [Dependent]
   public virtual List<ProcedureSchedule> ProcedureSchedules { get; set; } = new List<ProcedureSchedule>();
 
   [Dependent]
-  public virtual List<TreatmentTask> TreatmentTasks { get; set; } = new List<TreatmentTask>();
+  public virtual List<ProdecureDefinition> ProdecureDefinitions { get; set; } = new List<ProdecureDefinition>();
+
+  [Dependent]
+  public virtual List<TreatmentTaskDefinition> TreatmentTasks { get; set; } = new List<TreatmentTaskDefinition>();
 
   [Dependent]
   public virtual List<TaskSchedule> TaskSchedules { get; set; } = new List<TaskSchedule>();
-
-  [Dependent]
-  public virtual List<VisitProdecureDefinition> VisitProdecureDefinitions { get; set; } = new List<VisitProdecureDefinition>();
 
   [Dependent]
   public virtual List<StudyEvent> Events { get; set; } = new List<StudyEvent>();
@@ -132,8 +133,9 @@ public class ProcedureSchedule {
   [MaxLength(20), Required]
   public String StudyWorkflowVersion { get; set; }
 
+  /// <summary> Name of the Workflow which is represented by this schedule - INVARIANT! because it is used to generate Identifers for induced executions! </summary>
   [Required]
-  public String Title { get; set; }
+  public String ScheduleWorkflowName { get; set; }
 
   [Required]
   public String MaxSkipsBeforeLost { get; set; }
@@ -163,21 +165,21 @@ public class ProcedureSchedule {
   public String AbortCausingEvents { get; set; }
 
   [Dependent]
-  public virtual List<InducedSubProcedureSchedule> InducedSubProcedureSchedules { get; set; } = new List<InducedSubProcedureSchedule>();
+  public virtual List<InducedProcedure> InducedProcedures { get; set; } = new List<InducedProcedure>();
 
   [Dependent]
-  public virtual List<InducedVisitProcedure> InducedProcedures { get; set; } = new List<InducedVisitProcedure>();
+  public virtual List<InducedSubProcedureSchedule> InducedSubProcedureSchedules { get; set; } = new List<InducedSubProcedureSchedule>();
 
   [Dependent]
   public virtual ProcedureCycleDefinition CycleDefinition { get; set; }
 
 }
 
-public class DataRecordingTask {
+public class DataRecordingTaskDefinition {
 
-  /// <summary> *this field has a max length of 50 </summary>
+  /// <summary> Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions! *this field has a max length of 50 </summary>
   [MaxLength(50), Required]
-  public String DataRecordingName { get; set; }
+  public String TaskDefinitionName { get; set; }
 
   /// <summary> *this field has a max length of 100 </summary>
   [MaxLength(100), Required]
@@ -218,15 +220,15 @@ public class InducedDataRecordingTask {
 
   /// <summary> *this field has a max length of 50 </summary>
   [MaxLength(50), Required]
-  public String InducedDataRecordingName { get; set; }
+  public String TaskDefinitionName { get; set; }
 
   /// <summary> estimated scheduling time relative to the scheduling date of the parent TaskSchedule </summary>
   [Required]
-  public Int32 Offset { get; set; }
+  public Int32 SchedulingOffset { get; set; }
 
   /// <summary> 'h'=Hours / 'm'=Minutes / 's'=Seconds </summary>
   [Required]
-  public String OffsetUnit { get; set; }
+  public String SchedulingOffsetUnit { get; set; }
 
   /// <summary> defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the EARLIEST possible time. </summary>
   [Required]
@@ -240,9 +242,9 @@ public class InducedDataRecordingTask {
   [Required]
   public String SchedulingVariabilityUnit { get; set; }
 
-  /// <summary> the title for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution titles. </summary>
+  /// <summary> the name for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution names. </summary>
   [Required]
-  public String InducedTaskExecutionTitle { get; set; }
+  public String UniqueExecutionName { get; set; }
 
   /// <summary> defines, if the study protocol tolerates this execution to be 'skipped' (if not, a missed execution is treated as 'lost' and can cause the exclusion of the participant) </summary>
   [Required]
@@ -254,13 +256,28 @@ public class InducedDataRecordingTask {
   [Required]
   public String EventOnLost { get; set; }
 
+  /// <summary> The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values! </summary>
+  [Required]
+  public Int32 Position { get; set; }
+
+  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  [Required]
+  public Int32 SchedulingOffsetFixpoint { get; set; }
+
+  /// <summary> If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0! </summary>
+  [Required]
+  public Boolean SchedulingByEstimate { get; set; }
+
+  /// <summary> The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow *this field is optional (use null as value) </summary>
+  public String DedicatedToSubstudy { get; set; }
+
 }
 
-public class DrugApplymentTask {
+public class DrugApplymentTaskDefinition {
 
-  /// <summary> *this field has a max length of 50 </summary>
+  /// <summary> Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions! *this field has a max length of 50 </summary>
   [MaxLength(50), Required]
-  public String DrugApplymentName { get; set; }
+  public String TaskDefinitionName { get; set; }
 
   /// <summary> *this field has a max length of 100 </summary>
   [MaxLength(100), Required]
@@ -306,31 +323,31 @@ public class InducedDrugApplymentTask {
 
   /// <summary> *this field has a max length of 50 </summary>
   [MaxLength(50), Required]
-  public String InducedDrugApplymentName { get; set; }
+  public String TaskDefinitionName { get; set; }
 
   /// <summary> estimated scheduling time relative to the scheduling date of the parent TaskSchedule </summary>
   [Required]
-  public Int32 Offset { get; set; }
+  public Int32 SchedulingOffset { get; set; }
 
   /// <summary> 'h'=Hours / 'm'=Minutes / 's'=Seconds </summary>
   [Required]
-  public String OffsetUnit { get; set; }
+  public String SchedulingOffsetUnit { get; set; }
 
   /// <summary> defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the EARLIEST possible time. </summary>
   [Required]
-  public String SchedulingVariabilityBefore { get; set; }
+  public Int32 SchedulingVariabilityBefore { get; set; }
 
   /// <summary> defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the LATEST possible time. </summary>
   [Required]
-  public String SchedulingVariabilityAfter { get; set; }
+  public Int32 SchedulingVariabilityAfter { get; set; }
 
   /// <summary> 'h'=Hours / 'm'=Minutes / 's'=Seconds </summary>
   [Required]
   public String SchedulingVariabilityUnit { get; set; }
 
-  /// <summary> the title for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution titles. </summary>
+  /// <summary> the name for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution names. </summary>
   [Required]
-  public String InducedTaskExecutionTitle { get; set; }
+  public String UniqueExecutionName { get; set; }
 
   /// <summary> defines, if the study protocol tolerates this execution to be 'skipped' (if not, a missed execution is treated as 'lost' and can cause the exclusion of the participant) </summary>
   [Required]
@@ -341,6 +358,21 @@ public class InducedDrugApplymentTask {
 
   [Required]
   public String EventOnLost { get; set; }
+
+  /// <summary> The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values! </summary>
+  [Required]
+  public Int32 Position { get; set; }
+
+  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  [Required]
+  public Int32 SchedulingOffsetFixpoint { get; set; }
+
+  /// <summary> If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0! </summary>
+  [Required]
+  public Boolean SchedulingByEstimate { get; set; }
+
+  /// <summary> The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow *this field is optional (use null as value) </summary>
+  public String DedicatedToSubstudy { get; set; }
 
 }
 
@@ -357,8 +389,9 @@ public class TaskSchedule {
   [MaxLength(20), Required]
   public String StudyWorkflowVersion { get; set; }
 
+  /// <summary> Name of the Workflow which is represented by this schedule - INVARIANT! because it is used to generate Identifers for induced executions! </summary>
   [Required]
-  public String Title { get; set; }
+  public String ScheduleWorkflowName { get; set; }
 
   [Required]
   public String MaxSkipsBeforeLost { get; set; }
@@ -404,6 +437,97 @@ public class TaskSchedule {
 
 }
 
+public class InducedProcedure {
+
+  [Required]
+  public Guid Id { get; set; } = Guid.NewGuid();
+
+  [Required]
+  public Guid ProcedureScheduleId { get; set; }
+
+  /// <summary> estimated scheduling date relative to the scheduling date of the parent ProcedureSchedule </summary>
+  [Required]
+  public Int32 SchedulingOffset { get; set; }
+
+  /// <summary> 'M'=Months / 'W'=Weeks / 'D'=Days </summary>
+  [Required]
+  public String SchedulingOffsetUnit { get; set; }
+
+  /// <summary> defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the EARLIEST possible date. </summary>
+  [Required]
+  public Int32 SchedulingVariabilityBefore { get; set; }
+
+  /// <summary> defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the LATEST possible date. </summary>
+  [Required]
+  public Int32 SchedulingVariabilityAfter { get; set; }
+
+  /// <summary> 'M'=Months / 'W'=Weeks / 'D'=Days </summary>
+  [Required]
+  public String SchedulingVariabilityUnit { get; set; }
+
+  /// <summary> *this field has a max length of 50 </summary>
+  [MaxLength(50), Required]
+  public String ProdecureDefinitionName { get; set; }
+
+  /// <summary> the name for the induced execution (=VISIT), like 'V0', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: 'C{cy}-V0') to prevent from duplicate execution names. </summary>
+  [Required]
+  public String UniqueExecutionName { get; set; }
+
+  /// <summary> defines, if the study protocol tolerates this execution to be 'skipped' (if not, a missed execution is treated as 'lost' and can cause the exclusion of the participant) </summary>
+  [Required]
+  public Boolean Skipable { get; set; }
+
+  [Required]
+  public String EventOnSkip { get; set; }
+
+  [Required]
+  public String EventOnLost { get; set; }
+
+  /// <summary> The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values! </summary>
+  [Required]
+  public Int32 Position { get; set; }
+
+  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  [Required]
+  public Int32 SchedulingOffsetFixpoint { get; set; }
+
+  /// <summary> If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0! </summary>
+  [Required]
+  public Boolean SchedulingByEstimate { get; set; }
+
+  /// <summary> The name of a Sub-Study for which this procedure should be induced or empty when its part of the current Arms regular workflow  *this field is optional (use null as value) </summary>
+  public String DedicatedToSubstudy { get; set; }
+
+}
+
+public class ProdecureDefinition {
+
+  /// <summary> Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions! *this field has a max length of 50 </summary>
+  [MaxLength(50), Required]
+  public String ProdecureDefinitionName { get; set; }
+
+  /// <summary> *this field has a max length of 100 </summary>
+  [MaxLength(100), Required]
+  public String StudyWorkflowName { get; set; }
+
+  /// <summary> *this field has a max length of 20 </summary>
+  [MaxLength(20), Required]
+  public String StudyWorkflowVersion { get; set; }
+
+  /// <summary> the TaskSchedule which is representing the primary-/entry-workflow (estimated tasks) when executing this visit *this field is optional </summary>
+  public Nullable<Guid> RootTaskScheduleId { get; set; }
+
+  /// <summary> *this field is optional </summary>
+  public Nullable<Decimal> BillablePriceOnAbortedExecution { get; set; }
+
+  /// <summary> *this field is optional </summary>
+  public Nullable<Decimal> BillablePriceOnCompletedExecution { get; set; }
+
+  /// <summary> *this field is optional (use null as value) </summary>
+  public String VisitSpecificDocumentationUrl { get; set; }
+
+}
+
 public class InducedSubProcedureSchedule {
 
   [Required]
@@ -417,29 +541,32 @@ public class InducedSubProcedureSchedule {
 
   /// <summary> estimated scheduling date relative to the scheduling date of the parent ProcedureSchedule </summary>
   [Required]
-  public Int32 Offset { get; set; }
+  public Int32 SchedulingOffset { get; set; }
 
   /// <summary> 'M'=Months / 'W'=Weeks / 'D'=Days </summary>
   [Required]
-  public String OffsetUnit { get; set; }
-
-  /// <summary> defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the EARLIEST possible date. </summary>
-  [Required]
-  public String SchedulingVariabilityBefore { get; set; }
-
-  /// <summary> defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the LATEST possible date. </summary>
-  [Required]
-  public String SchedulingVariabilityAfter { get; set; }
-
-  /// <summary> 'M'=Months / 'W'=Weeks / 'D'=Days </summary>
-  [Required]
-  public String SchedulingVariabilityUnit { get; set; }
+  public String SchedulingOffsetUnit { get; set; }
 
   [Required]
   public Boolean SharedSkipCounters { get; set; }
 
   [Required]
   public Boolean SharedLostCounters { get; set; }
+
+  /// <summary> The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values! </summary>
+  [Required]
+  public Int32 Position { get; set; }
+
+  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  [Required]
+  public Int32 SchedulingOffsetFixpoint { get; set; }
+
+  /// <summary> If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0! </summary>
+  [Required]
+  public Boolean SchedulingByEstimate { get; set; }
+
+  /// <summary> The name of a Sub-Study for which this schedule should be induced or empty when its part of the current Arms regular workflow  *this field is optional (use null as value) </summary>
+  public String DedicatedToSubstudy { get; set; }
 
 }
 
@@ -456,29 +583,32 @@ public class InducedSubTaskSchedule {
 
   /// <summary> estimated scheduling time relative to the scheduling date of the parent ProcedureSchedule </summary>
   [Required]
-  public Int32 Offset { get; set; }
+  public Int32 SchedulingOffset { get; set; }
 
   /// <summary> 'h'=Hours / 'm'=Minutes / 's'=Seconds </summary>
   [Required]
-  public String OffsetUnit { get; set; }
-
-  /// <summary> defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the EARLIEST possible time. </summary>
-  [Required]
-  public String SchedulingVariabilityBefore { get; set; }
-
-  /// <summary> defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the LATEST possible time. </summary>
-  [Required]
-  public String SchedulingVariabilityAfter { get; set; }
-
-  /// <summary> 'h'=Hours / 'm'=Minutes / 's'=Seconds </summary>
-  [Required]
-  public String SchedulingVariabilityUnit { get; set; }
+  public String SchedulingOffsetUnit { get; set; }
 
   [Required]
   public Boolean SharedSkipCounters { get; set; }
 
   [Required]
   public Boolean SharedLostCounters { get; set; }
+
+  /// <summary> The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values! </summary>
+  [Required]
+  public Int32 Position { get; set; }
+
+  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  [Required]
+  public Int32 SchedulingOffsetFixpoint { get; set; }
+
+  /// <summary> If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0! </summary>
+  [Required]
+  public Boolean SchedulingByEstimate { get; set; }
+
+  /// <summary> The name of a Sub-Study for which this schedule should be induced or empty when its part of the current Arms regular workflow  *this field is optional (use null as value) </summary>
+  public String DedicatedToSubstudy { get; set; }
 
 }
 
@@ -492,15 +622,15 @@ public class InducedTreatmentTask {
 
   /// <summary> *this field has a max length of 50 </summary>
   [MaxLength(50), Required]
-  public String InducedTreatmentName { get; set; }
+  public String TaskDefinitionName { get; set; }
 
   /// <summary> estimated scheduling time relative to the scheduling date of the parent TaskSchedule </summary>
   [Required]
-  public Int32 Offset { get; set; }
+  public Int32 SchedulingOffset { get; set; }
 
   /// <summary> 'h'=Hours / 'm'=Minutes / 's'=Seconds </summary>
   [Required]
-  public String OffsetUnit { get; set; }
+  public String SchedulingOffsetUnit { get; set; }
 
   /// <summary> defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the EARLIEST possible time. </summary>
   [Required]
@@ -514,9 +644,9 @@ public class InducedTreatmentTask {
   [Required]
   public String SchedulingVariabilityUnit { get; set; }
 
-  /// <summary> the title for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution titles. </summary>
+  /// <summary> the name for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution names. </summary>
   [Required]
-  public String InducedTaskExecutionTitle { get; set; }
+  public String UniqueExecutionName { get; set; }
 
   /// <summary> defines, if the study protocol tolerates this execution to be 'skipped' (if not, a missed execution is treated as 'lost' and can cause the exclusion of the participant) </summary>
   [Required]
@@ -528,13 +658,28 @@ public class InducedTreatmentTask {
   [Required]
   public String EventOnLost { get; set; }
 
+  /// <summary> The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values! </summary>
+  [Required]
+  public Int32 Position { get; set; }
+
+  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  [Required]
+  public Int32 SchedulingOffsetFixpoint { get; set; }
+
+  /// <summary> If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0! </summary>
+  [Required]
+  public Boolean SchedulingByEstimate { get; set; }
+
+  /// <summary> The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow *this field is optional (use null as value) </summary>
+  public String DedicatedToSubstudy { get; set; }
+
 }
 
-public class TreatmentTask {
+public class TreatmentTaskDefinition {
 
-  /// <summary> *this field has a max length of 50 </summary>
+  /// <summary> Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions! *this field has a max length of 50 </summary>
   [MaxLength(50), Required]
-  public String TreatmentName { get; set; }
+  public String TaskDefinitionName { get; set; }
 
   /// <summary> *this field has a max length of 100 </summary>
   [MaxLength(100), Required]
@@ -561,94 +706,18 @@ public class TreatmentTask {
 
 }
 
-public class InducedVisitProcedure {
-
-  [Required]
-  public Guid Id { get; set; } = Guid.NewGuid();
-
-  [Required]
-  public Guid ProcedureScheduleId { get; set; }
-
-  /// <summary> estimated scheduling date relative to the scheduling date of the parent ProcedureSchedule </summary>
-  [Required]
-  public Int32 Offset { get; set; }
-
-  /// <summary> 'M'=Months / 'W'=Weeks / 'D'=Days </summary>
-  [Required]
-  public String OffsetUnit { get; set; }
-
-  /// <summary> defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the EARLIEST possible date. </summary>
-  [Required]
-  public String SchedulingVariabilityBefore { get; set; }
-
-  /// <summary> defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the LATEST possible date. </summary>
-  [Required]
-  public String SchedulingVariabilityAfter { get; set; }
-
-  /// <summary> 'M'=Months / 'W'=Weeks / 'D'=Days </summary>
-  [Required]
-  public String SchedulingVariabilityUnit { get; set; }
-
-  /// <summary> *this field has a max length of 50 </summary>
-  [MaxLength(50), Required]
-  public String InducedVisitProdecureName { get; set; }
-
-  /// <summary> the title for the induced execution, like 'V0', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: 'C{cs}-V0') to prevent from duplicate execution titles. </summary>
-  [Required]
-  public String InducedVisitExecutionTitle { get; set; }
-
-  /// <summary> defines, if the study protocol tolerates this execution to be 'skipped' (if not, a missed execution is treated as 'lost' and can cause the exclusion of the participant) </summary>
-  [Required]
-  public Boolean Skipable { get; set; }
-
-  [Required]
-  public String EventOnSkip { get; set; }
-
-  [Required]
-  public String EventOnLost { get; set; }
-
-}
-
-public class VisitProdecureDefinition {
-
-  /// <summary> *this field has a max length of 50 </summary>
-  [MaxLength(50), Required]
-  public String VisitProdecureName { get; set; }
-
-  /// <summary> *this field has a max length of 100 </summary>
-  [MaxLength(100), Required]
-  public String StudyWorkflowName { get; set; }
-
-  /// <summary> *this field has a max length of 20 </summary>
-  [MaxLength(20), Required]
-  public String StudyWorkflowVersion { get; set; }
-
-  /// <summary> the TaskSchedule which is representing the primary-/entry-workflow (estimated tasks) when executing this visit *this field is optional </summary>
-  public Nullable<Guid> RootTaskScheduleId { get; set; }
-
-  /// <summary> *this field is optional </summary>
-  public Nullable<Decimal> BillablePriceOnAbortedExecution { get; set; }
-
-  /// <summary> *this field is optional </summary>
-  public Nullable<Decimal> BillablePriceOnCompletedExecution { get; set; }
-
-  /// <summary> *this field is optional (use null as value) </summary>
-  public String VisitSpecificDocumentationUrl { get; set; }
-
-}
-
 public class ProcedureCycleDefinition {
 
   [Required]
   public Guid ProcedureScheduleId { get; set; } = Guid.NewGuid();
 
-  /// <summary> 1=EstimatedParent (related to the inducing date of the parent ProcedureSchedule) / 2=LastEstimatedInducement (related to the ESTIMATED scheduling date of the last inducement within the parent ProcedureSchedule) / 3=LastExecutedInducement  (related to the REAL EXECUTION date of the last inducement within the parent ProcedureSchedule) </summary>
+  /// <summary> 0=StartOfScheduleOrCycle: when the start of the last cycle was induced / -1=CompletionOfPredessessor: when the last cycle was completed (which means, that the last item within the schedule or a sub-schedule was completed) *this behaviour can be concretized via 'ReschedulingByEstimate' </summary>
   [Required]
-  public Int32 ReschedulingBase { get; set; }
+  public Int32 ReschedulingOffsetFixpoint { get; set; }
 
   /// <summary> estimated scheduling date relative to the ReschedulingBase </summary>
   [Required]
-  public String ReschedulingOffset { get; set; }
+  public Int32 ReschedulingOffset { get; set; }
 
   /// <summary> 'M'=Months / 'W'=Weeks / 'D'=Days </summary>
   [Required]
@@ -662,6 +731,10 @@ public class ProcedureCycleDefinition {
 
   [Required]
   public Boolean SharedLostCounters { get; set; }
+
+  /// <summary> If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0! </summary>
+  [Required]
+  public Boolean ReschedulingByEstimate { get; set; }
 
 }
 
@@ -693,18 +766,34 @@ public class StudyEvent {
 
 }
 
+public class SubStudy {
+
+  /// <summary> *this field has a max length of 50 </summary>
+  [MaxLength(50), Required]
+  public String SubStudyName { get; set; }
+
+  /// <summary> *this field has a max length of 100 </summary>
+  [MaxLength(100), Required]
+  public String StudyWorkflowName { get; set; }
+
+  /// <summary> *this field has a max length of 20 </summary>
+  [MaxLength(20), Required]
+  public String StudyWorkflowVersion { get; set; }
+
+}
+
 public class TaskCycleDefinition {
 
   [Required]
   public Guid TaskScheduleId { get; set; } = Guid.NewGuid();
 
-  /// <summary> 1=EstimatedParent (related to the inducing time of the parent TaskSchedule) / 2=LastEstimatedInducement (related to the ESTIMATED scheduling time of the last inducement within the parent TaskSchedule) / 3=LastExecutedInducement  (related to the REAL EXECUTION time of the last inducement within the parent TaskSchedule) </summary>
+  /// <summary> 0=StartOfScheduleOrCycle: when the start of the last cycle was induced / -1=CompletionOfPredessessor: when the last cycle was completed (which means, that the last item within the schedule or a sub-schedule was completed) *this behaviour can be concretized via 'ReschedulingByEstimate' </summary>
   [Required]
-  public String ReschedulingBase { get; set; }
+  public Int32 ReschedulingOffsetFixpoint { get; set; }
 
   /// <summary> estimated scheduling time relative to the ReschedulingBase </summary>
   [Required]
-  public String ReschedulingOffset { get; set; }
+  public Int32 ReschedulingOffset { get; set; }
 
   /// <summary> 'h'=Hours / 'm'=Minutes / 's'=Seconds </summary>
   [Required]
@@ -718,6 +807,10 @@ public class TaskCycleDefinition {
 
   [Required]
   public Boolean SharedLostCounters { get; set; }
+
+  /// <summary> If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0! </summary>
+  [Required]
+  public Boolean ReschedulingByEstimate { get; set; }
 
 }
 

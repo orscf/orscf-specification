@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>ORSCF.IdentityManagement.Model</id>
-    <version>1.3.0</version>
+    <version>1.3.0-localbuild</version>
     <title>ORSCF - IdentityManagement Model</title>
     <authors>ORSCF.org</authors>
     <owners>ORSCF.org</owners>
@@ -23,8 +23,8 @@
     <!-- https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package#from-a-convention-based-working-directory -->
     <file src="PackageIcon.png" target="" />
     <!-- .NET 5.0 -->
-    <file src="Libs\IdentityManagement.Model\bin\ORSCF.IdentityManagement.Model.dll" target="lib/net5.0" />
-    <file src="Libs\IdentityManagement.Model\bin\ORSCF.IdentityManagement.Model.xml" target="lib/net5.0" />
-    <file src="Libs\IdentityManagement.Model\bin\ORSCF.IdentityManagement.Model.pdb" target="lib/net5.0" />
+    <file src="(Stage)\Bin\net5.0\ORSCF.IdentityManagement.Model.dll" target="lib/net5.0" />
+    <file src="(Stage)\Bin\net5.0\ORSCF.IdentityManagement.Model.xml" target="lib/net5.0" />
+    <file src="(Stage)\Bin\net5.0\ORSCF.IdentityManagement.Model.pdb" target="lib/net5.0" />
   </files>
 </package>

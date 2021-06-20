@@ -12,16 +12,16 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>bin</OutputPath>
-    <DocumentationFile>bin\ORSCF.VisitData.Model.xml</DocumentationFile>
+    <OutputPath>..\..\(Stage)\Bin\net5.0</OutputPath>
+    <DocumentationFile>..\..\(Stage)\Bin\net5.0\ORSCF.VisitData.Model.xml</DocumentationFile>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Deterministic>false</Deterministic>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>bin</OutputPath>
-    <DocumentationFile>bin\ORSCF.VisitData.Model.xml</DocumentationFile>
+    <OutputPath>..\..\(Stage)\Bin\net5.0</OutputPath>
+    <DocumentationFile>..\..\(Stage)\Bin\net5.0\ORSCF.VisitData.Model.xml</DocumentationFile>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Deterministic>false</Deterministic>
     <NoWarn>1701;1702;1591</NoWarn>
