@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>ORSCF.StudyWorkflowDefinition.Model</id>
-    <version>1.4.0-localbuild</version>
+    <version>1.4.2-localbuild</version>
     <title>ORSCF - StudyWorkflowDefinition Model</title>
     <authors>ORSCF.org</authors>
     <owners>ORSCF.org</owners>
@@ -15,7 +15,8 @@
     <icon>PackageIcon.png</icon>
     <projectUrl>https://www.orscf.org</projectUrl>
     <dependencies>
-      <group targetFramework="net5.0">    
+      <group targetFramework="net5.0">
+        <dependency id="EntityAnnotations" version="[2.0.1,2.9999]" />
       </group>
     </dependencies>
   </metadata>

@@ -18,7 +18,7 @@
        '//CONFIGURATION:
 
        Const inputFile As String = "ORSCF-StudyWorkflowDefinition.edmx"
-       Const schemaSemanticVersion = "1.4.0"
+       Const schemaSemanticVersion = "1.4.2"
 
 '///////////////////////////////////////////////////////////////////////////////////////////////
 '

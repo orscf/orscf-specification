@@ -104,10 +104,10 @@ public class ResearchStudyDefinition {
   public virtual List<DrugApplymentTaskDefinition> DrugApplymentTasks { get; set; } = new List<DrugApplymentTaskDefinition>();
 
   [Dependent]
-  public virtual List<ProcedureSchedule> ProcedureSchedules { get; set; } = new List<ProcedureSchedule>();
+  public virtual List<ProcedureDefinition> ProcedureDefinitions { get; set; } = new List<ProcedureDefinition>();
 
   [Dependent]
-  public virtual List<ProdecureDefinition> ProdecureDefinitions { get; set; } = new List<ProdecureDefinition>();
+  public virtual List<ProcedureSchedule> ProcedureSchedules { get; set; } = new List<ProcedureSchedule>();
 
   [Dependent]
   public virtual List<TreatmentTaskDefinition> TreatmentTasks { get; set; } = new List<TreatmentTaskDefinition>();
@@ -117,6 +117,9 @@ public class ResearchStudyDefinition {
 
   [Dependent]
   public virtual List<StudyEvent> Events { get; set; } = new List<StudyEvent>();
+
+  [Dependent]
+  public virtual List<SubStudy> SubStudies { get; set; } = new List<SubStudy>();
 
 }
 
@@ -260,7 +263,9 @@ public class InducedDataRecordingTask {
   [Required]
   public Int32 Position { get; set; }
 
-  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  /// <summary> 0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+  /// *items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+  /// *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
   [Required]
   public Int32 SchedulingOffsetFixpoint { get; set; }
 
@@ -270,6 +275,10 @@ public class InducedDataRecordingTask {
 
   /// <summary> The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow *this field is optional (use null as value) </summary>
   public String DedicatedToSubstudy { get; set; }
+
+  /// <summary> Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules </summary>
+  [Required]
+  public Int32 TaskNumber { get; set; }
 
 }
 
@@ -363,7 +372,9 @@ public class InducedDrugApplymentTask {
   [Required]
   public Int32 Position { get; set; }
 
-  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  /// <summary> 0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+  /// *items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+  /// *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
   [Required]
   public Int32 SchedulingOffsetFixpoint { get; set; }
 
@@ -373,6 +384,10 @@ public class InducedDrugApplymentTask {
 
   /// <summary> The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow *this field is optional (use null as value) </summary>
   public String DedicatedToSubstudy { get; set; }
+
+  /// <summary> Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules </summary>
+  [Required]
+  public Int32 TaskNumber { get; set; }
 
 }
 
@@ -487,7 +502,9 @@ public class InducedProcedure {
   [Required]
   public Int32 Position { get; set; }
 
-  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  /// <summary> 0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor procedure or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+  /// *items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+  /// *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
   [Required]
   public Int32 SchedulingOffsetFixpoint { get; set; }
 
@@ -498,9 +515,13 @@ public class InducedProcedure {
   /// <summary> The name of a Sub-Study for which this procedure should be induced or empty when its part of the current Arms regular workflow  *this field is optional (use null as value) </summary>
   public String DedicatedToSubstudy { get; set; }
 
+  /// <summary> Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules </summary>
+  [Required]
+  public Int32 VisitNumber { get; set; }
+
 }
 
-public class ProdecureDefinition {
+public class ProcedureDefinition {
 
   /// <summary> Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions! *this field has a max length of 50 </summary>
   [MaxLength(50), Required]
@@ -557,7 +578,9 @@ public class InducedSubProcedureSchedule {
   [Required]
   public Int32 Position { get; set; }
 
-  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  /// <summary> 0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor procedure or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+  /// *items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+  /// *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
   [Required]
   public Int32 SchedulingOffsetFixpoint { get; set; }
 
@@ -567,6 +590,12 @@ public class InducedSubProcedureSchedule {
 
   /// <summary> The name of a Sub-Study for which this schedule should be induced or empty when its part of the current Arms regular workflow  *this field is optional (use null as value) </summary>
   public String DedicatedToSubstudy { get; set; }
+
+  [Required]
+  public Int32 IncreaseVisitNumberBase { get; set; }
+
+  [Required]
+  public Boolean InheritVisitNumberBase { get; set; }
 
 }
 
@@ -599,7 +628,9 @@ public class InducedSubTaskSchedule {
   [Required]
   public Int32 Position { get; set; }
 
-  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  /// <summary> 0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+  /// *items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+  /// *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
   [Required]
   public Int32 SchedulingOffsetFixpoint { get; set; }
 
@@ -609,6 +640,12 @@ public class InducedSubTaskSchedule {
 
   /// <summary> The name of a Sub-Study for which this schedule should be induced or empty when its part of the current Arms regular workflow  *this field is optional (use null as value) </summary>
   public String DedicatedToSubstudy { get; set; }
+
+  [Required]
+  public Int32 IncreaseVisitNumberBase { get; set; }
+
+  [Required]
+  public Boolean InheritVisitNumberBase { get; set; }
 
 }
 
@@ -662,7 +699,9 @@ public class InducedTreatmentTask {
   [Required]
   public Int32 Position { get; set; }
 
-  /// <summary> 0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
+  /// <summary> 0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+  /// *items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+  /// *this behaviour can be concretized via 'SchedulingByEstimate' </summary>
   [Required]
   public Int32 SchedulingOffsetFixpoint { get; set; }
 
@@ -672,6 +711,10 @@ public class InducedTreatmentTask {
 
   /// <summary> The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow *this field is optional (use null as value) </summary>
   public String DedicatedToSubstudy { get; set; }
+
+  /// <summary> Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules </summary>
+  [Required]
+  public Int32 TaskNumber { get; set; }
 
 }
 
@@ -711,7 +754,9 @@ public class ProcedureCycleDefinition {
   [Required]
   public Guid ProcedureScheduleId { get; set; } = Guid.NewGuid();
 
-  /// <summary> 0=StartOfScheduleOrCycle: when the start of the last cycle was induced / -1=CompletionOfPredessessor: when the last cycle was completed (which means, that the last item within the schedule or a sub-schedule was completed) *this behaviour can be concretized via 'ReschedulingByEstimate' </summary>
+  /// <summary> 0=InducementOfScheduleOrCycle: when the start of the last cycle was induced / -1=InducementOfPredessessor: when the last procedure or subschedule (based on the 'Position') of the previous cycle was induced.
+  /// *items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+  /// *this behaviour can be concretized via 'ReschedulingByEstimate' </summary>
   [Required]
   public Int32 ReschedulingOffsetFixpoint { get; set; }
 
@@ -735,6 +780,10 @@ public class ProcedureCycleDefinition {
   /// <summary> If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0! </summary>
   [Required]
   public Boolean ReschedulingByEstimate { get; set; }
+
+  /// <summary> -1: automatic, based on the usage of visit numbers within the schedule </summary>
+  [Required]
+  public Int32 IncreaseVisitNumberBasePerCycle { get; set; }
 
 }
 
@@ -787,7 +836,9 @@ public class TaskCycleDefinition {
   [Required]
   public Guid TaskScheduleId { get; set; } = Guid.NewGuid();
 
-  /// <summary> 0=StartOfScheduleOrCycle: when the start of the last cycle was induced / -1=CompletionOfPredessessor: when the last cycle was completed (which means, that the last item within the schedule or a sub-schedule was completed) *this behaviour can be concretized via 'ReschedulingByEstimate' </summary>
+  /// <summary> 0=InducementOfScheduleOrCycle: when the start of the last cycle was induced / -1=InducementOfPredessessor: when the last task or subschedule (based on the 'Position') of the previous cycle was induced.
+  /// *items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+  /// *this behaviour can be concretized via 'ReschedulingByEstimate' </summary>
   [Required]
   public Int32 ReschedulingOffsetFixpoint { get; set; }
 
@@ -811,6 +862,10 @@ public class TaskCycleDefinition {
   /// <summary> If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0! </summary>
   [Required]
   public Boolean ReschedulingByEstimate { get; set; }
+
+  /// <summary> -1: automatic, based on the usage of task numbers within the schedule </summary>
+  [Required]
+  public Int32 IncreaseTaskNumberBasePerCycle { get; set; }
 
 }
 

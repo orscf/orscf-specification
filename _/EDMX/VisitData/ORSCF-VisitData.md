@@ -5,7 +5,7 @@
 |author:   |[ORSCF](https://www.orscf.org) ("Open Research Study Communication Formats") / T.Korn|
 |license:  |[Apache-2](https://choosealicense.com/licenses/apache-2.0/)|
 |version:  |1.3.0|
-|timestamp:|2021-06-14 22:17|
+|timestamp:|2021-07-10 22:17|
 
 ### Contents
 

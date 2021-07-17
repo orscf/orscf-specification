@@ -17,7 +17,7 @@
           <EntitySet Name="StudyEvents" EntityType="DomainModel.StudyEvent" />
           <EntitySet Name="Arms" EntityType="DomainModel.Arm" />
           <EntitySet Name="ProcedureSchedules" EntityType="DomainModel.ProcedureSchedule" />
-          <EntitySet Name="ProdecureDefinitions" EntityType="DomainModel.ProdecureDefinition" />
+          <EntitySet Name="ProcedureDefinitions" EntityType="DomainModel.ProcedureDefinition" />
           <EntitySet Name="TaskSchedules" EntityType="DomainModel.TaskSchedule" />
           <EntitySet Name="DataRecordingTaskDefinitions" EntityType="DomainModel.DataRecordingTaskDefinition" />
           <EntitySet Name="DrugAppliymentTaskDefinitions" EntityType="DomainModel.DrugApplymentTaskDefinition" />
@@ -71,7 +71,7 @@
           </AssociationSet>
           <AssociationSet Name="ResearchStudyVisitProdecureDefinition" Association="DomainModel.ResearchStudyVisitProdecureDefinition">
             <End Role="ResearchStudy" EntitySet="ResearchStudyDefinitions" />
-            <End Role="VisitProdecureDefinition" EntitySet="ProdecureDefinitions" />
+            <End Role="VisitProdecureDefinition" EntitySet="ProcedureDefinitions" />
           </AssociationSet>
           <EntitySet Name="InducedVisitProcedures" EntityType="DomainModel.InducedProcedure" />
           <AssociationSet Name="ProcedureScheduleInducedProcedure" Association="DomainModel.ProcedureScheduleInducedProcedure">
@@ -80,7 +80,7 @@
           </AssociationSet>
           <AssociationSet Name="TaskScheduleVisitProdecureDefinition" Association="DomainModel.TaskScheduleVisitProdecureDefinition">
             <End Role="TaskSchedule" EntitySet="TaskSchedules" />
-            <End Role="VisitProdecureDefinition" EntitySet="ProdecureDefinitions" />
+            <End Role="VisitProdecureDefinition" EntitySet="ProcedureDefinitions" />
           </AssociationSet>
           <AssociationSet Name="ProcedureScheduleArm" Association="DomainModel.ProcedureScheduleArm">
             <End Role="ProcedureSchedule" EntitySet="ProcedureSchedules" />
@@ -123,7 +123,7 @@
             <End Role="InducedSubProcedureSchedule" EntitySet="InducedSubProcedureSchedules" />
           </AssociationSet>
           <AssociationSet Name="VisitProdecureDefinitionInducedVisitProcedure" Association="DomainModel.VisitProdecureDefinitionInducedVisitProcedure">
-            <End Role="VisitProdecureDefinition" EntitySet="ProdecureDefinitions" />
+            <End Role="VisitProdecureDefinition" EntitySet="ProcedureDefinitions" />
             <End Role="InducedVisitProcedure" EntitySet="InducedVisitProcedures" />
           </AssociationSet>
           <EntitySet Name="SubStudies" EntityType="DomainModel.SubStudy" />
@@ -152,7 +152,7 @@
           <NavigationProperty Name="TreatmentTasks" Relationship="DomainModel.ResearchStudyTreatmentTask" FromRole="ResearchStudy" ToRole="TreatmentTask" />
           <NavigationProperty Name="Arms" Relationship="DomainModel.ResearchStudyArm" FromRole="ResearchStudy" ToRole="Arm" />
           <NavigationProperty Name="TaskSchedules" Relationship="DomainModel.ResearchStudyTaskSchedule" FromRole="ResearchStudy" ToRole="TaskSchedule" />
-          <NavigationProperty Name="ProdecureDefinitions" Relationship="DomainModel.ResearchStudyVisitProdecureDefinition" FromRole="ResearchStudy" ToRole="VisitProdecureDefinition" />
+          <NavigationProperty Name="ProcedureDefinitions" Relationship="DomainModel.ResearchStudyVisitProdecureDefinition" FromRole="ResearchStudy" ToRole="VisitProdecureDefinition" />
           <NavigationProperty Name="Events" Relationship="DomainModel.ResearchStudyStudyEvent" FromRole="ResearchStudy" ToRole="StudyEvent" />
           <NavigationProperty Name="ProcedureSchedules" Relationship="DomainModel.ResearchStudyProcedureSchedule" FromRole="ResearchStudy" ToRole="ProcedureSchedule" />
           <Property Name="OfficialLabel" Type="String" Nullable="false" />
@@ -259,7 +259,7 @@
           <Property Name="InducingEvents" Type="String" Nullable="false" />
           <Property Name="AbortCausingEvents" Type="String" Nullable="false" />
         </EntityType>
-        <EntityType Name="ProdecureDefinition">
+        <EntityType Name="ProcedureDefinition">
           <Key>
             <PropertyRef Name="ProdecureDefinitionName" />
           </Key>
@@ -438,7 +438,9 @@
           </Property>
           <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
             <Documentation>
-              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+              <Summary>0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+*this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
             </Documentation>
           </Property>
           <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
@@ -449,6 +451,11 @@
           <Property Name="DedicatedToSubstudy" Type="String" Nullable="true" >
             <Documentation>
               <Summary>The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TaskNumber" Type="Int32" Nullable="false" DefaultValue="0" >
+            <Documentation>
+              <Summary>Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules</Summary>
             </Documentation>
           </Property>
         </EntityType>
@@ -506,7 +513,9 @@
           </Property>
           <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
             <Documentation>
-              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+              <Summary>0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+*this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
             </Documentation>
           </Property>
           <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
@@ -517,6 +526,11 @@
           <Property Name="DedicatedToSubstudy" Type="String" Nullable="true" >
             <Documentation>
               <Summary>The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TaskNumber" Type="Int32" Nullable="false" DefaultValue="0" >
+            <Documentation>
+              <Summary>Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules</Summary>
             </Documentation>
           </Property>
         </EntityType>
@@ -573,7 +587,9 @@
           </Property>
           <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
             <Documentation>
-              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+              <Summary>0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+*this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
             </Documentation>
           </Property>
           <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
@@ -584,6 +600,11 @@
           <Property Name="DedicatedToSubstudy" Type="String" Nullable="true" >
             <Documentation>
               <Summary>The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TaskNumber" Type="Int32" Nullable="false" DefaultValue="0" >
+            <Documentation>
+              <Summary>Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules</Summary>
             </Documentation>
           </Property>
         </EntityType>
@@ -749,7 +770,7 @@
           <End Type="DomainModel.ResearchStudyDefinition" Role="ResearchStudy" Multiplicity="1" >
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DomainModel.ProdecureDefinition" Role="VisitProdecureDefinition" Multiplicity="*" />
+          <End Type="DomainModel.ProcedureDefinition" Role="VisitProdecureDefinition" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ResearchStudy">
               <PropertyRef Name="StudyWorkflowName" />
@@ -814,7 +835,9 @@
           </Property>
           <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
             <Documentation>
-              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+              <Summary>0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor procedure or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+*this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
             </Documentation>
           </Property>
           <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
@@ -825,6 +848,11 @@
           <Property Name="DedicatedToSubstudy" Type="String" Nullable="true" >
             <Documentation>
               <Summary>The name of a Sub-Study for which this procedure should be induced or empty when its part of the current Arms regular workflow </Summary>
+            </Documentation>
+          </Property>
+          <Property Name="VisitNumber" Type="Int32" Nullable="false" DefaultValue="0" >
+            <Documentation>
+              <Summary>Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules</Summary>
             </Documentation>
           </Property>
         </EntityType>
@@ -844,7 +872,7 @@
         </Association>
         <Association Name="TaskScheduleVisitProdecureDefinition">
           <End Type="DomainModel.TaskSchedule" Role="TaskSchedule" Multiplicity="0..1" />
-          <End Type="DomainModel.ProdecureDefinition" Role="VisitProdecureDefinition" Multiplicity="*" />
+          <End Type="DomainModel.ProcedureDefinition" Role="VisitProdecureDefinition" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TaskSchedule">
               <PropertyRef Name="TaskScheduleId" />
@@ -874,7 +902,9 @@
           <NavigationProperty Name="ProcedureSchedule" Relationship="DomainModel.ProcedureScheduleProcedureCycleDefinition" FromRole="ProcedureCycleDefinition" ToRole="ProcedureSchedule" />
           <Property Name="ReschedulingOffsetFixpoint" Type="Int32" Nullable="false" >
             <Documentation>
-              <Summary>0=StartOfScheduleOrCycle: when the start of the last cycle was induced / -1=CompletionOfPredessessor: when the last cycle was completed (which means, that the last item within the schedule or a sub-schedule was completed) *this behaviour can be concretized via 'ReschedulingByEstimate'</Summary>
+              <Summary>0=InducementOfScheduleOrCycle: when the start of the last cycle was induced / -1=InducementOfPredessessor: when the last procedure or subschedule (based on the 'Position') of the previous cycle was induced.
+*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+*this behaviour can be concretized via 'ReschedulingByEstimate'</Summary>
             </Documentation>
           </Property>
           <Property Name="ReschedulingOffset" Type="Int32" Nullable="false" >
@@ -897,6 +927,11 @@
           <Property Name="ReschedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
             <Documentation>
               <Summary>If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="IncreaseVisitNumberBasePerCycle" Type="Int32" Nullable="false" DefaultValue="-1" >
+            <Documentation>
+              <Summary>-1: automatic, based on the usage of visit numbers within the schedule</Summary>
             </Documentation>
           </Property>
         </EntityType>
@@ -922,7 +957,9 @@
           <NavigationProperty Name="TaskSchedule" Relationship="DomainModel.TaskScheduleTaskCycleDefinition" FromRole="TaskCycleDefinition" ToRole="TaskSchedule" />
           <Property Name="ReschedulingOffsetFixpoint" Type="Int32" Nullable="false" >
             <Documentation>
-              <Summary>0=StartOfScheduleOrCycle: when the start of the last cycle was induced / -1=CompletionOfPredessessor: when the last cycle was completed (which means, that the last item within the schedule or a sub-schedule was completed) *this behaviour can be concretized via 'ReschedulingByEstimate'</Summary>
+              <Summary>0=InducementOfScheduleOrCycle: when the start of the last cycle was induced / -1=InducementOfPredessessor: when the last task or subschedule (based on the 'Position') of the previous cycle was induced.
+*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+*this behaviour can be concretized via 'ReschedulingByEstimate'</Summary>
             </Documentation>
           </Property>
           <Property Name="ReschedulingOffset" Type="Int32" Nullable="false" >
@@ -945,6 +982,11 @@
           <Property Name="ReschedulingByEstimate" Type="Boolean" Nullable="false" >
             <Documentation>
               <Summary>If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="IncreaseTaskNumberBasePerCycle" Type="Int32" Nullable="false" DefaultValue="-1" >
+            <Documentation>
+              <Summary>-1: automatic, based on the usage of task numbers within the schedule</Summary>
             </Documentation>
           </Property>
         </EntityType>
@@ -990,7 +1032,9 @@
           </Property>
           <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
             <Documentation>
-              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+              <Summary>0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor procedure or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+*this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
             </Documentation>
           </Property>
           <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
@@ -1003,6 +1047,8 @@
               <Summary>The name of a Sub-Study for which this schedule should be induced or empty when its part of the current Arms regular workflow </Summary>
             </Documentation>
           </Property>
+          <Property Name="IncreaseVisitNumberBase" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="InheritVisitNumberBase" Type="Boolean" Nullable="false" DefaultValue="true" />
         </EntityType>
         <EntityType Name="InducedSubTaskSchedule">
           <Key>
@@ -1032,7 +1078,9 @@
           </Property>
           <Property Name="SchedulingOffsetFixpoint" Type="Int32" Nullable="false" >
             <Documentation>
-              <Summary>0=StartOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=CompletionOfPredessessor: when the direct predecessor (based on the 'Position') within the current schedule was completed / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was executed *this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
+              <Summary>0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced 
+*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used
+*this behaviour can be concretized via 'SchedulingByEstimate'</Summary>
             </Documentation>
           </Property>
           <Property Name="SchedulingByEstimate" Type="Boolean" Nullable="false" DefaultValue="true" >
@@ -1045,6 +1093,8 @@
               <Summary>The name of a Sub-Study for which this schedule should be induced or empty when its part of the current Arms regular workflow </Summary>
             </Documentation>
           </Property>
+          <Property Name="IncreaseVisitNumberBase" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="InheritVisitNumberBase" Type="Boolean" Nullable="false" DefaultValue="true" />
         </EntityType>
         <Association Name="TaskScheduleInducedSubTaskSchedule">
           <End Type="DomainModel.TaskSchedule" Role="TaskSchedule" Multiplicity="1" >
@@ -1131,7 +1181,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="VisitProdecureDefinitionInducedVisitProcedure">
-          <End Type="DomainModel.ProdecureDefinition" Role="VisitProdecureDefinition" Multiplicity="1" />
+          <End Type="DomainModel.ProcedureDefinition" Role="VisitProdecureDefinition" Multiplicity="1" />
           <End Type="DomainModel.InducedProcedure" Role="InducedVisitProcedure" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VisitProdecureDefinition">
@@ -1152,7 +1202,9 @@
           <Property Name="StudyWorkflowVersion" Type="String" Nullable="false" MaxLength="20" />
         </EntityType>
         <Association Name="ResearchStudyDefinitionSubStudy">
-          <End Type="DomainModel.ResearchStudyDefinition" Role="ResearchStudyDefinition" Multiplicity="1" />
+          <End Type="DomainModel.ResearchStudyDefinition" Role="ResearchStudyDefinition" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="DomainModel.SubStudy" Role="SubStudy" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ResearchStudyDefinition">
@@ -1199,7 +1251,7 @@
         <EntityTypeShape EntityType="DomainModel.StudyEvent" Width="2.625" PointX="0.5" PointY="0.625" FillColor="0, 64, 0" />
         <EntityTypeShape EntityType="DomainModel.Arm" Width="2.625" PointX="6" PointY="5.625" IsExpanded="true" FillColor="0, 64, 0" />
         <EntityTypeShape EntityType="DomainModel.ProcedureSchedule" Width="2.625" PointX="4.75" PointY="10.625" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="DomainModel.ProdecureDefinition" Width="2.625" PointX="13.875" PointY="7.25" FillColor="0, 64, 0" />
+        <EntityTypeShape EntityType="DomainModel.ProcedureDefinition" Width="2.625" PointX="13.875" PointY="7.25" FillColor="0, 64, 0" />
         <EntityTypeShape EntityType="DomainModel.TaskSchedule" Width="2.625" PointX="15.25" PointY="10.625" FillColor="0, 64, 0" />
         <EntityTypeShape EntityType="DomainModel.DataRecordingTaskDefinition" Width="2.375" PointX="21.125" PointY="3.375" FillColor="0, 64, 0" />
         <EntityTypeShape EntityType="DomainModel.DrugApplymentTaskDefinition" Width="2.375" PointX="18.25" PointY="4.5" FillColor="0, 64, 0" />

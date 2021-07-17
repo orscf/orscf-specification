@@ -1,7 +1,7 @@
 {
   "DescriptionFormat": "v1.0",
-  "TimestampUtc": "2021-04-24T14:43:50.2464905Z",
-  "SemanticVersion": "1.3.0",
+  "TimestampUtc": "2021-07-10T15:36:07.3205983Z",
+  "SemanticVersion": "1.4.2",
   "Entities": [
     {
       "Name": "Arm",
@@ -41,7 +41,7 @@
           "Name": "StudyArmName",
           "Type": "String",
           "MaxLength": 50,
-          "Summary": "",
+          "Summary": "Name of the Arm - INVARIANT! because it is used to generate Identifers for induced executions!",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -148,10 +148,10 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "Substudy",
+          "Name": "AllowedSubstudies",
           "Type": "String",
           "MaxLength": 0,
-          "Summary": "defines, that the arm is part of a SubStudy which is addressed by a UniqueName or a path expressen",
+          "Summary": "comma sparated list of Sub-Study names which are allowed to be executed for this arm\n",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": false,
@@ -161,15 +161,15 @@
       ]
     },
     {
-      "Name": "ResearchStudy",
-      "NamePlural": "ResearchStudies",
+      "Name": "ResearchStudyDefinition",
+      "NamePlural": "ResearchStudyDefinitions",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
-      "PrimaryKeyIndexName": "PK_ResearchStudies",
+      "PrimaryKeyIndexName": "PK_ResearchStudyDefinitions",
       "Indices": [
         {
-          "Name": "PK_ResearchStudies",
+          "Name": "PK_ResearchStudyDefinitions",
           "Unique": true,
           "MemberFieldNames": [
             "StudyWorkflowName",
@@ -237,10 +237,10 @@
           "Name": "LogoImage",
           "Type": "String",
           "MaxLength": 0,
-          "Summary": "",
+          "Summary": "Logo in base64",
           "SystemInternal": false,
           "FixedAfterCreation": false,
-          "Required": true,
+          "Required": false,
           "DefaultValue": null,
           "DbGeneratedIdentity": false
         },
@@ -393,10 +393,10 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "Title",
+          "Name": "ScheduleWorkflowName",
           "Type": "String",
           "MaxLength": 0,
-          "Summary": "",
+          "Summary": "Name of the Workflow which is represented by this schedule - INVARIANT! because it is used to generate Identifers for induced executions!",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -505,22 +505,22 @@
       ]
     },
     {
-      "Name": "DataRecordingTask",
-      "NamePlural": "DataRecordingTasks",
+      "Name": "DataRecordingTaskDefinition",
+      "NamePlural": "DataRecordingTaskDefinitions",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
-      "PrimaryKeyIndexName": "PK_DataRecordingTasks",
+      "PrimaryKeyIndexName": "PK_DataRecordingTaskDefinitions",
       "Indices": [
         {
-          "Name": "PK_DataRecordingTasks",
+          "Name": "PK_DataRecordingTaskDefinitions",
           "Unique": true,
           "MemberFieldNames": [
-            "DataRecordingName"
+            "TaskDefinitionName"
           ]
         },
         {
-          "Name": "FK_DataRecordingTasks__ResearchStudy",
+          "Name": "FK_DataRecordingTaskDefinitions__ResearchStudy",
           "Unique": false,
           "MemberFieldNames": [
             "StudyWorkflowName",
@@ -530,10 +530,10 @@
       ],
       "Fields": [
         {
-          "Name": "DataRecordingName",
+          "Name": "TaskDefinitionName",
           "Type": "String",
           "MaxLength": 50,
-          "Summary": "",
+          "Summary": "Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions!",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -639,10 +639,10 @@
       "PrimaryKeyIndexName": "PK_InducedDataRecordingTasks",
       "Indices": [
         {
-          "Name": "FK__DataRecordingTasks_InducedTask",
+          "Name": "FK__DataRecordingTaskDefinitions_InducedTask",
           "Unique": false,
           "MemberFieldNames": [
-            "InducedDataRecordingName"
+            "TaskDefinitionName"
           ]
         },
         {
@@ -684,7 +684,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "InducedDataRecordingName",
+          "Name": "TaskDefinitionName",
           "Type": "String",
           "MaxLength": 50,
           "Summary": "",
@@ -695,7 +695,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "Offset",
+          "Name": "SchedulingOffset",
           "Type": "Int32",
           "MaxLength": 0,
           "Summary": "estimated scheduling time relative to the scheduling date of the parent TaskSchedule",
@@ -706,7 +706,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "OffsetUnit",
+          "Name": "SchedulingOffsetUnit",
           "Type": "String",
           "MaxLength": 0,
           "Summary": "'h'=Hours / 'm'=Minutes / 's'=Seconds",
@@ -750,10 +750,10 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "InducedTaskExecutionTitle",
+          "Name": "UniqueExecutionName",
           "Type": "String",
           "MaxLength": 0,
-          "Summary": "the title for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution titles.",
+          "Summary": "the name for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution names.",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -792,26 +792,81 @@
           "Required": true,
           "DefaultValue": null,
           "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Position",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingOffsetFixpoint",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced \n*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used\n*this behaviour can be concretized via 'SchedulingByEstimate'",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingByEstimate",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "DedicatedToSubstudy",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "TaskNumber",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
         }
       ]
     },
     {
-      "Name": "DrugApplymentTask",
-      "NamePlural": "DrugAppliymentTasks",
+      "Name": "DrugApplymentTaskDefinition",
+      "NamePlural": "DrugAppliymentTaskDefinitions",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
-      "PrimaryKeyIndexName": "PK_DrugAppliymentTasks",
+      "PrimaryKeyIndexName": "PK_DrugAppliymentTaskDefinitions",
       "Indices": [
         {
-          "Name": "PK_DrugAppliymentTasks",
+          "Name": "PK_DrugAppliymentTaskDefinitions",
           "Unique": true,
           "MemberFieldNames": [
-            "DrugApplymentName"
+            "TaskDefinitionName"
           ]
         },
         {
-          "Name": "FK_DrugAppliymentTasks__ResearchStudy",
+          "Name": "FK_DrugAppliymentTaskDefinitions__ResearchStudy",
           "Unique": false,
           "MemberFieldNames": [
             "StudyWorkflowName",
@@ -821,10 +876,10 @@
       ],
       "Fields": [
         {
-          "Name": "DrugApplymentName",
+          "Name": "TaskDefinitionName",
           "Type": "String",
           "MaxLength": 50,
-          "Summary": "",
+          "Summary": "Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions!",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -952,10 +1007,10 @@
       "PrimaryKeyIndexName": "PK_InducedDrugApplymentTasks",
       "Indices": [
         {
-          "Name": "FK__DrugAppliymentTasks_InducedTask",
+          "Name": "FK__DrugAppliymentTaskDefinitions_InducedTask",
           "Unique": false,
           "MemberFieldNames": [
-            "InducedDrugApplymentName"
+            "TaskDefinitionName"
           ]
         },
         {
@@ -997,7 +1052,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "InducedDrugApplymentName",
+          "Name": "TaskDefinitionName",
           "Type": "String",
           "MaxLength": 50,
           "Summary": "",
@@ -1008,7 +1063,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "Offset",
+          "Name": "SchedulingOffset",
           "Type": "Int32",
           "MaxLength": 0,
           "Summary": "estimated scheduling time relative to the scheduling date of the parent TaskSchedule",
@@ -1019,7 +1074,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "OffsetUnit",
+          "Name": "SchedulingOffsetUnit",
           "Type": "String",
           "MaxLength": 0,
           "Summary": "'h'=Hours / 'm'=Minutes / 's'=Seconds",
@@ -1031,7 +1086,7 @@
         },
         {
           "Name": "SchedulingVariabilityBefore",
-          "Type": "String",
+          "Type": "Int32",
           "MaxLength": 0,
           "Summary": "defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the EARLIEST possible time.",
           "SystemInternal": false,
@@ -1042,7 +1097,7 @@
         },
         {
           "Name": "SchedulingVariabilityAfter",
-          "Type": "String",
+          "Type": "Int32",
           "MaxLength": 0,
           "Summary": "defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the LATEST possible time.",
           "SystemInternal": false,
@@ -1063,10 +1118,10 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "InducedTaskExecutionTitle",
+          "Name": "UniqueExecutionName",
           "Type": "String",
           "MaxLength": 0,
-          "Summary": "the title for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution titles.",
+          "Summary": "the name for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution names.\n",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -1105,6 +1160,61 @@
           "Required": true,
           "DefaultValue": null,
           "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Position",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingOffsetFixpoint",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced \n*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used\n*this behaviour can be concretized via 'SchedulingByEstimate'",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingByEstimate",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "DedicatedToSubstudy",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "TaskNumber",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
         }
       ]
     },
@@ -1117,7 +1227,7 @@
       "PrimaryKeyIndexName": "PK_TaskSchedules",
       "Indices": [
         {
-          "Name": "FK__ResearchStudies_ResearchStudy",
+          "Name": "FK__ResearchStudyDefinitions_ResearchStudy",
           "Unique": false,
           "MemberFieldNames": [
             "StudyWorkflowName",
@@ -1167,10 +1277,10 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "Title",
+          "Name": "ScheduleWorkflowName",
           "Type": "String",
           "MaxLength": 0,
-          "Summary": "",
+          "Summary": "Name of the Workflow which is represented by this schedule - INVARIANT! because it is used to generate Identifers for induced executions!",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -1279,6 +1389,337 @@
       ]
     },
     {
+      "Name": "InducedProcedure",
+      "NamePlural": "InducedVisitProcedures",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_InducedVisitProcedures",
+      "Indices": [
+        {
+          "Name": "PK_InducedVisitProcedures",
+          "Unique": true,
+          "MemberFieldNames": [
+            "Id"
+          ]
+        },
+        {
+          "Name": "FK_InducedVisitProcedures__ProcedureSchedule",
+          "Unique": false,
+          "MemberFieldNames": [
+            "ProcedureScheduleId"
+          ]
+        },
+        {
+          "Name": "FK_InducedVisitProcedures__InducedVisitProdecure",
+          "Unique": false,
+          "MemberFieldNames": [
+            "ProdecureDefinitionName"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "Id",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ProcedureScheduleId",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingOffset",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "estimated scheduling date relative to the scheduling date of the parent ProcedureSchedule",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingOffsetUnit",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "'M'=Months / 'W'=Weeks / 'D'=Days",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingVariabilityBefore",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the EARLIEST possible date.",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingVariabilityAfter",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the LATEST possible date.",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingVariabilityUnit",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "'M'=Months / 'W'=Weeks / 'D'=Days",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ProdecureDefinitionName",
+          "Type": "String",
+          "MaxLength": 50,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "UniqueExecutionName",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "the name for the induced execution (=VISIT), like 'V0', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: 'C{cy}-V0') to prevent from duplicate execution names.",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Skipable",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "defines, if the study protocol tolerates this execution to be 'skipped' (if not, a missed execution is treated as 'lost' and can cause the exclusion of the participant)",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "EventOnSkip",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "EventOnLost",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Position",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingOffsetFixpoint",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor procedure or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced \n*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used\n*this behaviour can be concretized via 'SchedulingByEstimate'",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingByEstimate",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "DedicatedToSubstudy",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "The name of a Sub-Study for which this procedure should be induced or empty when its part of the current Arms regular workflow ",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "VisitNumber",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
+      "Name": "ProcedureDefinition",
+      "NamePlural": "ProcedureDefinitions",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_ProcedureDefinitions",
+      "Indices": [
+        {
+          "Name": "PK_ProcedureDefinitions",
+          "Unique": true,
+          "MemberFieldNames": [
+            "ProdecureDefinitionName"
+          ]
+        },
+        {
+          "Name": "FK_ProcedureDefinitions__ResearchStudy",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyWorkflowName",
+            "StudyWorkflowVersion"
+          ]
+        },
+        {
+          "Name": "FK_ProcedureDefinitions__RootTaskSchedule",
+          "Unique": false,
+          "MemberFieldNames": [
+            "RootTaskScheduleId"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "ProdecureDefinitionName",
+          "Type": "String",
+          "MaxLength": 50,
+          "Summary": "Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowName",
+          "Type": "String",
+          "MaxLength": 100,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowVersion",
+          "Type": "String",
+          "MaxLength": 20,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "RootTaskScheduleId",
+          "Type": "Guid",
+          "MaxLength": 0,
+          "Summary": "the TaskSchedule which is representing the primary-/entry-workflow (estimated tasks) when executing this visit",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "BillablePriceOnAbortedExecution",
+          "Type": "Decimal",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "BillablePriceOnCompletedExecution",
+          "Type": "Decimal",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "VisitSpecificDocumentationUrl",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
       "Name": "InducedSubProcedureSchedule",
       "NamePlural": "InducedSubProcedureSchedules",
       "InheritedEntityName": null,
@@ -1343,7 +1784,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "Offset",
+          "Name": "SchedulingOffset",
           "Type": "Int32",
           "MaxLength": 0,
           "Summary": "estimated scheduling date relative to the scheduling date of the parent ProcedureSchedule",
@@ -1354,40 +1795,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "OffsetUnit",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "'M'=Months / 'W'=Weeks / 'D'=Days",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "SchedulingVariabilityBefore",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the EARLIEST possible date.",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "SchedulingVariabilityAfter",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the LATEST possible date.",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "SchedulingVariabilityUnit",
+          "Name": "SchedulingOffsetUnit",
           "Type": "String",
           "MaxLength": 0,
           "Summary": "'M'=Months / 'W'=Weeks / 'D'=Days",
@@ -1410,6 +1818,72 @@
         },
         {
           "Name": "SharedLostCounters",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Position",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingOffsetFixpoint",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor procedure or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced \n*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used\n*this behaviour can be concretized via 'SchedulingByEstimate'",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingByEstimate",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "DedicatedToSubstudy",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "The name of a Sub-Study for which this schedule should be induced or empty when its part of the current Arms regular workflow ",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "IncreaseVisitNumberBase",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "InheritVisitNumberBase",
           "Type": "Boolean",
           "MaxLength": 0,
           "Summary": "",
@@ -1486,7 +1960,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "Offset",
+          "Name": "SchedulingOffset",
           "Type": "Int32",
           "MaxLength": 0,
           "Summary": "estimated scheduling time relative to the scheduling date of the parent ProcedureSchedule",
@@ -1497,40 +1971,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "OffsetUnit",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "'h'=Hours / 'm'=Minutes / 's'=Seconds",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "SchedulingVariabilityBefore",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the EARLIEST possible time.",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "SchedulingVariabilityAfter",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "defines an additional variability RELATIVE to the estimated scheduling time (which is calculated from the offset), in this case the LATEST possible time.\n",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "SchedulingVariabilityUnit",
+          "Name": "SchedulingOffsetUnit",
           "Type": "String",
           "MaxLength": 0,
           "Summary": "'h'=Hours / 'm'=Minutes / 's'=Seconds",
@@ -1553,6 +1994,72 @@
         },
         {
           "Name": "SharedLostCounters",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Position",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingOffsetFixpoint",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced \n*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used\n*this behaviour can be concretized via 'SchedulingByEstimate'",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingByEstimate",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "DedicatedToSubstudy",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "The name of a Sub-Study for which this schedule should be induced or empty when its part of the current Arms regular workflow ",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "IncreaseVisitNumberBase",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "InheritVisitNumberBase",
           "Type": "Boolean",
           "MaxLength": 0,
           "Summary": "",
@@ -1590,7 +2097,7 @@
           "Name": "FK_InducedTreatmentTasks__InducedTask",
           "Unique": false,
           "MemberFieldNames": [
-            "InducedTreatmentName"
+            "TaskDefinitionName"
           ]
         }
       ],
@@ -1618,7 +2125,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "InducedTreatmentName",
+          "Name": "TaskDefinitionName",
           "Type": "String",
           "MaxLength": 50,
           "Summary": "",
@@ -1629,7 +2136,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "Offset",
+          "Name": "SchedulingOffset",
           "Type": "Int32",
           "MaxLength": 0,
           "Summary": "estimated scheduling time relative to the scheduling date of the parent TaskSchedule",
@@ -1640,7 +2147,7 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "OffsetUnit",
+          "Name": "SchedulingOffsetUnit",
           "Type": "String",
           "MaxLength": 0,
           "Summary": "'h'=Hours / 'm'=Minutes / 's'=Seconds",
@@ -1684,10 +2191,10 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "InducedTaskExecutionTitle",
+          "Name": "UniqueExecutionName",
           "Type": "String",
           "MaxLength": 0,
-          "Summary": "the title for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution titles.",
+          "Summary": "the name for the induced execution, like 'Measurement X', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: '{vt} - Measurement X') to prevent from duplicate execution names.",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -1726,19 +2233,74 @@
           "Required": true,
           "DefaultValue": null,
           "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "Position",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "The Position (1..x) of this inducement within the parent schedule. This value is relevant for addressing predecessors as fixpoint for the offest-calculation. Within one schedule there can only be one inducement for each position! The 0 is reserved for addressing the parent schedule itself and must not be used as well as negative values!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingOffsetFixpoint",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "0=InducementOfScheduleOrCycle: when the start of the parent Schedule (for the current cycle) was induced / -1=InducementOfPredessessor: when the direct predecessor task or subschedule (based on the 'Position') within the current schedule was induced / 1..x: when the predecessor at the Position within the current schedule, ADRESSED by the given value, was induced \n*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used\n*this behaviour can be concretized via 'SchedulingByEstimate'",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "SchedulingByEstimate",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "DedicatedToSubstudy",
+          "Type": "String",
+          "MaxLength": 0,
+          "Summary": "The name of a Sub-Study for which this Task should be induced or empty when its part of the current Arms regular workflow",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": false,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "TaskNumber",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "Number, which can be used via Placeholder {#} within the UniqueExecutionName and which will automatically increase when using cycles or sub-schedules",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
         }
       ]
     },
     {
-      "Name": "TreatmentTask",
-      "NamePlural": "TreatmentTasks",
+      "Name": "TreatmentTaskDefinition",
+      "NamePlural": "TreatmentTaskDefinitions",
       "InheritedEntityName": null,
       "Summary": "",
       "IsBlEntrypoint": false,
-      "PrimaryKeyIndexName": "PK_TreatmentTasks",
+      "PrimaryKeyIndexName": "PK_TreatmentTaskDefinitions",
       "Indices": [
         {
-          "Name": "FK__ResearchStudies_ResearchStudy",
+          "Name": "FK__ResearchStudyDefinitions_ResearchStudy",
           "Unique": false,
           "MemberFieldNames": [
             "StudyWorkflowName",
@@ -1746,19 +2308,19 @@
           ]
         },
         {
-          "Name": "PK_TreatmentTasks",
+          "Name": "PK_TreatmentTaskDefinitions",
           "Unique": true,
           "MemberFieldNames": [
-            "TreatmentName"
+            "TaskDefinitionName"
           ]
         }
       ],
       "Fields": [
         {
-          "Name": "TreatmentName",
+          "Name": "TaskDefinitionName",
           "Type": "String",
           "MaxLength": 50,
-          "Summary": "",
+          "Summary": "Name of the Definition - INVARIANT! because it is used to generate Identifers for induced executions!",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -1845,282 +2407,6 @@
       ]
     },
     {
-      "Name": "InducedVisitProcedure",
-      "NamePlural": "InducedVisitProcedures",
-      "InheritedEntityName": null,
-      "Summary": "",
-      "IsBlEntrypoint": false,
-      "PrimaryKeyIndexName": "PK_InducedVisitProcedures",
-      "Indices": [
-        {
-          "Name": "PK_InducedVisitProcedures",
-          "Unique": true,
-          "MemberFieldNames": [
-            "Id"
-          ]
-        },
-        {
-          "Name": "FK_InducedVisitProcedures__ProcedureSchedule",
-          "Unique": false,
-          "MemberFieldNames": [
-            "ProcedureScheduleId"
-          ]
-        },
-        {
-          "Name": "FK_InducedVisitProcedures__InducedVisitProdecure",
-          "Unique": false,
-          "MemberFieldNames": [
-            "InducedVisitProdecureName"
-          ]
-        }
-      ],
-      "Fields": [
-        {
-          "Name": "Id",
-          "Type": "Guid",
-          "MaxLength": 0,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "ProcedureScheduleId",
-          "Type": "Guid",
-          "MaxLength": 0,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "Offset",
-          "Type": "Int32",
-          "MaxLength": 0,
-          "Summary": "estimated scheduling date relative to the scheduling date of the parent ProcedureSchedule",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "OffsetUnit",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "'M'=Months / 'W'=Weeks / 'D'=Days",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "SchedulingVariabilityBefore",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the EARLIEST possible date.",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "SchedulingVariabilityAfter",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "defines an additional variability RELATIVE to the estimated scheduling date (which is calculated from the offset), in this case the LATEST possible date.",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "SchedulingVariabilityUnit",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "'M'=Months / 'W'=Weeks / 'D'=Days",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "InducedVisitProdecureName",
-          "Type": "String",
-          "MaxLength": 50,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "InducedVisitExecutionTitle",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "the title for the induced execution, like 'V0', which is usually defined by the study protocol. if multiple inducements are possible (for example when using cycles), the title should to contain a placeholder (example: 'C{cs}-V0') to prevent from duplicate execution titles.",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "Skipable",
-          "Type": "Boolean",
-          "MaxLength": 0,
-          "Summary": "defines, if the study protocol tolerates this execution to be 'skipped' (if not, a missed execution is treated as 'lost' and can cause the exclusion of the participant)",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "EventOnSkip",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "EventOnLost",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        }
-      ]
-    },
-    {
-      "Name": "VisitProdecureDefinition",
-      "NamePlural": "VisitProdecureDefinitions",
-      "InheritedEntityName": null,
-      "Summary": "",
-      "IsBlEntrypoint": false,
-      "PrimaryKeyIndexName": "PK_VisitProdecureDefinitions",
-      "Indices": [
-        {
-          "Name": "FK__ResearchStudies_ResearchStudy",
-          "Unique": false,
-          "MemberFieldNames": [
-            "StudyWorkflowName",
-            "StudyWorkflowVersion"
-          ]
-        },
-        {
-          "Name": "FK__TaskSchedules_RootTaskSchedule",
-          "Unique": false,
-          "MemberFieldNames": [
-            "RootTaskScheduleId"
-          ]
-        },
-        {
-          "Name": "PK_VisitProdecureDefinitions",
-          "Unique": true,
-          "MemberFieldNames": [
-            "VisitProdecureName"
-          ]
-        }
-      ],
-      "Fields": [
-        {
-          "Name": "VisitProdecureName",
-          "Type": "String",
-          "MaxLength": 50,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "StudyWorkflowName",
-          "Type": "String",
-          "MaxLength": 100,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "StudyWorkflowVersion",
-          "Type": "String",
-          "MaxLength": 20,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": true,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "RootTaskScheduleId",
-          "Type": "Guid",
-          "MaxLength": 0,
-          "Summary": "the TaskSchedule which is representing the primary-/entry-workflow (estimated tasks) when executing this visit",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": false,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "BillablePriceOnAbortedExecution",
-          "Type": "Decimal",
-          "MaxLength": 0,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": false,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "BillablePriceOnCompletedExecution",
-          "Type": "Decimal",
-          "MaxLength": 0,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": false,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        },
-        {
-          "Name": "VisitSpecificDocumentationUrl",
-          "Type": "String",
-          "MaxLength": 0,
-          "Summary": "",
-          "SystemInternal": false,
-          "FixedAfterCreation": false,
-          "Required": false,
-          "DefaultValue": null,
-          "DbGeneratedIdentity": false
-        }
-      ]
-    },
-    {
       "Name": "ProcedureCycleDefinition",
       "NamePlural": "ProcedureCycleDefinitions",
       "InheritedEntityName": null,
@@ -2149,10 +2435,10 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "ReschedulingBase",
+          "Name": "ReschedulingOffsetFixpoint",
           "Type": "Int32",
           "MaxLength": 0,
-          "Summary": "1=EstimatedParent (related to the inducing date of the parent ProcedureSchedule) / 2=LastEstimatedInducement (related to the ESTIMATED scheduling date of the last inducement within the parent ProcedureSchedule) / 3=LastExecutedInducement  (related to the REAL EXECUTION date of the last inducement within the parent ProcedureSchedule) ",
+          "Summary": "0=InducementOfScheduleOrCycle: when the start of the last cycle was induced / -1=InducementOfPredessessor: when the last procedure or subschedule (based on the 'Position') of the previous cycle was induced.\n*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used\n*this behaviour can be concretized via 'ReschedulingByEstimate'",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -2161,7 +2447,7 @@
         },
         {
           "Name": "ReschedulingOffset",
-          "Type": "String",
+          "Type": "Int32",
           "MaxLength": 0,
           "Summary": "estimated scheduling date relative to the ReschedulingBase",
           "SystemInternal": false,
@@ -2213,6 +2499,28 @@
           "Required": true,
           "DefaultValue": null,
           "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ReschedulingByEstimate",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "IncreaseVisitNumberBasePerCycle",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "-1: automatic, based on the usage of visit numbers within the schedule",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
         }
       ]
     },
@@ -2225,7 +2533,7 @@
       "PrimaryKeyIndexName": "PK_StudyEvents",
       "Indices": [
         {
-          "Name": "FK__ResearchStudies_ResearchStudy",
+          "Name": "FK__ResearchStudyDefinitions_ResearchStudy",
           "Unique": false,
           "MemberFieldNames": [
             "StudyWorkflowName",
@@ -2321,6 +2629,66 @@
       ]
     },
     {
+      "Name": "SubStudy",
+      "NamePlural": "SubStudies",
+      "InheritedEntityName": null,
+      "Summary": "",
+      "IsBlEntrypoint": false,
+      "PrimaryKeyIndexName": "PK_SubStudies",
+      "Indices": [
+        {
+          "Name": "FK__ResearchStudyDefinitions_ResearchStudyDefinition",
+          "Unique": false,
+          "MemberFieldNames": [
+            "StudyWorkflowName",
+            "StudyWorkflowVersion"
+          ]
+        },
+        {
+          "Name": "PK_SubStudies",
+          "Unique": true,
+          "MemberFieldNames": [
+            "SubStudyName"
+          ]
+        }
+      ],
+      "Fields": [
+        {
+          "Name": "SubStudyName",
+          "Type": "String",
+          "MaxLength": 50,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowName",
+          "Type": "String",
+          "MaxLength": 100,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "StudyWorkflowVersion",
+          "Type": "String",
+          "MaxLength": 20,
+          "Summary": "",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        }
+      ]
+    },
+    {
       "Name": "TaskCycleDefinition",
       "NamePlural": "TaskCycleDefinitions",
       "InheritedEntityName": null,
@@ -2349,10 +2717,10 @@
           "DbGeneratedIdentity": false
         },
         {
-          "Name": "ReschedulingBase",
-          "Type": "String",
+          "Name": "ReschedulingOffsetFixpoint",
+          "Type": "Int32",
           "MaxLength": 0,
-          "Summary": "1=EstimatedParent (related to the inducing time of the parent TaskSchedule) / 2=LastEstimatedInducement (related to the ESTIMATED scheduling time of the last inducement within the parent TaskSchedule) / 3=LastExecutedInducement  (related to the REAL EXECUTION time of the last inducement within the parent TaskSchedule)",
+          "Summary": "0=InducementOfScheduleOrCycle: when the start of the last cycle was induced / -1=InducementOfPredessessor: when the last task or subschedule (based on the 'Position') of the previous cycle was induced.\n*items of sub-schedules are not relevant - when addressing a sub-schedule as predecessor, then only its entry will be used\n*this behaviour can be concretized via 'ReschedulingByEstimate'",
           "SystemInternal": false,
           "FixedAfterCreation": false,
           "Required": true,
@@ -2361,7 +2729,7 @@
         },
         {
           "Name": "ReschedulingOffset",
-          "Type": "String",
+          "Type": "Int32",
           "MaxLength": 0,
           "Summary": "estimated scheduling time relative to the ReschedulingBase",
           "SystemInternal": false,
@@ -2413,6 +2781,28 @@
           "Required": true,
           "DefaultValue": null,
           "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "ReschedulingByEstimate",
+          "Type": "Boolean",
+          "MaxLength": 0,
+          "Summary": "If set to true, the offset calculation will be based on the ESTIMATED completion of the predecessor (see 'Fixpoint'). Otherwise, when set to false, the offset calculation will be based on the REAL completion (if recorded execution data is available during calculation) of the predecessor. *this will not evaluated, when the 'Fixpoint' is set to 0!",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
+        },
+        {
+          "Name": "IncreaseTaskNumberBasePerCycle",
+          "Type": "Int32",
+          "MaxLength": 0,
+          "Summary": "-1: automatic, based on the usage of task numbers within the schedule",
+          "SystemInternal": false,
+          "FixedAfterCreation": false,
+          "Required": true,
+          "DefaultValue": null,
+          "DbGeneratedIdentity": false
         }
       ]
     }
@@ -2420,7 +2810,7 @@
   "Relations": [
     {
       "Name": "ResearchStudyArm",
-      "PrimaryEntityName": "ResearchStudy",
+      "PrimaryEntityName": "ResearchStudyDefinition",
       "ForeignEntityName": "Arm",
       "ForeignKeyIndexName": "FK_Arms__ResearchStudy",
       "IsLookupRelation": false,
@@ -2448,9 +2838,9 @@
     },
     {
       "Name": "DataRecordingTaskInducedDataRecordingTask",
-      "PrimaryEntityName": "DataRecordingTask",
+      "PrimaryEntityName": "DataRecordingTaskDefinition",
       "ForeignEntityName": "InducedDataRecordingTask",
-      "ForeignKeyIndexName": "FK__DataRecordingTasks_InducedTask",
+      "ForeignKeyIndexName": "FK__DataRecordingTaskDefinitions_InducedTask",
       "IsLookupRelation": true,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -2462,9 +2852,9 @@
     },
     {
       "Name": "ResearchStudyDataRecordingTask",
-      "PrimaryEntityName": "ResearchStudy",
-      "ForeignEntityName": "DataRecordingTask",
-      "ForeignKeyIndexName": "FK_DataRecordingTasks__ResearchStudy",
+      "PrimaryEntityName": "ResearchStudyDefinition",
+      "ForeignEntityName": "DataRecordingTaskDefinition",
+      "ForeignKeyIndexName": "FK_DataRecordingTaskDefinitions__ResearchStudy",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -2476,9 +2866,9 @@
     },
     {
       "Name": "DrugApplymentTaskInducedDrugApplymentTask",
-      "PrimaryEntityName": "DrugApplymentTask",
+      "PrimaryEntityName": "DrugApplymentTaskDefinition",
       "ForeignEntityName": "InducedDrugApplymentTask",
-      "ForeignKeyIndexName": "FK__DrugAppliymentTasks_InducedTask",
+      "ForeignKeyIndexName": "FK__DrugAppliymentTaskDefinitions_InducedTask",
       "IsLookupRelation": true,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -2490,9 +2880,9 @@
     },
     {
       "Name": "ResearchStudyDrugApplymentTask",
-      "PrimaryEntityName": "ResearchStudy",
-      "ForeignEntityName": "DrugApplymentTask",
-      "ForeignKeyIndexName": "FK_DrugAppliymentTasks__ResearchStudy",
+      "PrimaryEntityName": "ResearchStudyDefinition",
+      "ForeignEntityName": "DrugApplymentTaskDefinition",
+      "ForeignKeyIndexName": "FK_DrugAppliymentTaskDefinitions__ResearchStudy",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -2529,6 +2919,34 @@
       "PrimaryNavigationSummary": "",
       "ForeignNavigationSummary": "",
       "CascadeDelete": true
+    },
+    {
+      "Name": "ProcedureScheduleInducedProcedure",
+      "PrimaryEntityName": "ProcedureSchedule",
+      "ForeignEntityName": "InducedProcedure",
+      "ForeignKeyIndexName": "FK_InducedVisitProcedures__ProcedureSchedule",
+      "IsLookupRelation": false,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "InducedProcedures",
+      "ForeignNavigationName": "ProcedureSchedule",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": true
+    },
+    {
+      "Name": "VisitProdecureDefinitionInducedVisitProcedure",
+      "PrimaryEntityName": "ProcedureDefinition",
+      "ForeignEntityName": "InducedProcedure",
+      "ForeignKeyIndexName": "FK_InducedVisitProcedures__InducedVisitProdecure",
+      "IsLookupRelation": true,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "Inducements",
+      "ForeignNavigationName": "InducedVisitProdecure",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": false
     },
     {
       "Name": "ProcedureScheduleInducedSubProcedureSchedule",
@@ -2602,7 +3020,7 @@
     },
     {
       "Name": "TreatmentTaskInducedTreatmentTask",
-      "PrimaryEntityName": "TreatmentTask",
+      "PrimaryEntityName": "TreatmentTaskDefinition",
       "ForeignEntityName": "InducedTreatmentTask",
       "ForeignKeyIndexName": "FK_InducedTreatmentTasks__InducedTask",
       "IsLookupRelation": true,
@@ -2610,34 +3028,6 @@
       "ForeignEntityIsMultiple": true,
       "PrimaryNavigationName": "Inducements",
       "ForeignNavigationName": "InducedTask",
-      "PrimaryNavigationSummary": "",
-      "ForeignNavigationSummary": "",
-      "CascadeDelete": false
-    },
-    {
-      "Name": "ProcedureScheduleInducedProcedure",
-      "PrimaryEntityName": "ProcedureSchedule",
-      "ForeignEntityName": "InducedVisitProcedure",
-      "ForeignKeyIndexName": "FK_InducedVisitProcedures__ProcedureSchedule",
-      "IsLookupRelation": false,
-      "PrimaryEntityIsOptional": false,
-      "ForeignEntityIsMultiple": true,
-      "PrimaryNavigationName": "InducedProcedures",
-      "ForeignNavigationName": "ProcedureSchedule",
-      "PrimaryNavigationSummary": "",
-      "ForeignNavigationSummary": "",
-      "CascadeDelete": true
-    },
-    {
-      "Name": "VisitProdecureDefinitionInducedVisitProcedure",
-      "PrimaryEntityName": "VisitProdecureDefinition",
-      "ForeignEntityName": "InducedVisitProcedure",
-      "ForeignKeyIndexName": "FK_InducedVisitProcedures__InducedVisitProdecure",
-      "IsLookupRelation": true,
-      "PrimaryEntityIsOptional": false,
-      "ForeignEntityIsMultiple": true,
-      "PrimaryNavigationName": "Inducements",
-      "ForeignNavigationName": "InducedVisitProdecure",
       "PrimaryNavigationSummary": "",
       "ForeignNavigationSummary": "",
       "CascadeDelete": false
@@ -2657,8 +3047,36 @@
       "CascadeDelete": true
     },
     {
+      "Name": "ResearchStudyVisitProdecureDefinition",
+      "PrimaryEntityName": "ResearchStudyDefinition",
+      "ForeignEntityName": "ProcedureDefinition",
+      "ForeignKeyIndexName": "FK_ProcedureDefinitions__ResearchStudy",
+      "IsLookupRelation": false,
+      "PrimaryEntityIsOptional": false,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "ProcedureDefinitions",
+      "ForeignNavigationName": "ResearchStudy",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "",
+      "CascadeDelete": true
+    },
+    {
+      "Name": "TaskScheduleVisitProdecureDefinition",
+      "PrimaryEntityName": "TaskSchedule",
+      "ForeignEntityName": "ProcedureDefinition",
+      "ForeignKeyIndexName": "FK_ProcedureDefinitions__RootTaskSchedule",
+      "IsLookupRelation": true,
+      "PrimaryEntityIsOptional": true,
+      "ForeignEntityIsMultiple": true,
+      "PrimaryNavigationName": "EntryProdecureDefinitions",
+      "ForeignNavigationName": "RootTaskSchedule",
+      "PrimaryNavigationSummary": "",
+      "ForeignNavigationSummary": "the TaskSchedule which is representing the primary-/entry-workflow (estimated tasks) when executing this visit",
+      "CascadeDelete": false
+    },
+    {
       "Name": "ResearchStudyProcedureSchedule",
-      "PrimaryEntityName": "ResearchStudy",
+      "PrimaryEntityName": "ResearchStudyDefinition",
       "ForeignEntityName": "ProcedureSchedule",
       "ForeignKeyIndexName": "FK_ProcedureSchedules__ResearchStudy",
       "IsLookupRelation": false,
@@ -2672,9 +3090,9 @@
     },
     {
       "Name": "ResearchStudyTreatmentTask",
-      "PrimaryEntityName": "ResearchStudy",
-      "ForeignEntityName": "TreatmentTask",
-      "ForeignKeyIndexName": "FK__ResearchStudies_ResearchStudy",
+      "PrimaryEntityName": "ResearchStudyDefinition",
+      "ForeignEntityName": "TreatmentTaskDefinition",
+      "ForeignKeyIndexName": "FK__ResearchStudyDefinitions_ResearchStudy",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -2686,9 +3104,9 @@
     },
     {
       "Name": "ResearchStudyTaskSchedule",
-      "PrimaryEntityName": "ResearchStudy",
+      "PrimaryEntityName": "ResearchStudyDefinition",
       "ForeignEntityName": "TaskSchedule",
-      "ForeignKeyIndexName": "FK__ResearchStudies_ResearchStudy",
+      "ForeignKeyIndexName": "FK__ResearchStudyDefinitions_ResearchStudy",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
@@ -2699,29 +3117,29 @@
       "CascadeDelete": true
     },
     {
-      "Name": "ResearchStudyVisitProdecureDefinition",
-      "PrimaryEntityName": "ResearchStudy",
-      "ForeignEntityName": "VisitProdecureDefinition",
-      "ForeignKeyIndexName": "FK__ResearchStudies_ResearchStudy",
+      "Name": "ResearchStudyStudyEvent",
+      "PrimaryEntityName": "ResearchStudyDefinition",
+      "ForeignEntityName": "StudyEvent",
+      "ForeignKeyIndexName": "FK__ResearchStudyDefinitions_ResearchStudy",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
-      "PrimaryNavigationName": "VisitProdecureDefinitions",
+      "PrimaryNavigationName": "Events",
       "ForeignNavigationName": "ResearchStudy",
       "PrimaryNavigationSummary": "",
       "ForeignNavigationSummary": "",
       "CascadeDelete": true
     },
     {
-      "Name": "ResearchStudyStudyEvent",
-      "PrimaryEntityName": "ResearchStudy",
-      "ForeignEntityName": "StudyEvent",
-      "ForeignKeyIndexName": "FK__ResearchStudies_ResearchStudy",
+      "Name": "ResearchStudyDefinitionSubStudy",
+      "PrimaryEntityName": "ResearchStudyDefinition",
+      "ForeignEntityName": "SubStudy",
+      "ForeignKeyIndexName": "FK__ResearchStudyDefinitions_ResearchStudyDefinition",
       "IsLookupRelation": false,
       "PrimaryEntityIsOptional": false,
       "ForeignEntityIsMultiple": true,
-      "PrimaryNavigationName": "Events",
-      "ForeignNavigationName": "ResearchStudy",
+      "PrimaryNavigationName": "SubStudies",
+      "ForeignNavigationName": "ResearchStudyDefinition",
       "PrimaryNavigationSummary": "",
       "ForeignNavigationSummary": "",
       "CascadeDelete": true
@@ -2739,20 +3157,6 @@
       "PrimaryNavigationSummary": "",
       "ForeignNavigationSummary": "",
       "CascadeDelete": true
-    },
-    {
-      "Name": "TaskScheduleVisitProdecureDefinition",
-      "PrimaryEntityName": "TaskSchedule",
-      "ForeignEntityName": "VisitProdecureDefinition",
-      "ForeignKeyIndexName": "FK__TaskSchedules_RootTaskSchedule",
-      "IsLookupRelation": true,
-      "PrimaryEntityIsOptional": true,
-      "ForeignEntityIsMultiple": true,
-      "PrimaryNavigationName": "EntryVisitProdecureDefinitions",
-      "ForeignNavigationName": "RootTaskSchedule",
-      "PrimaryNavigationSummary": "",
-      "ForeignNavigationSummary": "the TaskSchedule which is representing the primary-/entry-workflow (estimated tasks) when executing this visit",
-      "CascadeDelete": false
     }
   ]
 }

@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace MedicalResearch.Workflow.Access {
 
-/// <summary> Provides CRUD access to stored ResearchStudyDefinitions (based on schema version '1.4.0') </summary>
+/// <summary> Provides CRUD access to stored ResearchStudyDefinitions (based on schema version '1.4.1') </summary>
 public partial interface IResearchStudyDefinitions {
 
   //// <summary> Returns an info object, which specifies the possible operations (accessor specific permissions) regarding ResearchStudyDefinitions.</summary>
@@ -52,47 +52,6 @@ public class ResearchStudyDefinitionIdentity {
   public String StudyWorkflowName;
   /// <summary> This value follows the rules of 'Semantic Versioning' (https://semver.org) and needs to be updated exactly and only on transition to DraftState.Released! If the previously DraftState was 'DraftNewFix', then the 3. number must be increased at this time! If the previously DraftState was 'DraftNewMinor', then the 2. number must be increased, and the 3. number must be set to 0 at this time! If the previously DraftState was 'DraftNewMajor', then the 1. number must be increased, and the 2.+3. number must be set to 0 at this time! </summary>
   public String StudyWorkflowVersion;
-}
-
-/// <summary> Provides CRUD access to stored SubStudies (based on schema version '1.4.0') </summary>
-public partial interface ISubStudies {
-
-  //// <summary> Returns an info object, which specifies the possible operations (accessor specific permissions) regarding SubStudies.</summary>
-  //AccessSpecs GetAccessSpecs();
-
-  /// <summary> Loads a specific SubStudy addressed by the given primary identifier. Returns null on failure, or if no record exists with the given identity.</summary>
-  /// <param name="subStudyName"> Represents the primary identity of a SubStudy </param>
-  SubStudy GetSubStudyBySubStudyName(String subStudyName);
-
-  /// <summary> Loads SubStudies. </summary>
-  /// <param name="page">Number of the page, which should be returned </param>
-  /// <param name="pageSize">Max count of SubStudies which should be returned </param>
-  SubStudy[] GetSubStudies(int page = 1, int pageSize = 20);
-
-  /// <summary> Loads SubStudies where values matching to the given filterExpression</summary>
-    /// <param name="filterExpression">a filter expression like '((FieldName1 == "ABC" &amp;&amp; FieldName2 &gt; 12) || FieldName2 != "")'</param>
-  /// <param name="sortingExpression">one or more property names which are used as sort order (before pagination)</param>
-  /// <param name="page">Number of the page, which should be returned</param>
-  /// <param name="pageSize">Max count of SubStudies which should be returned</param>
-  SubStudy[] SearchSubStudies(String filterExpression, String sortingExpression = null, int page = 1, int pageSize = 20);
-
-  /// <summary> Adds a new SubStudy and returns its primary identifier (or null on failure). </summary>
-  /// <param name="subStudy"> SubStudy containing the new values </param>
-  bool AddNewSubStudy(SubStudy subStudy);
-
-  /// <summary> Updates all values (which are not "FixedAfterCreation") of the given SubStudy addressed by the primary identifier fields within the given SubStudy. Returns false on failure or if no target record was found, otherwise true.</summary>
-  /// <param name="subStudy"> SubStudy containing the new values (the primary identifier fields within the given SubStudy will be used to address the target record) </param>
-  bool UpdateSubStudy(SubStudy subStudy);
-
-  /// <summary> Updates all values (which are not "FixedAfterCreation") of the given SubStudy addressed by the supplementary given primary identifier. Returns false on failure or if no target record was found, otherwise true.</summary>
-  /// <param name="subStudyName"> Represents the primary identity of a SubStudy </param>
-  /// <param name="subStudy"> SubStudy containing the new values (the primary identifier fields within the given SubStudy will be ignored) </param>
-  bool UpdateSubStudyBySubStudyName(String subStudyName, SubStudy subStudy);
-
-  /// <summary> Deletes a specific SubStudy addressed by the given primary identifier. Returns false on failure or if no target record was found, otherwise true.</summary>
-  /// <param name="subStudyName"> Represents the primary identity of a SubStudy </param>
-  bool DeleteSubStudyBySubStudyName(String subStudyName);
-
 }
 
 }
